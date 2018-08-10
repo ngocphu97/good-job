@@ -1,0 +1,15 @@
+<mat-progress-bar *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
+
+<button mat-button routerLink="create">Create new Post</button>
+
+<ng-container *ngIf="(posts$ | async).length > 0; else emptyInHere">
+  <app-post-table [posts]="(posts$ | async)"  (rowSelected)="onRowSelected($event)"></app-post-table>
+</ng-container>
+
+<ng-template #emptyInHere>
+  <mat-spinner *ngIf="(loading$ | async)" color="primary" [diameter]="50"></mat-spinner>
+  <app-lonely-in-here *ngIf="!(loading$ | async)"
+                      subTitle="You don't have any posts yet."
+                      message="To get started click the button below to create your first post.">
+  </app-lonely-in-here>
+</ng-template>

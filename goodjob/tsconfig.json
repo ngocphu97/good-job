@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "paths": {
+      "@app/environment": ["environments/environment"],
+      "@app/core": ["app/modules/core/index"],
+      "@app/core/*": ["app/modules/core/*"],
+      "@app/shared/*": ["app/modules/shared/*"],
+      "@app/auth/*": ["app/modules/auth/*"]
+    }
+  }
+}

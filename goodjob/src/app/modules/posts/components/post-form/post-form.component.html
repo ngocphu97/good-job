@@ -1,0 +1,13 @@
+<div class="example-container">
+  <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Input" name="title" required [(ngModel)]="post.title">
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Textarea" name="body" [(ngModel)]="post.body"></textarea>
+    </mat-form-field>
+
+    <button mat-button type="submit" [disabled]="f.invalid">Save</button>
+  </form>
+</div>

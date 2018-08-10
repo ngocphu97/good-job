@@ -1,0 +1,206 @@
+<h2 matDialogTitle>{{ options.title }}</h2>
+<mat-dialog-content class="mat-body-1">
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <!-- First step: Choose client -->
+    <mat-step [stepControl]="firstFormGroup">
+      <mat-card>
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Select client(s)</ng-template>
+
+          <mat-selection-list #clientList formControlName="clientControl" [(ngModel)]="clientsSelected" required>
+            <mat-list-option *ngFor="let client of clients" [selected]="client.selected" [value]="client">
+              <span style="display: flex; align-items: center">
+                <img src="{{client.image}}" class="client-img"> &nbsp; {{client.name}} </span>
+            </mat-list-option>
+          </mat-selection-list>
+
+          <div class="actions first-step">
+            <button mat-raised-button color="accent" matStepperNext (click)="checkClient(clientsSelected)">Next</button>
+          </div>
+        </form>
+      </mat-card>
+    </mat-step>
+
+    <!-- Second step: Choose time -->
+    <mat-step [stepControl]="secondFormGroup">
+      <mat-card>
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Pick date time</ng-template>
+          <div class="date-time">
+            <div>
+              <div class="sample-wrapper">
+                <div class="sample-content">
+                  <article class="sample-column calendar-wrapper">
+                    <igx-calendar #calendar (onSelection)="verifyRange($event)">
+                    </igx-calendar>
+                  </article>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="time">
+              <w-time color="accent" [(userTime)]="exportTime" (onRevert)="onRevert()" (onSubmit)="onSubmitTime($event)">
+              </w-time>
+            </div>
+
+            <div class="event">
+              <div class="event-title">
+                Events
+              </div>
+
+              <p *ngIf="events.length === 0">
+                No event this day !!!
+              </p>
+
+              <div *ngIf="events.length > 0">
+                <mat-list>
+                  <mat-list-item *ngFor="let event of events; let i = index">
+                    <h4 mat-line>
+                      <strong>Post {{i + 1}}</strong>
+                    </h4>
+                    <p mat-line> {{event.date | date}} - {{event.clientName}} </p>
+                    <p mat-line>
+                      {{ (event.post.length>20)? (event.post | slice:0:50) + '...' : (event.post) }}
+                      <img src="{{event.image}}" class="post-img" alt="">
+                    </p>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="actions">
+            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+            <button mat-raised-button color="accent" matStepperNext (click)="checkDateTime(selectedDateTime)">Next</button>
+          </div>
+        </form>
+      </mat-card>
+    </mat-step>
+
+    <!-- Third step: Edit post -->
+    <mat-step [stepControl]="thirdFormGroup">
+      <mat-card>
+        <div class="post-edit">
+          <form [formGroup]="thirdFormGroup" id="post-form">
+            <div class="edit-post">
+              <ng-template matStepLabel>Edit post</ng-template>
+              <mat-form-field style="width: 100%">
+                <textarea spellcheck="true" style="width: 100%" matInput placeholder="Textarea" rows="10" [formControl]="postControl" [(ngModel)]="content"
+                  #post required></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="input-image">
+
+              <input type="file" (change)="onAccept($event)" accept=".png, .jpg, .jpeg, .pdf" name="file" id="file" class="inputfile" />
+
+              <label for="file">
+                <i class="material-icons">add</i>
+                <span>Add image</span>
+              </label>
+
+              <div style="margin-top: 10px">
+                <mat-grid-list cols="5" rowHeight="160px">
+                  <mat-grid-tile *ngFor="let item of base64textString">
+
+                    <img class="img-preview" src={{item}} alt="" id="img">
+                    <button class="img-preview-delete" mat-raised-button color="accent" (click)="onDeleteImgPreview(item)">
+                      <i class="material-icons">
+                        delete
+                      </i>
+                    </button>
+
+                  </mat-grid-tile>
+                </mat-grid-list>
+              </div>
+
+            </div>
+
+            <div class="actions">
+              <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+              <button mat-raised-button color="accent" matStepperNext (click)="checkPost(post.value)">Next</button>
+            </div>
+          </form>
+        </div>
+
+
+      </mat-card>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <mat-card>
+        <h4>YOUR POST REVIEW</h4>
+
+        <div>
+          <label class="preview-text-color">
+            <strong>Client selected</strong>
+          </label>
+          <div class="preview-content">
+            <ul>
+              <li *ngFor="let clientSelected of clientsSelected; let i = index">
+                {{i + 1}} - {{clientSelected.name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <label class="preview-text-color">
+            <strong>Date - time</strong>
+          </label>
+          <br>
+          <span class="preview-content">{{selectedDateTime | date:'medium'}}</span>
+        </div>
+
+        <div>
+          <label class="preview-text-color">
+            <strong>Your content</strong>
+          </label>
+          <div *ngIf="content.length === 0" class="preview-content">
+            <textarea spellcheck="true" style="width: 100%; color:#ff4081" matInput rows="10">You haven't edit your content. Go back to do that</textarea>
+          </div>
+
+          <div *ngIf="content.length > 0" class="preview-content">
+            <textarea spellcheck="true" style="width: 100%" matInput placeholder="Textarea" rows="10" #post>{{content}}</textarea>
+          </div>
+        </div>
+
+        <div style="margin-top: 10px">
+          <label class="preview-text-color">
+            <strong>Images</strong>
+          </label>
+
+          <p class="preview-content" *ngIf="base64textString.length === 0" style="color:#ff4081">
+            Your post have no image. Go back to add.
+          </p>
+
+          <div *ngIf="base64textString.length > 0">
+            <mat-grid-list cols="5" rowHeight="160px">
+              <mat-grid-tile *ngFor="let item of base64textString">
+                <img class="img-preview" src={{item}} alt="" id="img">
+                <button class="img-preview-delete" mat-raised-button color="accent" (click)="onDeleteImgPreview(item)">
+                  <i class="material-icons">
+                    delete
+                  </i>
+                </button>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+          <button mat-raised-button color="accent" (click)="onSubmit()">Submit</button>
+        </div>
+      </mat-card>
+
+    </mat-step>
+  </mat-horizontal-stepper>
+
+
+</mat-dialog-content>

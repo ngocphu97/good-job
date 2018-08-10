@@ -1,0 +1,19 @@
+.publish {
+  display: flex;
+  justify-content: center;
+}
+
+.publish button {
+  width: 83%;
+  border-radius: 20px;
+}
+
+:host ::ng-deep .mat-pseudo-checkbox {
+  border: 2px solid #fff;
+}
+
+:host ::ng-deep .mat-card-avatar {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+}

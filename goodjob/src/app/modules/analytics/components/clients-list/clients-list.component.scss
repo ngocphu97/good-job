@@ -1,0 +1,49 @@
+table {
+  width: 100%;
+}
+
+#clien-posts {
+  overflow: auto;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.mat-table-sticky {
+  border-top: 1px solid #e0e0e0;
+}
+
+.post-img {
+  width: 85px;
+  height: 50px;
+}
+
+:host::ng-deeptd.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+  padding: 10px 10px;
+}
+
+.row-hover:hover {
+  background: #DCDCDC;
+  cursor: pointer;
+}
+
+.total {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px 0;
+}
+
+.total mat-card {
+  width: 15%;
+  background: #262A2F;
+  color: #fff;
+}
+
+.total mat-card mat-card-subtitle {
+  color: #8D98A9;
+}
+
+

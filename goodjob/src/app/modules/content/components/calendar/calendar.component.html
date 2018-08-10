@@ -1,0 +1,37 @@
+<div class="wrapper">
+
+  <div class="calendar">
+    <article class="sample-column calendar-wrapper">
+      <igx-calendar #calendar (onSelection)="getEvents($event)">
+      </igx-calendar>
+    </article>
+  </div>
+
+  <div class="event">
+    <div class="event-title">
+      Events
+    </div>
+
+    <p *ngIf="events.length === 0" style="padding: 15px;">
+      No event this day !!!
+    </p>
+
+    <div *ngIf="events.length > 0">
+      <mat-list>
+        <mat-list-item *ngFor="let event of events; let i = index">
+          <h4 mat-line>
+            <strong>Post {{i + 1}}</strong>
+          </h4>
+          <p mat-line> {{event.date | date}} - {{event.clientName}} </p>
+          <div mat-line>
+            {{ (event.post.length>20)? (event.post | slice:0:50) + '...' : (event.post) }}
+          </div>
+          <div mat-line>
+              <img src="{{event.image}}" class="post-img" alt=""> 
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+
+</div>

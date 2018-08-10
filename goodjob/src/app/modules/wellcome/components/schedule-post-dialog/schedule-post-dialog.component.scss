@@ -1,0 +1,140 @@
+@import "../../../../../../node_modules/angular-calendar/css/angular-calendar.css";
+:host ::ng-deep .mat-calendar-body-cell-content:focus {
+  background: grey;
+}
+
+:host ::ng-deep .mat-step-header .mat-step-icon {
+  background: #ff4081;
+}
+
+:host ::ng-deep .igx-calendar__header {
+  background-color: #ff4081;
+  color: #fff;
+}
+
+:host ::ng-deep .mat-grid-tile .mat-figure {
+  justify-content: start;
+  padding-bottom: 15px;
+}
+
+:host ::ng-depp .w-time {
+  margin: 0 10px;
+}
+
+:host ::ng-deep .w-timepicker-time-container.mat-toolbar.mat-accent.mat-toolbar-single-row {
+  height: 117px;
+  padding: 15px;
+  min-width: 160px;
+  width: 100%;
+}
+
+:host ::ng-deep .w-animation-zoom {
+  height: 100%;
+}
+
+:host ::ng-deep .mat-list-item.mat-3-line.ng-star-inserted {
+  border-bottom: 1px solid grey;
+}
+
+.date-time {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions.first-step {
+  justify-content: flex-end;
+}
+
+.client-img {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+}
+
+.post-img {
+  width: 33px;
+  height: 33px;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile+label {
+  color: grey;
+  background-color: #2a2f34;
+  display: flex;
+  justify-content: center;
+  width: 160px;
+  border-radius: 10px;
+}
+
+.inputfile:focus+label,
+.inputfile+label:hover {
+  cursor: pointer;
+}
+
+.img-preview {
+  width: 160px;
+  height: 160px;
+}
+
+.img-preview-delete {
+  width: 160px;
+  height: 40px;
+  top: 112px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.5;
+  position: absolute;
+}
+
+.img-preview-delete:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.time {
+  height: 100%;
+  margin: 0 5px;
+}
+
+.preview-text-color {
+  color: #ff4081;
+}
+
+.event {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-title {
+  height: 93px;
+  background: #ff4081;
+  padding: 1rem;
+  font-size: 3.5rem;
+  font-weight: 400;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  color: #fff;
+}
+
+.preview-content {
+  padding-left: 15px;
+}
