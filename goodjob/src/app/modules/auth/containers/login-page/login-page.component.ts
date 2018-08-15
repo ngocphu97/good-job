@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import {
-  AuthService,
-  FacebookLoginProvider
-} from 'angular-6-social-login';
-import { Router } from '@angular/router';
-
-interface Window {
-  fbAsyncInit: () => any;
-}
+declare var FB: any;
 
 @Component({
   selector: 'app-login-page',
@@ -17,22 +10,38 @@ interface Window {
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(private socialAuthService: AuthService, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.initFb();
   }
 
-  socialSignIn(socialPlatform: string) {
-    let socialPlatformProvider;
-    if (socialPlatform === 'facebook') {
-      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    }
-    this.socialAuthService.signIn(socialPlatformProvider).then(
-      (userData) => {
-        console.log(socialPlatform + ' sign in data : ', userData);
-        this.router.navigate(['/']);
+  initFb() {
+    FB.api(
+      '/me/feed',
+      'POST',
+      {
+        // tslint:disable-next-line:max-line-length
+        access_token: 'EAAFiVT3Gv5EBAJeb6nOI2C99En4OhKqYYCQmM2ChKIunZAV1pt4wt2QCmWkrfTOpSATvmDmFph9mNOuBHBJJYZBetZB980PK7tKJWzidkv2bs9bzD7leD0i9nTnyglZBOc4fqmmzlRCz6fcqDyoFuSXDuOsaUV4zzPiJEPIY4yBpctmA4ba1iUm7DTESiaZCZCZAwUtPkoAXwZDZD',
+        message: 'This is a test demo',
+        sheduled_publish_time: 'now'
+      },
+      function (response) {
+        console.log(response);
+        if (response && !response.error) {
+          /* handle the result */
+        }
       }
     );
+
   }
 
+  test() {
+    const body = new FormData();
+    body.append('message', 'test test');
+    // tslint:disable-next-line:max-line-length
+    this.http.post('https://graph.facebook.com/v3.1/1986831114966270_2030001103982604?access_token=EAAFiVT3Gv5EBAIbR70zC8Ifeof7RllIYjbZB66kGxoO0vxwLuZAnk35thbOxCgQFtZB0EObwlZCyOQrZC4Xd2D4IaZBuxXwOIdXq4ZAVVNJbQgvYmXDlELySqoOGZAZBo2JmifbUw1jsaqBake44rZA7o7odxxS3JxB9bNEMpooEqOPLGXqHWW0DdPLgKaEs0ZAZBBAZD&debug=all&format=json&method=get&pretty=0&suppress_http_code=1', body).subscribe(data => {
+      console.log(data);
+    });
+  }
 }
