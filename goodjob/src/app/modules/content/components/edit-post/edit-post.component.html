@@ -195,9 +195,13 @@
 
       <div class="actions">
         <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-        <button mat-raised-button color="accent" (click)="onSubmit()">Submit</button>
+        <button mat-raised-button color="accent" (click)="onSubmit(content, base64textString[0])">Submit</button>
       </div>
     </mat-card>
 
   </mat-step>
 </mat-horizontal-stepper>
+
+<button (click)="createAlbum()">
+  create album
+</button>

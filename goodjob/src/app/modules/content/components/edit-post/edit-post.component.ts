@@ -10,6 +10,8 @@ import { ContentService } from '../../services/content.service';
 import { User } from '@app/core/services/navigate/model/user.model';
 import { IgxCalendarComponent } from 'igniteui-angular';
 
+declare var FB: any;
+
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
@@ -47,6 +49,12 @@ export class EditPostComponent implements OnInit {
   clientControl = new FormControl();
   timeControl = new FormControl();
   postControl = new FormControl();
+
+  imgs = [
+    'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
+    'https://cdn.techgyd.com/25-Labs-Facebook-Multiple-Group-Poster.png',
+    'https://i.stack.imgur.com/3J699.jpg'
+  ];
 
   constructor(
     private datepipe: DatePipe,
@@ -148,7 +156,62 @@ export class EditPostComponent implements OnInit {
     this.selectedDateTime.setSeconds(0);
   }
 
-  onSubmit() {
+  createAlbum(albumName: string): any {
+    FB.api(
+      '/me/photos',
+      'POST',
+      {
+        // tslint:disable-next-line:max-line-length
+        access_token: 'EAAFiVT3Gv5EBAAMEcJaZANbV1dEm3YZArzPTAqsYtLdzEuTMslc0iI4FT3TZAzZA5ouT1443sTlq2jkNJZC35RKLdr5tUiXaIpRXmW0PeI5W9pvvZCZAZCwOFGot5ZBE2ZBKPfuNagyUcsA7xW6cn9vdetJI11GVYzXsBnr7et0X3nO65izBLXrR7cuSDnaryduY0ZD',
+        // url: 'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
+        message: 'doi ny vui ah nghen, doi la lm ah nghen',
+        'attached_media[0]': {'media_fbid': '1002088839996'},
+        published: false
+      },
+      function (response) {
+        console.log(response);
+        if (response && !response.error) {
+          /* handle the result */
+        }
+        return response;
+      }
+    );
+  }
+
+  post(content: string, img: string) {
+
+    FB.api(
+      `/me/feed/photos`,
+      'POST',
+      {
+        // tslint:disable-next-line:max-line-length
+        access_token: 'EAAFiVT3Gv5EBAAYoiKbgZBdiKNoAmRCzweYZCwhs7x9LJBcItV1ZCCd6ZBoo6qaTFrMda9BBk3N7ZBdlmr9zSlwZBQQIvvoP5vZB7ZAj9yny1xZCkQi5J0cyNEym1pzIYS3C6iVe2KP2RcxmMqmgNghiJe3UmmHajZCZBFcZAK6asW76wXNeIcvgatTSdzwEnbIIplIZD',
+        message: content,
+        url: img
+      },
+      function (response) {
+        console.log(response);
+        if (response && !response.error) {
+          /* handle the result */
+        }
+      }
+    );
+
+  }
+
+  onSubmit(mess: string, img: string) {
+
+    const imgs = [
+      'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
+      'https://cdn.techgyd.com/25-Labs-Facebook-Multiple-Group-Poster.png',
+      'https://i.stack.imgur.com/3J699.jpg'
+    ];
+
+    // this.post(mess, 'https://i.stack.imgur.com/3J699.jpg');
+    imgs.forEach(element => {
+      this.post(mess, element);
+    });
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
       data: {
