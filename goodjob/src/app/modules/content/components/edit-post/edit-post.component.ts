@@ -158,15 +158,13 @@ export class EditPostComponent implements OnInit {
 
   createAlbum(albumName: string): any {
     FB.api(
-      '/me/photos',
+      '/249376455821855/albums',
       'POST',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAAMEcJaZANbV1dEm3YZArzPTAqsYtLdzEuTMslc0iI4FT3TZAzZA5ouT1443sTlq2jkNJZC35RKLdr5tUiXaIpRXmW0PeI5W9pvvZCZAZCwOFGot5ZBE2ZBKPfuNagyUcsA7xW6cn9vdetJI11GVYzXsBnr7et0X3nO65izBLXrR7cuSDnaryduY0ZD',
-        // url: 'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
-        message: 'doi ny vui ah nghen, doi la lm ah nghen',
-        'attached_media[0]': {'media_fbid': '1002088839996'},
-        published: false
+        access_token: 'EAAFiVT3Gv5EBAChpYzt0CUz5HHNOONlstpcvhhg6M5SlPh0LaZAZC2lYm09niFQBFsITXOvXhEel5hcnroAFOYZBrkri3oDGYZCNjTOMY8zbrEdI5oxwZARXC5MQ7JewaxhSEkS3r3gf7iZBDzsouwToZAVcg4hZC65UvZAxXOmvPFKW8xV13jXjPDWLFkZAhitQsZD',
+        message: 'tesst tesst testt testt 123345456',
+        name: '## feed feed feed feed feed feed ##'
       },
       function (response) {
         console.log(response);
@@ -174,6 +172,58 @@ export class EditPostComponent implements OnInit {
           /* handle the result */
         }
         return response;
+      }
+    );
+  }
+
+  postImagesToAlbumWithId(id: string) {
+
+    const imgs = [
+      // tslint:disable-next-line:max-line-length
+      'http://3.bp.blogspot.com/-2w-4PPkcAm4/V2TS_2OYTWI/AAAAAAAADFI/_eylCqZZfwoKtuZct7CxhVhnle092GXiACHM/s1600/red-wolf-wallpapers-free-download-on-wallpapers-bros.jpg',
+      // tslint:disable-next-line:max-line-length
+      'https://cdn.vox-cdn.com/thumbor/zIH1nrau5uA1ajbKr8Qj3veh7Pg=/166x0:2833x2000/1200x800/filters:focal(166x0:2833x2000)/cdn.vox-cdn.com/uploads/chorus_image/image/55998769/1_3V8x0m62mBzUqEThApdtTg.0.jpeg',
+      'https://newevolutiondesigns.com/images/freebies/cool-wallpaper-1.jpg',
+      'https://media.giphy.com/media/3o85xopxIjnRKotn0c/giphy.gif'
+    ];
+
+    // this.post(mess, 'https://i.stack.imgur.com/3J699.jpg');
+    imgs.forEach(element => {
+      FB.api(
+        `/304945553598278/photos`,
+        'POST',
+        {
+          // tslint:disable-next-line:max-line-length
+          access_token: 'EAAFiVT3Gv5EBAFZC80gOHdboEkomT2NmEtC6K3ZBM6bsRGjcEa24jUBm56fbsKXgIUhbZCQ1kYJocm0kDZBOHZBnkFyMb4JdmyBQAUqBJg3DMzzrNRUBQRIGQIYEITtZB9z9ecZCq1Dc7tAhqKhDbzvtQ0ndnZCTQ5ZBtnWZAjiwET4HStxnJfuXVJ6iGDsEvLnuwB1s6xr9hbrAZDZD',
+          url: element,
+        },
+        function (response) {
+          console.log(response);
+          if (response && !response.error) {
+            /* handle the result */
+          }
+        }
+      );
+    });
+
+  }
+
+  postToFeedAlbum() {
+    FB.api(
+      `/me/feed`,
+      'POST',
+      {
+        // tslint:disable-next-line:max-line-length
+        access_token: 'EAAFiVT3Gv5EBAFZC80gOHdboEkomT2NmEtC6K3ZBM6bsRGjcEa24jUBm56fbsKXgIUhbZCQ1kYJocm0kDZBOHZBnkFyMb4JdmyBQAUqBJg3DMzzrNRUBQRIGQIYEITtZB9z9ecZCq1Dc7tAhqKhDbzvtQ0ndnZCTQ5ZBtnWZAjiwET4HStxnJfuXVJ6iGDsEvLnuwB1s6xr9hbrAZDZD',
+        // tslint:disable-next-line:max-line-length
+        message: 'You can upload an unpublished photo without publishing a story to the /user-id/photos or /page-id/photos edge by making a similar call as described in the single photo post section but by adding the argument published=false. Publishing user photos requires a user access token with user_photos permission. Publishing page photos requires a page access token with manage_pages and publish_pages permissions.'
+
+      },
+      function (response) {
+        console.log(response);
+        if (response && !response.error) {
+          /* handle the result */
+        }
       }
     );
   }
