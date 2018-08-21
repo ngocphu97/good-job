@@ -10,6 +10,7 @@ import { services } from './services';
 import { guards } from './guards';
 import { routes } from './auth.routing';
 import { containers } from './containers';
+import { CommonModule } from '@angular/common';
 
 export function getAuthServiceConfigs() {
   const config = new AuthServiceConfig(
@@ -25,6 +26,7 @@ export function getAuthServiceConfigs() {
 
 @NgModule({
   imports: [
+    CommonModule,
     RouterModule.forChild(routes),
     SocialLoginModule
   ],

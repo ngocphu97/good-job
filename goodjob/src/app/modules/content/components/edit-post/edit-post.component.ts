@@ -162,7 +162,7 @@ export class EditPostComponent implements OnInit {
       'POST',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAChpYzt0CUz5HHNOONlstpcvhhg6M5SlPh0LaZAZC2lYm09niFQBFsITXOvXhEel5hcnroAFOYZBrkri3oDGYZCNjTOMY8zbrEdI5oxwZARXC5MQ7JewaxhSEkS3r3gf7iZBDzsouwToZAVcg4hZC65UvZAxXOmvPFKW8xV13jXjPDWLFkZAhitQsZD',
+        access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
         message: 'tesst tesst testt testt 123345456',
         name: '## feed feed feed feed feed feed ##'
       },
@@ -194,7 +194,7 @@ export class EditPostComponent implements OnInit {
         'POST',
         {
           // tslint:disable-next-line:max-line-length
-          access_token: 'EAAFiVT3Gv5EBAFZC80gOHdboEkomT2NmEtC6K3ZBM6bsRGjcEa24jUBm56fbsKXgIUhbZCQ1kYJocm0kDZBOHZBnkFyMb4JdmyBQAUqBJg3DMzzrNRUBQRIGQIYEITtZB9z9ecZCq1Dc7tAhqKhDbzvtQ0ndnZCTQ5ZBtnWZAjiwET4HStxnJfuXVJ6iGDsEvLnuwB1s6xr9hbrAZDZD',
+          access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
           url: element,
         },
         function (response) {
@@ -214,7 +214,7 @@ export class EditPostComponent implements OnInit {
       'POST',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAFZC80gOHdboEkomT2NmEtC6K3ZBM6bsRGjcEa24jUBm56fbsKXgIUhbZCQ1kYJocm0kDZBOHZBnkFyMb4JdmyBQAUqBJg3DMzzrNRUBQRIGQIYEITtZB9z9ecZCq1Dc7tAhqKhDbzvtQ0ndnZCTQ5ZBtnWZAjiwET4HStxnJfuXVJ6iGDsEvLnuwB1s6xr9hbrAZDZD',
+        access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
         // tslint:disable-next-line:max-line-length
         message: 'You can upload an unpublished photo without publishing a story to the /user-id/photos or /page-id/photos edge by making a similar call as described in the single photo post section but by adding the argument published=false. Publishing user photos requires a user access token with user_photos permission. Publishing page photos requires a page access token with manage_pages and publish_pages permissions.'
 
@@ -228,14 +228,22 @@ export class EditPostComponent implements OnInit {
     );
   }
 
-  post(content: string, img: string) {
+  testUI() {
+    FB.ui({
+      method: 'feed',
+      url: 'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg'
+    }, function (response) {
+      console.log(response);
+    });
+  }
 
+  post(content: string, img: string) {
     FB.api(
-      `/me/feed/photos`,
+      `/me/photos`,
       'POST',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAAYoiKbgZBdiKNoAmRCzweYZCwhs7x9LJBcItV1ZCCd6ZBoo6qaTFrMda9BBk3N7ZBdlmr9zSlwZBQQIvvoP5vZB7ZAj9yny1xZCkQi5J0cyNEym1pzIYS3C6iVe2KP2RcxmMqmgNghiJe3UmmHajZCZBFcZAK6asW76wXNeIcvgatTSdzwEnbIIplIZD',
+        access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
         message: content,
         url: img
       },
@@ -246,7 +254,6 @@ export class EditPostComponent implements OnInit {
         }
       }
     );
-
   }
 
   onSubmit(mess: string, img: string) {
@@ -281,5 +288,36 @@ export class EditPostComponent implements OnInit {
     this.contentService.getClientPostByClientDate(date).subscribe(result => {
       this.events = result;
     });
+  }
+
+  postMultiPhoto() {
+    const imgs = [
+      {
+        url: 'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
+        published: false
+      },
+      {
+        url: 'https://i.stack.imgur.com/3J699.jpg',
+        published: false
+      },
+      {
+        url: 'https://cdn.techgyd.com/25-Labs-Facebook-Multiple-Group-Poster.png',
+        published: false
+      }
+    ];
+
+    const result = FB.api(`/me/photos`, 'POST', {
+      // tslint:disable-next-line:max-line-length
+      access_token: 'EAAFiVT3Gv5EBAGDgrkr5nGqz5e2kTNaWoDWOZCh3lTKjWFOHeZCNp4RCyTNZAKRSU2wINMGVxQ3XHe8vLncx51TVcrZArqHi4dqzMPrwDwsmZCM08wWhtHf3rYezh0bE9PFDcCZAxRX9bYubG6TvuITIsXBlYtUfGQJgdPY8uVEUti0PZAyO6FVNPzZCh9HLjxYZD',
+    }, function (response) {
+        console.log(response);
+        if (response && !response.error) {
+          /* handle the result */
+        }
+      }
+    );
+
+    const multiPhotoId = result.getDecodedBody();
+
   }
 }

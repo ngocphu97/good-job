@@ -5,3 +5,14 @@
 <button (click)="loginWithFb()">Sign in with Facebook</button>
 
 <button (click)="getUserAccountList()">GetConnectAccount</button>
+
+<button (click)="getInfo()">GetInfo</button>
+
+<div *ngIf="connectAccount.length > 0">
+  <ul>
+    <li *ngFor="let e of connectAccount">
+        <img src="{{e}}" alt="">
+    </li>
+  </ul>
+</div>
+
