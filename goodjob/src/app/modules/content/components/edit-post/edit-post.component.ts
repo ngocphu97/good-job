@@ -348,12 +348,32 @@ export class EditPostComponent implements OnInit {
 
   }
 
+  post1(f: any) {
+    const token = this.access_token;
+    const fileReader = new FileReader();
+    // const file = document.getElementById('file').files[0];
+
+    fileReader.onloadend = async () => {
+      const photoData = new Blob([fileReader.result], { type: 'image/jpg' });
+      const formData = new FormData();
+
+      formData.append('access_token', token);
+      formData.append('source', photoData);
+      formData.append('message', 'some status message');
+
+      let response = await fetch(`https://graph.facebook.com/249376455821855/photos`, {
+        body: formData,
+        method: 'post'
+      });
+      response = await response.json();
+      console.log(response);
+    };
+    fileReader.readAsArrayBuffer(f);
+  }
+
   onSubmit(mess: string, img: string) {
-    const imgs = [
-      'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
-      'https://cdn.techgyd.com/25-Labs-Facebook-Multiple-Group-Poster.png',
-      'https://i.stack.imgur.com/3J699.jpg'
-    ];
+
+    this.post(mess, img);
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
