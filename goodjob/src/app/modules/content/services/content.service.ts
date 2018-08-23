@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+declare var FB: any;
+
 @Injectable({
   providedIn: 'root'
 })
 export class ContentService {
+
+  connectAccount = [];
 
   constructor(private http: HttpClient) { }
 
@@ -24,5 +28,4 @@ export class ContentService {
   getClientPostByClientDate(date: string): Observable<any> {
     return this.http.get(`http://localhost:3000/client_post?date=${date}`);
   }
-
 }

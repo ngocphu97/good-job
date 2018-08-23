@@ -2,11 +2,11 @@
   <!-- First step: Choose client -->
   <mat-step [stepControl]="firstFormGroup">
     <mat-card>
-      <form [formGroup]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" enctype="multipart/form-data">
         <ng-template matStepLabel>Select client(s)</ng-template>
 
         <mat-selection-list #clientList formControlName="clientControl" [(ngModel)]="clientsSelected" required>
-          <mat-list-option *ngFor="let client of clients" [selected]="client.selected" [value]="client">
+          <mat-list-option *ngFor="let client of connectAccount; let i of index" [selected]="client.selected" [value]="client">
             <span style="display: flex; align-items: center">
               <img src="{{client.image}}" class="client-img"> &nbsp; {{client.name}} </span>
           </mat-list-option>
@@ -29,7 +29,7 @@
             <div class="sample-wrapper">
               <div class="sample-content">
                 <article class="sample-column calendar-wrapper">
-                  <igx-calendar #calendar (onSelection)="getEvents($event)">
+                  <igx-calendar #calendar (onSelection)="getEventsByDate($event)">
                   </igx-calendar>
                 </article>
               </div>
@@ -47,23 +47,17 @@
               Events
             </div>
 
-            <p *ngIf="events.length === 0" style="padding: 15px;">
-              No event this day !!!
-            </p>
+            <div *ngIf="eventsByDate.length == 0" >
+              nothing here
+            </div>
 
-            <div *ngIf="events.length > 0">
+            <div *ngIf="eventsByDate.length > 0">
               <mat-list>
-                <mat-list-item *ngFor="let event of events; let i = index">
+                <mat-list-item *ngFor="let event of eventsByDate; let i = index">
                   <h4 mat-line>
-                    <strong>Post {{i + 1}}</strong>
+                    <strong>{{event.clientName }} - {{event.created_time | date }} </strong>
                   </h4>
-                  <p mat-line> {{event.date | date}} - {{event.clientName}} </p>
-                  <div mat-line>
-                    {{ (event.post.length>20)? (event.post | slice:0:50) + '...' : (event.post) }}
-                  </div>
-                  <div mat-line>
-                    <img src="{{event.image}}" class="post-img" alt="">
-                  </div>
+                  <p mat-line> {{ (event.message.length) > 20?  (event.message | slice:0:50) + '...' : (event.message)}}</p>
                 </mat-list-item>
               </mat-list>
             </div>
@@ -218,4 +212,6 @@
   UI
 </button>
 
-
+<button (click)="getEvents()">
+  get event
+</button>

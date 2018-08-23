@@ -9,11 +9,11 @@
   </div>
 
   <mat-nav-list>
-      <mat-list-item *ngFor="let user of users" style="color: #fff" (click)="onSelect(user)">
-         <span matLine>{{ user.fb }}</span>
-         <button mat-icon-button >
-            <img mat-card-avatar src="{{user.image}}" alt="">
-         </button>
-      </mat-list-item>
-    </mat-nav-list>
-</div>
+    <mat-list-item *ngFor="let user of connectAccount" style="color: #fff" (click)="onSelect(user)">
+      <span matLine>{{ user.name }}</span>
+      <button mat-icon-button>
+        <img mat-card-avatar src="{{user.image}}" alt="">
+      </button>
+    </mat-list-item>
+  </mat-nav-list>
+

@@ -2,13 +2,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
-import { Client } from '../../models/client';
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ContentService } from '../../services/content.service';
 
 import { User } from '@app/core/services/navigate/model/user.model';
 import { IgxCalendarComponent } from 'igniteui-angular';
+
+import { Client } from '../../models/client';
+import { Event } from '../../models/event';
+import * as moment from 'moment';
+
 
 declare var FB: any;
 
@@ -21,11 +25,16 @@ export class EditPostComponent implements OnInit {
 
   @ViewChild('calendar') public calendar: IgxCalendarComponent;
 
+  // remove user type
   clients: User[] = [];
-  events = [];
+
   clientsSelected: Array<Client> = [];
   currentDateTime = new Date();
   selectedDateTime = new Date();
+
+  events: Array<Event> = [];
+  eventsByDate: Array<Event> = [];
+  eventsByMonth: Array<Event> = [];
 
   content = '';
   imgPreview = '';
@@ -56,6 +65,11 @@ export class EditPostComponent implements OnInit {
     'https://i.stack.imgur.com/3J699.jpg'
   ];
 
+  connectAccount = new Array<Client>();
+
+  // tslint:disable-next-line:max-line-length
+  access_token = 'EAAFiVT3Gv5EBAHvvGCnfSKPe8jivwGgHUbfmTuCdNFaeuzc1yDo4IhniZCFe2OE3TxHgr7sQj0wzZBPwXZB5xZBwF9LLBKlnsHRFAGpdKbN7UUuIX6a3RYiDTnMModxCWoSFmDbD00IGQw5SXMyJW84pcuoVrXfCzpgjY1NrxC18HlNiQkgQHeiPyi5T54WI38rYfYelYBa6lbgjgGZBjjA3u08WzKrcZD';
+
   constructor(
     private datepipe: DatePipe,
     private dialog: MatDialog,
@@ -65,7 +79,7 @@ export class EditPostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getClients();
+    this.getInfo();
     this.firstFormGroup = this.postForm.group({
       clientControl: ['', [Validators.required]]
     });
@@ -74,12 +88,6 @@ export class EditPostComponent implements OnInit {
     });
     this.thirdFormGroup = this.postForm.group({
       postControl: ['', []]
-    });
-  }
-
-  getClients() {
-    this.contentService.getClients().subscribe((data) => {
-      return this.clients = data;
     });
   }
 
@@ -156,13 +164,104 @@ export class EditPostComponent implements OnInit {
     this.selectedDateTime.setSeconds(0);
   }
 
+  getEventsByDate(date: string) {
+    const dateConvert = date.toString().substring(0, 15);
+    const result = this.events.filter(e =>
+      (e.created_time.indexOf(dateConvert) > -1 && e.message.length !== 0));
+
+    if (this.eventsByDate.length > 0) {
+      this.eventsByDate = [];
+      result.forEach(ele => {
+        this.eventsByDate.push(ele);
+      });
+    } else {
+      result.forEach(ele => {
+        this.eventsByDate.push(ele);
+      });
+    }
+    console.log(this.eventsByDate);
+  }
+
+  // getEventsByMonth(date: string) {
+  //   // substring to month and year to find feed in that month
+  //   const dateConvert = date.toString().substring(0, 15);
+  //   const result = this.events.filter(e =>
+  //     (e.created_time.indexOf(dateConvert) > -1 && e.message.length !== 0));
+
+  //   if (this.eventsByMonth.length > 0) {
+  //     this.eventsByDate = [];
+  //     result.forEach(ele => {
+  //       this.eventsByMonth.push(ele);
+  //     });
+  //   } else {
+  //     result.forEach(ele => {
+  //       this.eventsByMonth.push(ele);
+  //     });
+  //   }
+  //   console.log(this.eventsByMonth);
+  // }
+
+  getInfo() {
+    const token = this.access_token;
+    const array = this.connectAccount;
+    const events = this.events;
+    FB.api(`/me`, 'GET',
+      {
+        // tslint:disable-next-line:max-line-length
+        access_token: token,
+        fields: 'accounts{feed,access_token, name, photos.width(150).height(150){picture}}'
+      }, (response) => {
+        const length = response.accounts.data.length;
+        for (let i = 0; i < length; i++) {
+          const id = response.accounts.data[i].id;
+          const photo = response.accounts.data[i].photos;
+          const avatar = photo.data[0].picture;
+          const data = response.accounts.data[i].name;
+          const access_token = response.accounts.data[i].access_token;
+          const feed = response.accounts.data[i].feed;
+          const client: Client = {
+            id: id,
+            name: data,
+            image: avatar,
+            access_token: access_token,
+            feed: feed.data,
+          };
+          array.push(client);
+
+          for (let j = 0; j < client.feed.length; j++) {
+            if (client.feed[j].message == null) {
+              client.feed[j].message = '';
+            }
+            if (client.feed[j].story == null) {
+              client.feed[j].story = '';
+            }
+            const converDateTime = new Date(client.feed[j].created_time).toString();
+            const event: Event = {
+              id: client.feed[j].id,
+              clientName: data,
+              created_time: converDateTime,
+              story: client.feed[j].story,
+              message: client.feed[j].message
+            };
+            this.events.push(event);
+          }
+        }
+        if (response.error) {
+          console.log(response.error);
+        }
+      }
+    );
+  }
+
+
   createAlbum(albumName: string): any {
+    const token = this.access_token;
     FB.api(
       '/249376455821855/albums',
       'POST',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
+        access_token: token,
         message: 'tesst tesst testt testt 123345456',
         name: '## feed feed feed feed feed feed ##'
       },
@@ -176,45 +275,14 @@ export class EditPostComponent implements OnInit {
     );
   }
 
-  postImagesToAlbumWithId(id: string) {
-
-    const imgs = [
-      // tslint:disable-next-line:max-line-length
-      'http://3.bp.blogspot.com/-2w-4PPkcAm4/V2TS_2OYTWI/AAAAAAAADFI/_eylCqZZfwoKtuZct7CxhVhnle092GXiACHM/s1600/red-wolf-wallpapers-free-download-on-wallpapers-bros.jpg',
-      // tslint:disable-next-line:max-line-length
-      'https://cdn.vox-cdn.com/thumbor/zIH1nrau5uA1ajbKr8Qj3veh7Pg=/166x0:2833x2000/1200x800/filters:focal(166x0:2833x2000)/cdn.vox-cdn.com/uploads/chorus_image/image/55998769/1_3V8x0m62mBzUqEThApdtTg.0.jpeg',
-      'https://newevolutiondesigns.com/images/freebies/cool-wallpaper-1.jpg',
-      'https://media.giphy.com/media/3o85xopxIjnRKotn0c/giphy.gif'
-    ];
-
-    // this.post(mess, 'https://i.stack.imgur.com/3J699.jpg');
-    imgs.forEach(element => {
-      FB.api(
-        `/304945553598278/photos`,
-        'POST',
-        {
-          // tslint:disable-next-line:max-line-length
-          access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
-          url: element,
-        },
-        function (response) {
-          console.log(response);
-          if (response && !response.error) {
-            /* handle the result */
-          }
-        }
-      );
-    });
-
-  }
-
   postToFeedAlbum() {
+    const token = this.access_token;
     FB.api(
       `/me/feed`,
       'POST',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
+        access_token: token,
         // tslint:disable-next-line:max-line-length
         message: 'You can upload an unpublished photo without publishing a story to the /user-id/photos or /page-id/photos edge by making a similar call as described in the single photo post section but by adding the argument published=false. Publishing user photos requires a user access token with user_photos permission. Publishing page photos requires a page access token with manage_pages and publish_pages permissions.'
 
@@ -228,22 +296,14 @@ export class EditPostComponent implements OnInit {
     );
   }
 
-  testUI() {
-    FB.ui({
-      method: 'feed',
-      url: 'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg'
-    }, function (response) {
-      console.log(response);
-    });
-  }
-
   post(content: string, img: string) {
+    const token = this.access_token;
     FB.api(
       `/me/photos`,
       'POST',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAN035SPDeMdeTa1pwiQYrFaU900smX5UsoRVZB3Dc20a2BGb0y9Ez9ZBkwfMvZAYVUn9ZB7wHbS8PDAqH47C8mdUe5rJlTStYzJlzy2Gn29wzVeIaf8wvAbD6S99prFeZCZA6fs0FojkeQ6HxwYgNsHiIl3wdGZBMBSD4jRvMiZB9hz2t42sECcmNsoRyZBIUmAZDZD',
+        access_token: token,
         message: content,
         url: img
       },
@@ -256,41 +316,8 @@ export class EditPostComponent implements OnInit {
     );
   }
 
-  onSubmit(mess: string, img: string) {
-
-    const imgs = [
-      'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
-      'https://cdn.techgyd.com/25-Labs-Facebook-Multiple-Group-Poster.png',
-      'https://i.stack.imgur.com/3J699.jpg'
-    ];
-
-    // this.post(mess, 'https://i.stack.imgur.com/3J699.jpg');
-    imgs.forEach(element => {
-      this.post(mess, element);
-    });
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Submit',
-        message: 'Your post is saved to database ',
-        confirmButtonText: 'Ok'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  getEvents(dates: Date[]) {
-    const date = this.datepipe.transform(this.calendar.value, 'MM/dd/yyy');
-
-    this.contentService.getClientPostByClientDate(date).subscribe(result => {
-      this.events = result;
-    });
-  }
-
   postMultiPhoto() {
+    const token = this.access_token;
     const imgs = [
       {
         url: 'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
@@ -308,16 +335,37 @@ export class EditPostComponent implements OnInit {
 
     const result = FB.api(`/me/photos`, 'POST', {
       // tslint:disable-next-line:max-line-length
-      access_token: 'EAAFiVT3Gv5EBAGDgrkr5nGqz5e2kTNaWoDWOZCh3lTKjWFOHeZCNp4RCyTNZAKRSU2wINMGVxQ3XHe8vLncx51TVcrZArqHi4dqzMPrwDwsmZCM08wWhtHf3rYezh0bE9PFDcCZAxRX9bYubG6TvuITIsXBlYtUfGQJgdPY8uVEUti0PZAyO6FVNPzZCh9HLjxYZD',
+      access_token: token,
     }, function (response) {
-        console.log(response);
-        if (response && !response.error) {
-          /* handle the result */
-        }
+      console.log(response);
+      if (response && !response.error) {
+        /* handle the result */
       }
+    }
     );
 
     const multiPhotoId = result.getDecodedBody();
 
   }
+
+  onSubmit(mess: string, img: string) {
+    const imgs = [
+      'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
+      'https://cdn.techgyd.com/25-Labs-Facebook-Multiple-Group-Poster.png',
+      'https://i.stack.imgur.com/3J699.jpg'
+    ];
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Submit',
+        message: 'Your post is saved to database ',
+        confirmButtonText: 'Ok'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
 }

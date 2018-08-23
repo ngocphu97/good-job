@@ -2,17 +2,26 @@
   Sign in
 </h1>
 
-<button (click)="loginWithFb()">Sign in with Facebook</button>
 
-<button (click)="getUserAccountList()">GetConnectAccount</button>
+<div class="fb-login-button" 
+data-max-rows="1" 
+data-size="large" 
+data-button-type="continue_with" 
+data-show-faces="false"
+data-auto-logout-link="false" 
+data-use-continue-as="false" 
+(click)="loginWithFb()"></div>
 
 <button (click)="getInfo()">GetInfo</button>
 
+<button (click)="logout()">Log out</button>
+
 <div *ngIf="connectAccount.length > 0">
   <ul>
-    <li *ngFor="let e of connectAccount">
-        <img src="{{e}}" alt="">
+    <li *ngFor="let account of connectAccount">
+      <button>
+        <img src="{{account}}" alt="">
+      </button>
     </li>
   </ul>
 </div>
-
