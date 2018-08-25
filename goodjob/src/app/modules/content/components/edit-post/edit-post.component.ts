@@ -13,8 +13,8 @@ import { Client } from '../../models/client';
 import { Event } from '../../models/event';
 import * as moment from 'moment';
 
-
 declare var FB: any;
+declare var $: any;
 
 @Component({
   selector: 'app-edit-post',
@@ -68,7 +68,7 @@ export class EditPostComponent implements OnInit {
   connectAccount = new Array<Client>();
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAHvvGCnfSKPe8jivwGgHUbfmTuCdNFaeuzc1yDo4IhniZCFe2OE3TxHgr7sQj0wzZBPwXZB5xZBwF9LLBKlnsHRFAGpdKbN7UUuIX6a3RYiDTnMModxCWoSFmDbD00IGQw5SXMyJW84pcuoVrXfCzpgjY1NrxC18HlNiQkgQHeiPyi5T54WI38rYfYelYBa6lbgjgGZBjjA3u08WzKrcZD';
+  access_token = 'EAAFiVT3Gv5EBAEVTP9qZC0Mlhnhu3gRwu50yEQbH7bKM150nbVyztMucVyOZBipxqEZAg8ZCfxKxiLarDvkSHw3TZCr7L9H7MnTUmTtftd1uppTYvLUW4BXy0Cd9KoXNygvZBVS7YShxx05I5fNuDOUBtZBia37vGfSZALdwe4kOC67JhZBKdTH03X3ZBnvLggWLtJTeHKqxkJsdweLfQaKXpFZASRvuFEZCCboZD';
 
   constructor(
     private datepipe: DatePipe,
@@ -89,6 +89,8 @@ export class EditPostComponent implements OnInit {
     this.thirdFormGroup = this.postForm.group({
       postControl: ['', []]
     });
+
+    this.schedule(this.access_token, 'test thoi gian: Saturday, August 25, 2018 10:38:28 PM GMT+07:00', '1535211508');
   }
 
   checkClient(clients) {
@@ -117,7 +119,7 @@ export class EditPostComponent implements OnInit {
   }
 
   handleReaderLoaded(e) {
-    this.base64textString.push('data:image/png;base64,' + btoa(e.target.result));
+    this.base64textString.push('data:image/png;base64,' + window.btoa(e.target.result));
   }
 
   onDeleteImgPreview(item) {
@@ -255,7 +257,8 @@ export class EditPostComponent implements OnInit {
 
 
   createAlbum(albumName: string): any {
-    const token = this.access_token;
+    // tslint:disable-next-line:max-line-length
+    const token = 'EAAFiVT3Gv5EBAKaLaKa9KtcmIAcaNWZAqZCveFM7LdM6tH5LBWJqqJ9Y4e3HeUmQRyMzAWIb9gMiVm6lSPNiDzHkOBH0VQge8VtSBLLFgNSxrZBXf6kjY6Hyw24LDeOUjFUfSA8Njg5ppfY9ZBNXcDPQSKQSzwcnZA22l3urbWvCVmnYGqwaLFS1LrcKHnYi2dVbjkBPizetUyvMNqOyc';
     FB.api(
       '/249376455821855/albums',
       'POST',
@@ -296,16 +299,18 @@ export class EditPostComponent implements OnInit {
     );
   }
 
-  post(content: string, img: string) {
-    const token = this.access_token;
+  post(text: string) {
+    // tslint:disable-next-line:max-line-length
+    const clientToken = 'EAAFiVT3Gv5EBAI7CXjsYpVF9jJZB17TAz2NqrqyTGhmxYbYPUI9Q4sbg0kNlb2UecSY7z5mjFd81YdMjuVf1cbny3NYP7nHsKIIa9ZAOiGLIFwrzi5RZC5hItRNLmvG3mpOGNXnVYAZCUlsioglj8XAy8Ti1ydJyF6SHuxX5yIlINQHcZBJCVAzujZAhP2hgudMIRCZCZC3m6u7DTVDCZAOSD';
+    const content = text;
+    const imgUrl = 'https://images-na.ssl-images-amazon.com/images/I/81MQcUJi-UL._SY355_.jpg';
     FB.api(
-      `/me/photos`,
+      `/249376455821855/photos`,
       'POST',
       {
-        // tslint:disable-next-line:max-line-length
-        access_token: token,
+        access_token: clientToken,
         message: content,
-        url: img
+        url: imgUrl,
       },
       function (response) {
         console.log(response);
@@ -348,32 +353,35 @@ export class EditPostComponent implements OnInit {
 
   }
 
-  post1(f: any) {
-    const token = this.access_token;
-    const fileReader = new FileReader();
-    // const file = document.getElementById('file').files[0];
-
-    fileReader.onloadend = async () => {
-      const photoData = new Blob([fileReader.result], { type: 'image/jpg' });
-      const formData = new FormData();
-
-      formData.append('access_token', token);
-      formData.append('source', photoData);
-      formData.append('message', 'some status message');
-
-      let response = await fetch(`https://graph.facebook.com/249376455821855/photos`, {
-        body: formData,
-        method: 'post'
-      });
-      response = await response.json();
-      console.log(response);
-    };
-    fileReader.readAsArrayBuffer(f);
+  schedule(pageToken: string, content: string, time: string) {
+    const token = pageToken;
+    const message = content;
+    const scheudle_time = time;
+    FB.api(
+      `/me/feed`,
+      'POST',
+      {
+        access_token: token,
+        published: false,
+        message: message,
+        scheduled_publish_time: scheudle_time
+      },
+      function (response) {
+        console.log(response);
+        if (response && !response.error) {
+          /* handle the result */
+        }
+      }
+    );
   }
 
-  onSubmit(mess: string, img: string) {
+  onSubmit(content: string, image: string) {
 
-    this.post(mess, img);
+    // this.post(content);
+
+    this.contentService.connectToServer().subscribe(data => {
+      console.log(data);
+    });
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
@@ -388,4 +396,9 @@ export class EditPostComponent implements OnInit {
     });
   }
 
+  getAllCats() {
+    return this.contentService.getAllCats().subscribe(data => {
+      console.log(data);
+    });
+  }
 }

@@ -47,7 +47,7 @@
               Events
             </div>
 
-            <div *ngIf="eventsByDate.length == 0" >
+            <div *ngIf="eventsByDate.length == 0">
               nothing here
             </div>
 
@@ -57,7 +57,7 @@
                   <h4 mat-line>
                     <strong>{{event.clientName }} - {{event.created_time | date }} </strong>
                   </h4>
-                  <p mat-line> {{ (event.message.length) > 20?  (event.message | slice:0:50) + '...' : (event.message)}}</p>
+                  <p mat-line> {{ (event.message.length) > 20? (event.message | slice:0:50) + '...' : (event.message)}}</p>
                 </mat-list-item>
               </mat-list>
             </div>
@@ -189,13 +189,13 @@
 
       <div class="actions">
         <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-        <button mat-raised-button color="accent" (click)="onSubmit(content, base64textString[0])">Submit</button>
+        <button mat-raised-button color="accent" (click)="onSubmit(content)">Submit</button>
       </div>
     </mat-card>
 
   </mat-step>
 </mat-horizontal-stepper>
 
-<button (click)="post1($event)">
-  post 1
+<button (click)="getAllCats()">
+  Get all cats
 </button>

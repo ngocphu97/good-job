@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 
 declare var FB: any;
 
+export interface Cat {
+  name: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,5 +32,13 @@ export class ContentService {
 
   getClientPostByClientDate(date: string): Observable<any> {
     return this.http.get(`http://localhost:3000/client_post?date=${date}`);
+  }
+
+  connectToServer(): Observable<any> {
+    return this.http.get('http://localhost:3000/');
+  }
+
+  getAllCats(): Observable<any> {
+    return this.http.get('http://localhost:3000/api/cats');
   }
 }

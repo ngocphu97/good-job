@@ -4,13 +4,15 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
+import { SharedModule } from '@app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
+
 import * as fromStore from './store';
 import { services } from './services';
 import { components } from './components';
 import { containers } from './containers';
 import { routes } from './posts.routing';
-import { SharedModule } from '@app/shared/shared.module';
-import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   imports: [

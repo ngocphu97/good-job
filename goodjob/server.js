@@ -1,30 +1,25 @@
-var express = require('express');
-var app = express();
-var fs = require("fs");
+const express = require('express');
+const app = express();
 
-var user = {
-   "user4" : {
-      "name" : "mohit",
-      "password" : "password4",
-      "profession" : "teacher",
-      "id": 4
-   }
+const cors = require('cors');
+
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
 }
 
-app.post('/addUser', function (req, res) {
-   // First read existing users.
-   fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-       data = JSON.parse( data );
-       data["user4"] = user["user4"];
-       console.log( data );
-       res.end( JSON.stringify(data));
-   });
-})
+app.use(cors(corsOptions));
 
-var server = app.listen(8081, function () {
-  
-  var host = server.address().address
-  var port = server.address().port
-  console.log("Example app listening at http://%s:%s", host, port)
+app.get('/', (req, res) => res.send('Hello World!'));
 
-})
+app.route('/api/cats').get((req, res) => {
+  res.send({
+    cats: [{
+      name: 'lilly'
+    }, {
+      name: 'lucy'
+    }]
+  });
+});
+
+app.listen(3000, () => console.log('Example app listening on port 3000!'));
