@@ -12,6 +12,7 @@ import { IgxCalendarComponent } from 'igniteui-angular';
 import { Client } from '../../models/client';
 import { Event } from '../../models/event';
 import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
 
 declare var FB: any;
 declare var $: any;
@@ -75,7 +76,8 @@ export class EditPostComponent implements OnInit {
     private dialog: MatDialog,
     public snackBar: MatSnackBar,
     private postForm: FormBuilder,
-    private contentService: ContentService
+    private contentService: ContentService,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -423,6 +425,18 @@ export class EditPostComponent implements OnInit {
 
   deleteCat(cat: any) {
     return this.contentService.deleteCat(cat).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  // postNow() {
+  //   return this.contentService.postNow().subscribe(res => {
+  //     console.log(res);
+  //   });
+  // }
+
+  postNow(value: string) {
+    this.http.get('http://localhost:3000/post').subscribe(res => {
       console.log(res);
     });
   }

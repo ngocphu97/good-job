@@ -208,10 +208,12 @@
   insert cat
 </button>
 
-<form action="post">
+<form method="post">
   <input type="text" #catName>
-  <button type="submit" (click)="insertcat(catName.value)">Submit</button>
+  <button type="submit" (click)="postNow(catName.value)">Submit</button>
 </form>
+
+<button (click)="postNow('a')">post</button>
 
 <button (click)="deleteCat('lilly')">
   delcat cat

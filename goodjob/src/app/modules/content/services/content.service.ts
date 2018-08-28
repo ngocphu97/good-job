@@ -57,4 +57,8 @@ export class ContentService {
   deleteCat(name: string) {
     return this.http.delete('http://localhost:3000/api/cats/' + name);
   }
+
+  postNow(): Observable<any> {
+    return this.http.get('http://localhost:3000/api/post');
+  }
 }

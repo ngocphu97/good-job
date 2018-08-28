@@ -1,10 +1,11 @@
 <div class="wrapper">
 
   <div class="calendar">
-    <article class="sample-column calendar-wrapper">
+    <!-- <article class="sample-column calendar-wrapper">
       <igx-calendar #calendar (onSelection)="getEvents($event)">
       </igx-calendar>
-    </article>
+    </article> -->
+
   </div>
 
   <div class="event">
@@ -27,7 +28,7 @@
             {{ (event.post.length>20)? (event.post | slice:0:50) + '...' : (event.post) }}
           </div>
           <div mat-line>
-              <img src="{{event.image}}" class="post-img" alt=""> 
+            <img src="{{event.image}}" class="post-img" alt="">
           </div>
         </mat-list-item>
       </mat-list>
