@@ -199,3 +199,20 @@
 <button (click)="getAllCats()">
   Get all cats
 </button>
+
+<button (click)="getCatByName('lilly')">
+  Get cat
+</button>
+
+<button (click)="insertcat('con men map')">
+  insert cat
+</button>
+
+<form action="post">
+  <input type="text" #catName>
+  <button type="submit" (click)="insertcat(catName.value)">Submit</button>
+</form>
+
+<button (click)="deleteCat('lilly')">
+  delcat cat
+</button>

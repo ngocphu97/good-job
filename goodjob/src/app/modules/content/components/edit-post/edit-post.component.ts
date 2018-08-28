@@ -401,4 +401,29 @@ export class EditPostComponent implements OnInit {
       console.log(data);
     });
   }
+
+  getCatByName(name: string) {
+    return this.contentService.getCat(name).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  // insertCat(cat: any) {
+  //   return this.contentService.insertCat(cat).subscribe(res => {
+  //     console.log(res);
+  //   });
+  // }
+
+  insertcat(catName: string) {
+    const cat = {
+      name: catName
+    };
+    return this.contentService.insertCat(cat).subscribe(data => console.log(data));
+  }
+
+  deleteCat(cat: any) {
+    return this.contentService.deleteCat(cat).subscribe(res => {
+      console.log(res);
+    });
+  }
 }
