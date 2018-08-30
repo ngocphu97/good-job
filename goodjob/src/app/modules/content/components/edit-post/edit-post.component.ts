@@ -26,7 +26,6 @@ export class EditPostComponent implements OnInit {
 
   @ViewChild('calendar') public calendar: IgxCalendarComponent;
 
-  // remove user type
   clients: User[] = [];
 
   clientsSelected: Array<Client> = [];
@@ -77,7 +76,6 @@ export class EditPostComponent implements OnInit {
     public snackBar: MatSnackBar,
     private postForm: FormBuilder,
     private contentService: ContentService,
-    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -91,8 +89,6 @@ export class EditPostComponent implements OnInit {
     this.thirdFormGroup = this.postForm.group({
       postControl: ['', []]
     });
-
-    this.schedule(this.access_token, 'test thoi gian: Saturday, August 25, 2018 10:38:28 PM GMT+07:00', '1535211508');
   }
 
   checkClient(clients) {
@@ -257,7 +253,6 @@ export class EditPostComponent implements OnInit {
     );
   }
 
-
   createAlbum(albumName: string): any {
     // tslint:disable-next-line:max-line-length
     const token = 'EAAFiVT3Gv5EBAKaLaKa9KtcmIAcaNWZAqZCveFM7LdM6tH5LBWJqqJ9Y4e3HeUmQRyMzAWIb9gMiVm6lSPNiDzHkOBH0VQge8VtSBLLFgNSxrZBXf6kjY6Hyw24LDeOUjFUfSA8Njg5ppfY9ZBNXcDPQSKQSzwcnZA22l3urbWvCVmnYGqwaLFS1LrcKHnYi2dVbjkBPizetUyvMNqOyc';
@@ -323,38 +318,6 @@ export class EditPostComponent implements OnInit {
     );
   }
 
-  postMultiPhoto() {
-    const token = this.access_token;
-    const imgs = [
-      {
-        url: 'http://d24w6bsrhbeh9d.cloudfront.net/photo/agydwb6_460s.jpg',
-        published: false
-      },
-      {
-        url: 'https://i.stack.imgur.com/3J699.jpg',
-        published: false
-      },
-      {
-        url: 'https://cdn.techgyd.com/25-Labs-Facebook-Multiple-Group-Poster.png',
-        published: false
-      }
-    ];
-
-    const result = FB.api(`/me/photos`, 'POST', {
-      // tslint:disable-next-line:max-line-length
-      access_token: token,
-    }, function (response) {
-      console.log(response);
-      if (response && !response.error) {
-        /* handle the result */
-      }
-    }
-    );
-
-    const multiPhotoId = result.getDecodedBody();
-
-  }
-
   schedule(pageToken: string, content: string, time: string) {
     const token = pageToken;
     const message = content;
@@ -378,9 +341,6 @@ export class EditPostComponent implements OnInit {
   }
 
   onSubmit(content: string, image: string) {
-
-    // this.post(content);
-
     this.contentService.connectToServer().subscribe(data => {
       console.log(data);
     });
@@ -398,46 +358,4 @@ export class EditPostComponent implements OnInit {
     });
   }
 
-  getAllCats() {
-    return this.contentService.getAllCats().subscribe(data => {
-      console.log(data);
-    });
-  }
-
-  getCatByName(name: string) {
-    return this.contentService.getCat(name).subscribe(data => {
-      console.log(data);
-    });
-  }
-
-  // insertCat(cat: any) {
-  //   return this.contentService.insertCat(cat).subscribe(res => {
-  //     console.log(res);
-  //   });
-  // }
-
-  insertcat(catName: string) {
-    const cat = {
-      name: catName
-    };
-    return this.contentService.insertCat(cat).subscribe(data => console.log(data));
-  }
-
-  deleteCat(cat: any) {
-    return this.contentService.deleteCat(cat).subscribe(res => {
-      console.log(res);
-    });
-  }
-
-  // postNow() {
-  //   return this.contentService.postNow().subscribe(res => {
-  //     console.log(res);
-  //   });
-  // }
-
-  postNow(value: string) {
-    this.http.get('http://localhost:3000/post').subscribe(res => {
-      console.log(res);
-    });
-  }
 }

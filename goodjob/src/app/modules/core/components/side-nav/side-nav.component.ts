@@ -25,7 +25,6 @@ export class SideNavComponent implements OnInit {
   constructor(private navigateService: NavigateService) { }
 
   ngOnInit() {
-    this.getUsers();
     this.getInfo();
   }
 
@@ -44,7 +43,7 @@ export class SideNavComponent implements OnInit {
     FB.api(`/me`, 'GET',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBAL3NSJRr7lCfdNM3urmR7lFU8BoMm14hIPSOhVDABDGDEQuNY2e0ScdohRdYVD16iXYctSZAS8n7iM23kFARfjMenOURGi2oL7CW4evFOMzTp8Gxl98ytM2JODYOdlTrRZAOl9aGM00OcbppSvC5TTAHNg1M2MU7Y3Rg6RobLIWapzU1IZC9bFjf9d3m993FqoObWuy5L9druTJXskZD',
+        access_token: 'EAAFiVT3Gv5EBABJlMIPM5XqDNbY5YPAb0A47BAijWdUht4ggx78EPmGPST5LXVl6wZC4JhiviSTXkvlbzAzIwSK1AhWGHeu0yJf7vQGbk4ZBKwFkGM9o6w48ZAKcxIosHPSDwnP9nWrRZBx402PBxtAmOX2ZBoRRGCZCNF3n7QDI89U2LTSVXEFbZAhKjOpuZB0ZD',
         fields: 'accounts{name, photos.width(150).height(150){picture}}'
       }, (response) => {
         const length = response.accounts.data.length;
