@@ -1,0 +1,44 @@
+<!-- <h1>
+  Sign in
+</h1>
+
+
+<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false"
+  data-auto-logout-link="false" data-use-continue-as="false" (click)="loginWithFb()"></div>
+
+
+<div *ngIf="connectAccount.length > 0">
+  <ul>
+    <li *ngFor="let account of connectAccount">
+      <button>
+        <img src="{{account}}" alt="">
+      </button>
+    </li>
+  </ul>
+</div> -->
+
+<form #loginForm (ngSubmit)="login()">
+
+  <div class="inputGroup inputGroup1">
+    <label for="email1">Email</label>
+    <input type="text" id="email" name="email" [(ngModel)]="email" class="email" maxlength="256" required />
+    <span class="indicator"></span>
+  </div>
+  <div class="inputGroup inputGroup2">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" [(ngModel)]="password" class="password" required />
+  </div>
+  <div class="inputGroup inputGroup3">
+    <button id="login" type="submit" [disabled]="loginForm.invalid">Log in</button>
+  </div>
+
+  <span>-------------</span>
+  <br>
+</form>
+
+
+<button (click)="loginWithFb()"> Login with fb </button>
+
+<button (click)="logoutWithFb()">Log out</button>
+<button (click)="route()">route</button>
+

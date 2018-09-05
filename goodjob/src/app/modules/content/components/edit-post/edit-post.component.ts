@@ -139,68 +139,6 @@ export class EditPostComponent implements OnInit {
     });
   }
 
-  onSelectedDate(event: any) {
-    this.currentDateTime = event.value;
-  }
-
-  onRevert() {
-    this.snackBar.open(`Revert time to ${this.exportTime24.hour}:${this.exportTime24.minute} ${this.exportTime24.meriden}`, null, {
-      duration: 500,
-    });
-  }
-
-  onSubmitTime(time: any) {
-    this.snackBar.open(`Saved time ${this.exportTime.hour}:${this.exportTime.minute} ${this.exportTime.meriden}`, null, {
-      duration: 500,
-    });
-
-    if (this.exportTime.meriden === 'PM') {
-      this.selectedDateTime.setHours(this.exportTime.hour + 12);
-    } else {
-      this.selectedDateTime.setHours(this.exportTime.hour);
-    }
-
-    this.selectedDateTime.setMinutes(this.exportTime.minute);
-    this.selectedDateTime.setSeconds(0);
-  }
-
-  getEventsByDate(date: string) {
-    const dateConvert = date.toString().substring(0, 15);
-    const result = this.events.filter(e =>
-      (e.created_time.indexOf(dateConvert) > -1 && e.message.length !== 0));
-
-    if (this.eventsByDate.length > 0) {
-      this.eventsByDate = [];
-      result.forEach(ele => {
-        this.eventsByDate.push(ele);
-      });
-    } else {
-      result.forEach(ele => {
-        this.eventsByDate.push(ele);
-      });
-    }
-    console.log(this.eventsByDate);
-  }
-
-  // getEventsByMonth(date: string) {
-  //   // substring to month and year to find feed in that month
-  //   const dateConvert = date.toString().substring(0, 15);
-  //   const result = this.events.filter(e =>
-  //     (e.created_time.indexOf(dateConvert) > -1 && e.message.length !== 0));
-
-  //   if (this.eventsByMonth.length > 0) {
-  //     this.eventsByDate = [];
-  //     result.forEach(ele => {
-  //       this.eventsByMonth.push(ele);
-  //     });
-  //   } else {
-  //     result.forEach(ele => {
-  //       this.eventsByMonth.push(ele);
-  //     });
-  //   }
-  //   console.log(this.eventsByMonth);
-  // }
-
   getInfo() {
     const token = this.access_token;
     const array = this.connectAccount;
@@ -235,7 +173,7 @@ export class EditPostComponent implements OnInit {
             if (client.feed[j].story == null) {
               client.feed[j].story = '';
             }
-            const converDateTime = new Date(client.feed[j].created_time).toString();
+            const converDateTime = new Date(client.feed[j].created_time);
             const event: Event = {
               id: client.feed[j].id,
               clientName: data,
@@ -341,9 +279,6 @@ export class EditPostComponent implements OnInit {
   }
 
   onSubmit(content: string, image: string) {
-    this.contentService.connectToServer().subscribe(data => {
-      console.log(data);
-    });
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',

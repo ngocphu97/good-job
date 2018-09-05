@@ -103,10 +103,7 @@
 <br>
 
 <h3>
-  Edit events
-  <button class="btn btn-primary pull-right" (click)="addEvent()">
-    Add new
-  </button>
+  Preview events
   <div class="clearfix"></div>
 </h3>
 
@@ -114,10 +111,10 @@
 
   <thead>
     <tr>
-      <th>Title</th>
+      <th>Thumbnail</th>
       <th>Starts at</th>
-      <th>Ends at</th>
-      <th>Remove</th>
+      <th>Messgage</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -127,15 +124,10 @@
         <img src="{{event.thumbnail}}" alt="">
       </td>
       <td>
-        <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()">
+        <input type="text" class="form-control" [(ngModel)]="event.start" (keyup)="refresh.next()">
       </td>
       <td>
-        <input class="form-control" type="text" [(ngModel)]="event.start" (ngModelChange)="refresh.next()" dateFormat="Y-m-dTH:i"
-          altFormat="F j, Y H:i" placeholder="Not set">
-      </td>
-      <td>
-        <input class="form-control" type="text" [(ngModel)]="event.end" (ngModelChange)="refresh.next()" dateFormat="Y-m-dTH:i"
-          altFormat="F j, Y H:i" placeholder="Not set">
+        <p>{{event.message}}</p>
       </td>
       <td>
         <button class="btn btn-danger" (click)="events.splice(index, 1); refresh.next()">

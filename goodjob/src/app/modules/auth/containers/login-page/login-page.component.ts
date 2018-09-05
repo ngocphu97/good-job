@@ -18,7 +18,6 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit() {
     this.init();
-    // this.loginWithFb();
   }
 
   init() {
@@ -31,17 +30,19 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginWithFb() {
+    const router = this.router;
     FB.login(function (response) {
-      console.log(response.data.url);
+      console.log(response);
       if (response.authResponse) {
         console.log('Welcome! Fetching your information.... ');
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
+      router.navigate(['/content']);
     });
   }
 
-  logout() {
+  logoutWithFb() {
     FB.logout(function (response) {
       console.log(response);
     });

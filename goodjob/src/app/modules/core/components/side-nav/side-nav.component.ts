@@ -43,7 +43,7 @@ export class SideNavComponent implements OnInit {
     FB.api(`/me`, 'GET',
       {
         // tslint:disable-next-line:max-line-length
-        access_token: 'EAAFiVT3Gv5EBABJlMIPM5XqDNbY5YPAb0A47BAijWdUht4ggx78EPmGPST5LXVl6wZC4JhiviSTXkvlbzAzIwSK1AhWGHeu0yJf7vQGbk4ZBKwFkGM9o6w48ZAKcxIosHPSDwnP9nWrRZBx402PBxtAmOX2ZBoRRGCZCNF3n7QDI89U2LTSVXEFbZAhKjOpuZB0ZD',
+        access_token: 'EAAFiVT3Gv5EBAMIYu3aXWggN4xUxLl1ZA3k1ssUNJfh0dzMytkohzgMXdHl4VkLW4ZAO23WZA30YK0flKcUevSvNru6Y4FnQn2hnbpe3mWELUZCDcX8exLZCO6y6UQPNNbOt0R9NUnhtZAXgZAhiXOxlZAbb3CmsZA0AXkhpUvuqUTJ7qswx3P8kgCTUBTWZBs68MZD',
         fields: 'accounts{name, photos.width(150).height(150){picture}}'
       }, (response) => {
         const length = response.accounts.data.length;

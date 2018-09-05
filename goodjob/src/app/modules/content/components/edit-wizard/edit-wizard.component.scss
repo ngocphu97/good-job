@@ -1,0 +1,87 @@
+.group-card {
+  max-width: 200px;
+  height: 250px;
+  border: 1px solid #000000;
+  padding: 0;
+}
+
+.card-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item {
+  width: 100%;
+  margin: 15px;
+}
+
+.client-avatar {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.group-client {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-field {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-img {
+  width: 33px;
+  height: 33px;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile:focus+label,
+.inputfile+label:hover {
+  cursor: pointer;
+}
+
+.img-preview {
+  width: 160px;
+  height: 160px;
+}
+
+.img-preview-delete {
+  width: 160px;
+  height: 40px;
+  top: 112px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.5;
+  position: absolute;
+}
+
+.img-preview-delete:hover {
+  cursor: pointer;
+  opacity: 1;
+}

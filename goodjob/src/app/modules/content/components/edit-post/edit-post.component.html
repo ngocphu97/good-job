@@ -1,9 +1,12 @@
+<!-- buoc 1: chon nhom -->
+<!-- buoc 2: nhap noi dung -->
+
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <!-- First step: Choose client -->
   <mat-step [stepControl]="firstFormGroup">
     <mat-card>
       <form [formGroup]="firstFormGroup" enctype="multipart/form-data">
-        <ng-template matStepLabel>Select client(s)</ng-template>
+        <ng-template matStepLabel>SELECT GROUP</ng-template>
 
         <mat-selection-list #clientList formControlName="clientControl" [(ngModel)]="clientsSelected" required>
           <mat-list-option *ngFor="let client of connectAccount; let i of index" [selected]="client.selected" [value]="client">

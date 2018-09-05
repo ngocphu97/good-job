@@ -1,2 +1,6 @@
-export const components: Array<any> = [];
+import { LoginFormComponent } from './login-form/login-form.component';
+
+export const components: Array<any> = [
+    LoginFormComponent
+];
 

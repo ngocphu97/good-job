@@ -1,9 +1,14 @@
 import { EditPostComponent } from './edit-post/edit-post.component';
-import { CalendarComponent } from './calendar/calendar.component';
 import { DemoComponent } from './demo/demo.component';
+import { EditWizardComponent } from './edit-wizard/edit-wizard.component';
+import { StatusComponent } from './status/status.component';
+import { AddGroupFormComponent } from './add-group-form/add-group-form.component';
+
 
 export const components = [
     EditPostComponent,
-    CalendarComponent,
-    DemoComponent
+    DemoComponent,
+    EditWizardComponent,
+    StatusComponent,
+    AddGroupFormComponent
 ];

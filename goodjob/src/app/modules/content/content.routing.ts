@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { CreatePageComponent, SchedulePageComponent } from './containers';
+import { CreatePageComponent, SchedulePageComponent, StatusPageComponent } from './containers';
 
 export const routes: Routes = [
   {
@@ -9,6 +9,10 @@ export const routes: Routes = [
   {
     path: 'schedule',
     component: SchedulePageComponent
+  },
+  {
+    path: 'status',
+    component: StatusPageComponent
   }
 ];
 

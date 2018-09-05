@@ -1,0 +1,103 @@
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      All
+    </ng-template>
+
+    <ul>
+      <li *ngFor="let e of events">
+        <mat-card>
+          <img src="{{e.thumbnail}}" style="width: 75px"> <br>
+          <i>{{ e.clientName }} </i> <br>
+          <i>{{e.created_time}}</i> <br>
+          <i>{{ (e.message.length > 50)? (e.message | slice:0:50) + '...' : (e.message) }}</i>
+          <br>
+          <a href="{{e.link}}">Click here to go to post</a>
+
+          <mat-card-actions style="float: right">
+            <button mat-button>Delete</button>
+            <button mat-button>Repost</button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    </ul>
+
+    <button (click)="getFeed()">Get feed</button>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label style="color: green">
+      <i class="material-icons">
+        check_circle
+      </i>
+      Success
+    </ng-template>
+    <ul>
+      <li *ngFor="let e of eventsSuccess">
+        <mat-card>
+          <img src="{{e.thumbnail}}" style="width: 75px"> <br>
+          <i>{{ e.clientName }} </i> <br>
+          <i>{{e.created_time}}</i> <br>
+          <i>{{ (e.message.length > 50)? (e.message | slice:0:50) + '...' : (e.message) }}</i>
+          <br>
+          <a href="{{e.link}}">Click here to go to post</a>
+
+          <mat-card-actions style="float: right">
+            <button mat-button>Delete</button>
+            <button mat-button>Repost</button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    </ul>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label style="color: green">
+      <i class="material-icons">
+        schedule
+      </i>
+      Scheudle
+    </ng-template>
+    <ul>
+      <li *ngFor="let e of eventsSuccess">
+        <mat-card>
+          <img src="{{e.thumbnail}}" style="width: 75px"> <br>
+          <i>{{ e.clientName }} </i> <br>
+          <i>{{e.created_time}}</i> <br>
+          <p>{{ (e.message.length > 50)? (e.message | slice:0:50) + '...' : (e.message) }}</p>
+          <br>
+          <a href="{{e.link}}">Click here to go to post</a>
+
+          <mat-card-actions style="float: right;">
+            <button mat-button>Delete</button>
+            <button mat-button>Edit</button>
+            <button mat-button>Post now</button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    </ul>
+  </mat-tab>
+
+
+  <mat-tab label="Fails">
+    <ul>
+      <li *ngFor="let e of eventsFails">
+        <mat-card>
+          <img src="{{e.thumbnail}}" style="width: 75px"> <br>
+          <i>{{i}}: {{ e.clientName }} </i> <br>
+          <i>{{e.created_time}}</i> <br>
+          <i>{{ (e.message.length > 10)? (e.message | slice:0:10) + '...' : (e.message) }}</i>
+          <br>
+          <a href="{{e.link}}">Click here to go to post</a>
+          <mat-card-actions style="float: right;">
+            <button mat-button>Delete</button>
+            <button mat-button>Edit</button>
+            <button mat-button>Post now</button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    </ul>
+  </mat-tab>
+
+</mat-tab-group>

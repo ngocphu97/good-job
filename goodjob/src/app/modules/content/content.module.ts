@@ -18,6 +18,8 @@ import { routes } from './content.routing';
 import { containers } from './containers';
 import { components } from './components';
 
+import { AddGroupFormComponent } from './components/add-group-form/add-group-form.component';
+
 const config: InputFileConfig = {};
 
 @NgModule({
@@ -39,7 +41,10 @@ const config: InputFileConfig = {};
   ],
   declarations: [
     ...containers,
-    ...components,
+    ...components
+  ],
+  entryComponents: [
+    AddGroupFormComponent
   ],
   providers: [DatePipe]
 })
