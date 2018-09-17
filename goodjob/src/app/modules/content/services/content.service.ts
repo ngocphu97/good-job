@@ -24,7 +24,7 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAEQ2iz4ah9VOsj0k0FqqfaDEI4ZCphMME9nJdRnGWMrJbA1wiPEwrYWjW7CtFOW8IamWARwJVZB9ZBxnvduAaSMrj7ndhPXDqYZAxNjZBfrHdfM6QxIpYxkHtwlLyhE9aZAggvQwM2x1p4bOv3jY0cipuvovbTyZAywZAehJxjC6xgRYjlDiwZCkZD';
+  access_token = 'EAAFiVT3Gv5EBAEAgXQ7beKhUaemHrlV1KbeZCo7ZC0TSX7dTYAOGTLWeZCMhTa8tjqid6ZBXUUrPpTX4V9JcZAU9ARGJ5xyMgyYQt5WX9TAOZCRaswzQatFCslg7D3WFqPGfwh4enmfcp0Q1vP1Of5ZBJl40pqEdl2j0ZBCwidxGyLNsdoYUE1bwci3ImTpDjMEZD';
   connectAccount = [];
 
   colors: any = {
@@ -64,7 +64,7 @@ export class ContentService {
     return this.groups;
   }
 
-  getFeeds(): CalendarEvent[]  {
+  getFeeds(): CalendarEvent[] {
     const token = this.access_token;
     const eventColors = this.colors;
     const events = this.events;
@@ -173,6 +173,39 @@ export class ContentService {
       }
     );
     return connectAccount;
+  }
+
+  post() {
+    const token = this.access_token;
+    FB.api(`/me/photos`, 'POST',
+      {
+        access_token: token,
+      }, (response) => {
+        console.log(response);
+      }
+    );
+  }
+
+  postPhotoAlbum() {
+    const urls = [
+      'https://comps.canstockphoto.com/hello-drawing_csp0965504.jpg',
+      'https://i.ytimg.com/vi/rjsGDAScZTw/maxresdefault.jpg',
+      'https://i.ytimg.com/vi/Esl9RTOax84/maxresdefault.jpg',
+      'https://i.ytimg.com/vi/qdy_2GS4Yrs/hqdefault.jpg'
+    ];
+    const albumId = '304023537023813';
+
+    FB.api(`/${albumId}/photos`, 'POST',
+      {
+        url: '',
+        published: false
+      },
+      (response) => {
+        if (response && !response.error) {
+          console.log(response);
+        }
+      }
+    );
   }
 
 }

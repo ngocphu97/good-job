@@ -25,7 +25,7 @@ export class SideNavComponent implements OnInit {
   constructor(private navigateService: NavigateService) { }
 
   ngOnInit() {
-    this.getInfo();
+    // this.getInfo();
   }
 
   onSelect(user: User) {

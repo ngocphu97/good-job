@@ -20,6 +20,11 @@
   </div>
 </ng-template>
 
+<ng-template #custom let-weekEvent="weekEvent" let-tooltipPlacement="left">
+  
+</ng-template>
+
+
 <ng-template #customCellTemplate let-day="day">
   <div class="cal-cell-top">
     <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
@@ -93,7 +98,9 @@
     (eventTimesChanged)="eventTimesChanged($event)" [cellTemplate]="customCellTemplate">
   </mwl-calendar-month-view>
 
-  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events">
+  <mwl-calendar-week-view *ngSwitchCase="'week'" 
+
+  [viewDate]="viewDate" [events]="events">
   </mwl-calendar-week-view>
 
   <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events">
