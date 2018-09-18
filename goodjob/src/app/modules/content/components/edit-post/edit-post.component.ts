@@ -16,7 +16,7 @@ export class EditPostComponent implements OnInit {
     multiSelectedFile = [];
 
     // tslint:disable-next-line:max-line-length
-    GJ_access_token = 'EAAFiVT3Gv5EBAFxPnjPbLcVe0LMeiUqgPsrSrIra0TvK4rQoswrZAcWCH31YhNQV8s1XZB2w5MoJsS1QoVQ3fRtcQdAw99ooUKgNz7bdWszLjEFzeA0US7pdA6ymz8LZC1TuezwBtQ5xJHZAJvaOz6BeZCvZAHqt85l0NZAq6Q7Qf2AjmolpiGm5MVmSZAi1DsrI1czCb35lmwZDZD';
+    GJ_access_token = 'EAAFiVT3Gv5EBAM5gms7Lcj8okt9x2zRB1n1vXJtdXblZBjOZAXGcB78XKj8VNCWZBPUhNxhAFqZCy7qXiEE51grEwtro55W8n9UpUwCnJ3L2DdKQDcseXukw00HtU9jvoeE9K5GVYKGMPSiDv349k9gzPH9slnLsuk95uT2mgLkeMwWLZCPFAut0sEhnlZBdIZD';
 
     constructor(private http: HttpClient, private service: ContentService) {
     }
@@ -61,7 +61,6 @@ export class EditPostComponent implements OnInit {
             this.multiSelectedFile.push(file);
             console.log(this.multiSelectedFile.length);
         }
-        // console.log(this.multiSelectedFile);
     }
 
     onUploadMuiltiPhotos(message: string) {

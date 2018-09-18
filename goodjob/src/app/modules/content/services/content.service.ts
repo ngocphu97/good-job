@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
 
 import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent
+  CalendarEvent
 } from 'angular-calendar';
 
 import { Client } from '../models/client';
@@ -24,7 +20,7 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAIA2QKGw03nXSGkrb22IruUlMrjmlmhAfZBjbuh5F4efhQxvcDjRwt7HyHUhMYLRZApIwHIDDIoKrNG7JN6oKayP5X7LXV5WAlhz9J6OXLhxXGukGH5O7saZCAIGnYtVNI92UjPZCZAGexP3qVvVoZBVHiheKEsZCGlnze7jzhyRZCZCy1Jl2WVIZD';
+  access_token = 'EAAFiVT3Gv5EBAM5gms7Lcj8okt9x2zRB1n1vXJtdXblZBjOZAXGcB78XKj8VNCWZBPUhNxhAFqZCy7qXiEE51grEwtro55W8n9UpUwCnJ3L2DdKQDcseXukw00HtU9jvoeE9K5GVYKGMPSiDv349k9gzPH9slnLsuk95uT2mgLkeMwWLZCPFAut0sEhnlZBdIZD';
   connectAccount = [];
 
   colors: any = {
