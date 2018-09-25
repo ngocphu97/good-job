@@ -1,0 +1,12 @@
+The protocol has three different upload phases:
+
+Start - Initialize an upload session
+Transfer - Upload video chunks
+Finish - Post the video
+
+video publish endpoints:
+
+/{user-id}/videos
+/{event-id}/videos
+/{page-id}/videos
+/{group-id}/videos

@@ -20,7 +20,7 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAM5gms7Lcj8okt9x2zRB1n1vXJtdXblZBjOZAXGcB78XKj8VNCWZBPUhNxhAFqZCy7qXiEE51grEwtro55W8n9UpUwCnJ3L2DdKQDcseXukw00HtU9jvoeE9K5GVYKGMPSiDv349k9gzPH9slnLsuk95uT2mgLkeMwWLZCPFAut0sEhnlZBdIZD';
+  access_token = 'EAAFiVT3Gv5EBAAKpQIagynyUP4szxppvKZAoz6WWHXzusXwhmkTt7oRRqRtWMgxmvxsiCTvfYBgkBjr3TT1KpnTIUlfJwLdbk53dAQBU5zOF7mXQ3I3iqpGF3GvCwNPNWXY0RpNLZCNpPcg6iOE3QERcsROkFHksZADXkKCNeUqAnClv1jnTJ0cYjGEMtafO8A3nZAXqV3Y7Po8gxmAsnHGcbOnU7T8ZD';
   connectAccount = [];
 
   colors: any = {
@@ -171,37 +171,57 @@ export class ContentService {
     return connectAccount;
   }
 
-  post() {
-    const token = this.access_token;
-    FB.api(`/me/photos`, 'POST',
-      {
-        access_token: token,
-      }, (response) => {
-        console.log(response);
-      }
-    );
-  }
+  onUploadMuiltiPhotos(message: string, multiSelectedFile: any, pageToken: string) {
+    const files = multiSelectedFile;
+    const fbMediaId: any = [];
+    const lenght = multiSelectedFile.length;
+    files.forEach(file => {
+      const fileReader = new FileReader();
+      if (file) {
+        fileReader.onloadend = async () => {
+          const token = pageToken;
+          const photoData = new Blob([fileReader.result], { type: 'image/jpeg' });
+          const formData = new FormData();
+          const published = 'false';
 
-  postPhotoAlbum() {
-    const urls = [
-      'https://comps.canstockphoto.com/hello-drawing_csp0965504.jpg',
-      'https://i.ytimg.com/vi/rjsGDAScZTw/maxresdefault.jpg',
-      'https://i.ytimg.com/vi/Esl9RTOax84/maxresdefault.jpg',
-      'https://i.ytimg.com/vi/qdy_2GS4Yrs/hqdefault.jpg'
-    ];
-    const albumId = '304023537023813';
+          formData.append('access_token', token);
+          formData.append('source', photoData);
+          formData.append('message', 'status message');
+          formData.append('published', published);
 
-    FB.api(`/${albumId}/photos`, 'POST',
-      {
-        url: '',
-        published: false
-      },
-      (response) => {
-        if (response && !response.error) {
-          console.log(response);
-        }
+          let response: any = await fetch(`https://graph.facebook.com/249376455821855/photos`, {
+            body: formData,
+            method: 'POST',
+          });
+          response = await response.json();
+
+          fbMediaId.push({
+            media_fbid: response.id
+          });
+
+          if (fbMediaId.length === lenght) {
+            const mess = message;
+            FB.api(
+              '/me/feed',
+              'POST',
+              {
+                access_token: token,
+                message: mess,
+                attached_media: fbMediaId
+              },
+              (res) => {
+                console.log(res);
+                if (res && !res.error) { }
+                return res;
+              }
+            );
+          }
+
+        };
+
+        fileReader.readAsArrayBuffer(file);
       }
-    );
+    });
   }
 
 }

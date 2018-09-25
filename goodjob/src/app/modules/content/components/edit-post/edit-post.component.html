@@ -1,10 +1,34 @@
 <h1>hello</h1>
+
+<input type="file" (change)="video($event)"> upload file
+
+<!-- <input (change)="uploadVideoToFacebookUsingURL(event)" type="file">Upload video using url -->
+<!-- <input (change)="uploadVideoToFacebooFromFile($event)" type="file">Upload video from file -->
+
+<!-- <input type="file" (change)="innitalizeSession($event)" name="file" id="file" #fileUpload>
+
+<button (click)=finishSession(151951951)>upload</button>
+<button (click)="uploadVideoToFacebookUsingURL()">Upload video using url</button> -->
+
+<!-- <form enctype="multipart/form-data" method="post"">
+  <input type="file" name="files">
+  <input type="submit" value="Send">
+</form> -->
+
 <!-- 
 <form action="POST" enctype="multipart/form-data">
-  <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-  <button (click)="fileInput.click()">Select File</button>
-  <button (click)="onUploadOnePhotoFromLocal()">Upload!</button>
+  <input type="file" (change)="onVideoChange($event)" name="file" id="file">
 </form> -->
+
+<!-- <button (click)="innitalizeSession(fileUpload.value)">Upload</button> -->
+<!-- <div>
+  <ul>
+    <li *ngFor="let client of clients">
+      <img src="client.image" alt="" style="height: 30px;">
+      {{client.access_token}}
+    </li>
+  </ul>
+</div>
 
 <div class="input-image">
 
@@ -34,13 +58,4 @@
   ----------------------------------
   💌💌 Còn chần chừ gì mà không chọn quà Trung Thu ngay hôm nay với những gợi ý siêu hay ho tại đây http://bit.ly/Chọn-Quà-Trung-Thu-Tiki</textarea>
 
-<button (click)="onUploadMuiltiPhotos(message.value)">upload Multi photo</button>
-
-
-<!-- <button (click)="postSinglePhoto()">
-  Post single photo
-</button>
-
-<button (click)="postMultiPhotosUnpublish(image)">
-  Post multi photos unpublish
-</button> -->
+<button (click)="onUploadMuiltiPhotos(message.value)">upload Multi photo</button> -->
