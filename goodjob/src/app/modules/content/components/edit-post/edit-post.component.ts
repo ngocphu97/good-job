@@ -12,17 +12,13 @@ declare var FB: any;
 export class EditPostComponent implements OnInit {
 
     selectedFile = null;
-
     multiSelectedFile = [];
-
     clients: any = [];
 
-
     // tslint:disable-next-line:max-line-length
-    GJ_access_token = 'EAAFiVT3Gv5EBAAKGh8emBgXcRJhizaN7t5zoHdMD73IIRbnns91CS7Slmme9uvHG8lyxmxTh8lmn6ZCV7S2dRhI1dBzZAZBUkv3E0k9sZB983YZCdOG91zlaVvfMfIEZC3WMcKMOG3QtFt65cR5TOCtW58D15cqcHeO6eZCYYJnqaQBa94sZCucOmPyoZBJ2sKHcZD';
+    GJ_access_token = 'EAAFiVT3Gv5EBACmRc3ZB7ldw5QZC1aFOKmVgVTaPXu9VmARBkKGSB3EcfsR2mRkOnC22YjMi8wm6nvJqvqPgjPBcqYIVmZBR5f7bxRbwI8SwVmFOheH9U1d164QkrZAPm6ZA8iSHZAri22RQoeYyZCIK8L2KLKkgZCH61z1xIKyNTY9ofzHtYZABBTZCcJ6xsQyx3jcQQzpr006OW6D4tfPluH';
 
     constructor(private http: HttpClient, private service: ContentService) {
-
     }
 
     ngOnInit() {
@@ -67,7 +63,6 @@ export class EditPostComponent implements OnInit {
         const file = evt.target.files[0];
         if (file) {
             this.multiSelectedFile.push(file);
-            console.log(this.multiSelectedFile.length);
         }
     }
 
@@ -78,7 +73,6 @@ export class EditPostComponent implements OnInit {
     }
 
     onUploadMuiltiPhotos(message: string) {
-        console.log(this.multiSelectedFile);
         const files = this.multiSelectedFile;
         const fbMediaId: any = [];
         const lenght = this.multiSelectedFile.length;
@@ -93,7 +87,7 @@ export class EditPostComponent implements OnInit {
 
                     formData.append('access_token', token);
                     formData.append('source', photoData);
-                    formData.append('message', 'status message');
+                    formData.append('message', message);
                     formData.append('published', published);
 
                     let response: any = await fetch(`https://graph.facebook.com/249376455821855/photos`, {
@@ -131,90 +125,6 @@ export class EditPostComponent implements OnInit {
         });
     }
 
-    onVideoChange(event) {
-        const fileReader = new FileReader();
-        const videoFile = event.target.files[0];
-        // const path = videoFile.path;
-        console.log(videoFile);
-
-        // if (videoFile) {
-        //     fileReader.onloadend = async () => {
-        //         const token = this.GJ_access_token;
-        //         const formData = new FormData();
-        //         const videoname = videoFile.name;
-
-        //         formData.append('access_token', token);
-        //         formData.append('upload_phase', 'start');
-        //         formData.append('file_size', '152043520');
-
-        //         let response: any = await fetch(`https://graph-video.facebook.com/249376455821855/videos`, {
-        //             body: formData,
-        //             method: 'POST',
-        //         });
-
-        //         response = await response.json();
-
-        //         this.tranferSession(response, videoname);
-        //     };
-        //     fileReader.readAsArrayBuffer(videoFile);
-        // }
-    }
-
-
-    // innitalizeSession(event) {
-    //     const file = event.target.files[0];
-    //     const videoname = file.name;
-    //     const SIZE = file.size;
-    //     const token = this.GJ_access_token;
-
-    //     FB.api(`https://graph-video.facebook.com/249376455821855/videos`, 'POST',
-    //         {
-    //             access_token: token,
-    //             source: event
-    //         }, (response) => {
-    //             console.log(response);
-    //         }
-    //     );
-    // }
-    // tranferSession(file, videoname, upload_session_id) {
-    //     const session = this.blobFile(file);
-    //     const token = this.GJ_access_token;
-    //     console.log(session);
-
-    //     FB.api(`https://graph-video.facebook.com/249376455821855/videos`, 'POST',
-    //         {
-    //             access_token: token,
-    //             source: file
-    //         }, (response) => {
-    //             console.log(response);
-    //         }
-    //     );
-    // FB.api(`https://graph-video.facebook.com/249376455821855/videos`, 'POST',
-    //     {
-    //         access_token: token,
-    //         upload_phase: 'finish',
-    //         upload_session_id: upload_session_id
-    //     }, (res) => {
-    //         console.log(res);
-    //     }
-    // );
-
-    // }
-
-    // finishSession(id) {
-    //     const token = this.GJ_access_token;
-    //     FB.api(`https://graph-video.facebook.com/249376455821855/videos`, 'POST',
-    //         {
-    //             access_token: token,
-    //             upload_phase: 'finish',
-    //             upload_session_id: id
-    //         }, (response) => {
-    //             console.log(response);
-    //         }
-    //     );
-    //     console.log('finish');
-    // }
-
     uploadVideoToFacebookUsingURL() {
         const url = 'https://s20.onlinevideoconverter.com/download?file=d3e4e4b1i8i8f5d3';
         const token = this.GJ_access_token;
@@ -228,7 +138,6 @@ export class EditPostComponent implements OnInit {
             }
         );
     }
-
 
     video(event) {
         const file = event.target.files[0];
@@ -245,7 +154,7 @@ export class EditPostComponent implements OnInit {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://graph-video.facebook.com/v3.1/249376455821855/videos');
         xhr.send(formData);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 const res = xhr.response;
                 console.log(res);

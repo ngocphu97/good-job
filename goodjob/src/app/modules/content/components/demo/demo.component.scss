@@ -2,9 +2,13 @@
   cursor: pointer;
 }
 
-.my-custom-class {
-  color: #ffffff !important;
+// custom cell contain list of event
+
+// custom list contain tag a
+.my-custom-class a {
+  color: darkorange !important;
 }
+
 
 .event-custom {
   margin: 1px 0px;
@@ -12,6 +16,7 @@
   padding: 3px;
 }
 
-.element {
-  background-color: var(--main-bg-color);
+
+.img-custom {
+  width: 30px !important;
 }

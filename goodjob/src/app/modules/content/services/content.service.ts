@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {
-  CalendarEvent
+  CalendarEvent, CalendarEventAction
 } from 'angular-calendar';
 
 import { Client } from '../models/client';
@@ -20,7 +20,8 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAEaJnydUf8v1POb25GVfRtZCRuAdSX5fl3MpcCTfHTJqfM6QxU7NN7ZA0ZCfbGzgHPCqcolFXsAJbfY7wNHEedzaCoQlUmvUqZA8NfrRDSE5ZAZASjGMNWR3bBZAXdCZCmhTKQgPEwmVt1B0VLoQwz0yQbZC1LBlVfXDdmKeOGgE0iypZAj5ZCwHVsZD';
+  access_token = 'EAAFiVT3Gv5EBANUNHyikKCg1gUVrlgPlMaJgob0etGbYN6wknKJVFBE8WeqyThpjKx593vZCupRBcAuQrZAkZB4h2zIv7D1qJjmMhESfO9TmGxEuYBANzGnbI2GLsiNoCZCerYuhvn72EBKCo7jCqs9JE4tgNDULihNBiZCfTXbWS3uSJm6odwLgNYRpzB8F6B9TrZCYPrsEE3SPhJcA9cxpUMsBAlIOYZD';
+
   connectAccount = [];
 
   colors: any = {
@@ -37,6 +38,7 @@ export class ContentService {
       secondary: '#FDF1BA'
     }
   };
+
 
   constructor(private http: HttpClient) { }
 
@@ -75,11 +77,21 @@ export class ContentService {
         const length = response.accounts.data.length;
         for (let i = 0; i < length; i++) {
           const id = response.accounts.data[i].id;
+
+          // page logo
           const photo = response.accounts.data[i].photos;
           const avatar = photo.data[0].picture;
+
+          // page name
           const data = response.accounts.data[i].name;
+
+          // page access_token
           const access_token = response.accounts.data[i].access_token;
+
+          // page feeds
           const feed = response.accounts.data[i].feed;
+
+
           const client: Client = {
             id: id,
             name: data,
@@ -89,11 +101,11 @@ export class ContentService {
           };
 
           for (let j = 0; j < client.feed.length; j++) {
-            let t = '';
+            let thumb = '';
             for (let k = 0; k < feed.data.length; k++) {
-              t = feed.data[k].picture;
-              if (t == null) {
-                t = '';
+              thumb = feed.data[k].picture;
+              if (thumb == null) {
+                thumb = '';
               }
             }
             if (client.feed[j].message == null) {
@@ -122,7 +134,12 @@ export class ContentService {
               clientName: data,
               is_published: client.feed[j].is_published,
               link: client.feed[j].link,
-              thumbnail: t,
+              thumbnail: feed.data[j].picture,
+              actions: [{
+                label: `<img class="img-custom" src='${feed.data[j].picture}' style='width:30px'/>`,
+                onClick: ({ }: { event: CalendarEvent }): void => {
+                }
+              }]
             };
             events.push(event);
           }

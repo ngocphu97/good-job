@@ -41,7 +41,7 @@ const config: InputFileConfig = {};
   ],
   declarations: [
     ...containers,
-    ...components
+    ...components,
   ],
   entryComponents: [
     AddGroupFormComponent

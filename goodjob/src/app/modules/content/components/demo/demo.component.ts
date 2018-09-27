@@ -46,21 +46,6 @@ export class DemoComponent implements OnInit {
     action: string;
     event: CalendarEvent;
   };
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      }
-    }
-  ];
 
   constructor(private modal: NgbModal, private service: ContentService) { }
 
@@ -68,7 +53,11 @@ export class DemoComponent implements OnInit {
     this.getFeeds();
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  getFeeds() {
+    this.events = this.service.getFeeds();
+  }
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }) {
     if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;
       if (
@@ -80,14 +69,12 @@ export class DemoComponent implements OnInit {
         this.activeDayIsOpen = true;
       }
       this.clickedDate = date;
-      console.log(date);
       this.eventsFillter = this.events.filter(function (e) {
         return e.start.getDate() === date.getDate()
           && e.start.getMonth() === date.getMonth()
           && e.start.getFullYear() === date.getFullYear();
       });
-      console.log(this.events);
-      console.log(this.eventsFillter);
+      console.log(this.events[0].cssClass);
     }
   }
 
@@ -101,11 +88,6 @@ export class DemoComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-
-  getFeeds() {
-    this.events = this.service.getFeeds();
   }
 
 }

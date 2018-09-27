@@ -1,10 +1,33 @@
 <h1>hello</h1>
 
-<input type="file" (change)="video($event)"> upload file
+<div class="input-image">
+
+  <input type="file" (change)="onAccept($event)" accept=".png, .jpg, .jpeg, .pdf" name="file" id="file" multiple />
+
+  <label for="file">
+    <span>Add image</span>
+  </label>
+</div>
+
+<div *ngIf="multiSelectedFile.length > 0">
+  <ul>
+    <li *ngFor="let e of multiSelectedFile">
+      {{e.name}}
+    </li>
+  </ul>
+</div>
+
+<textarea name="" id="" cols="30" rows="10" #message>
+  </textarea>
+
+<button (click)="onUploadMuiltiPhotos(message.value)">upload Multi photo</button>
+
+
+<!-- <input type="file" (change)="video($event)"> upload file
 
 <button (click)="schedulePost()">schedule</button>
 <button (click)="editSchedulePost('249376455821855_2086875551345036')">edit schedule</button>
-<button (click)="getSchedulePost()">get</button>
+<button (click)="getSchedulePost()">get</button> -->
 
 <!-- <input (change)="uploadVideoToFacebookUsingURL(event)" type="file">Upload video using url -->
 <!-- <input (change)="uploadVideoToFacebooFromFile($event)" type="file">Upload video from file -->

@@ -19,6 +19,7 @@ import { routes } from './app.routing';
 import { CustomRouterStateSerializer, metaReducers, reducers } from '@app/core/store';
 
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ThumnailDirective } from './modules/content/directive/thumnail.directive';
 
 @NgModule({
   imports: [
@@ -77,7 +78,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     AuthModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    ThumnailDirective
   ],
   providers: [
     /**

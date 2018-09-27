@@ -18,6 +18,10 @@ export const routes: Routes = [
   },
   {
     path: 'test',
+    component: EditPostComponent
+  },
+  {
+    path: 'test1',
     component: DemoComponent
   }
 ];

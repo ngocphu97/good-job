@@ -1,3 +1,10 @@
+<div>
+  <a href="#">
+    <img style="width: 10px;" src="https://scontent.xx.fbcdn.net/v/t1.0-0/p130x130/39686722_2494926634166215_1798424002222358528_n.jpg?_nc_cat=102&oh=bc9138e57e93a8c9f566c4b2f746275b&oe=5C14DEC3"
+      alt="">
+  </a>
+</div>
+
 <!-- MODAL -->
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
@@ -90,22 +97,12 @@
 
 <div [ngSwitch]="view" class="calendar">
 
-  <mwl-calendar-month-view 
-      *ngSwitchCase="'month'" 
-      [viewDate]="viewDate" 
-      [events]="events" 
-      [refresh]="refresh"
-      [activeDayIsOpen]="activeDayIsOpen" 
-      (dayClicked)="dayClicked($event.day)" 
-      (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)" 
-      [cellTemplate]="customCellTemplate">
+  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)" [cellTemplate]="customCellTemplate">
   </mwl-calendar-month-view>
 
-  <mwl-calendar-week-view 
-      *ngSwitchCase="'week'" 
-      [viewDate]="viewDate" 
-      [events]="events">
+  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [ngStyle]="{'background-color':'green !important'}">
   </mwl-calendar-week-view>
 
 </div>
@@ -124,7 +121,6 @@
       <th>Thumbnail</th>
       <th>Starts at</th>
       <th>Messgage</th>
-      <th>Action</th>
     </tr>
   </thead>
 
@@ -138,11 +134,6 @@
       </td>
       <td>
         <p>{{event.message}}</p>
-      </td>
-      <td>
-        <button class="btn btn-danger" (click)="events.splice(index, 1); refresh.next()">
-          Delete
-        </button>
       </td>
     </tr>
   </tbody>
