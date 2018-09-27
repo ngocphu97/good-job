@@ -19,7 +19,7 @@ export class EditPostComponent implements OnInit {
 
 
     // tslint:disable-next-line:max-line-length
-    GJ_access_token = 'EAAFiVT3Gv5EBALed6ZCZCNuC6sm3zoSSkuHwYaj5QFP2OZADEootMzKOC4GCurtV5noVI6f3ysu0C7m47usf14PYvdUzggYzInIGXboE1ZCX2wQ8MMwvrlEBska0YjB4DqfYFTjwgSkUhcNH3gcb696Q3q6cDc9D1XDYUhO206S7Tk2euKmTTEQuhBYscZCZCXuaojEEsN1gZDZD';
+    GJ_access_token = 'EAAFiVT3Gv5EBAAKGh8emBgXcRJhizaN7t5zoHdMD73IIRbnns91CS7Slmme9uvHG8lyxmxTh8lmn6ZCV7S2dRhI1dBzZAZBUkv3E0k9sZB983YZCdOG91zlaVvfMfIEZC3WMcKMOG3QtFt65cR5TOCtW58D15cqcHeO6eZCYYJnqaQBa94sZCucOmPyoZBJ2sKHcZD';
 
     constructor(private http: HttpClient, private service: ContentService) {
 
@@ -229,120 +229,72 @@ export class EditPostComponent implements OnInit {
         );
     }
 
-    uploadVideoToFacebooFromFile(event) {
-        const file = event.target.files[0];
-        const token = this.GJ_access_token;
-        this.intall(file, token);
-    }
-
-    intall(file, token) {
-        const file_size = file.size;
-        const upload_phase = 'start';
-
-        FB.api(`https://graph-video.facebook.com/v3.1/249376455821855/videos`, 'POST',
-            {
-                access_token: token,
-                description: 'Upload video to facebook from file',
-                upload_phase: upload_phase,
-                file_size: file_size
-            }, (response) => {
-                console.log(response);
-                if (response.upload_session_id) {
-                    console.log('install done');
-                    this.transfer(file, response);
-                }
-            }
-        );
-    }
-
-    transfer(file, response: any) {
-        const token = this.GJ_access_token;
-        const upload_phase = 'transfer';
-        const bytes_per_chunk = response.end_offset;
-        const splitSession = this.blobFile(file, bytes_per_chunk);
-        const data = {
-            content_type: 'multipart/form-data',
-            start_offset: 0,
-            video_file_chunk: 0
-        };
-        const upload_session_id = response.upload_session_id;
-
-        const fileReader = new FileReader();
-
-        console.log(file.size);
-
-        if (file) {
-            fileReader.onloadend = async () => {
-                const videoData = new Blob(
-                    [fileReader.result],
-                    {
-                        type: 'multipart/form-data',
-                    }
-                );
-
-                const a = this.blobFile(videoData, response.end_offset);
-                console.log(a);
-                const formData = new FormData();
-
-                formData.append('access_token', token);
-                formData.append('data', a[2]);
-                formData.append('message', 'status message');
-                formData.append('upload_session_id', upload_session_id);
-                formData.append('start_offset', '0');
-                formData.append('upload_phase', upload_phase);
-
-                let r = await fetch(`https://graph-video.facebook.com/249376455821855/videos`, {
-                    body: formData,
-                    method: 'POST',
-                });
-
-                r = await r.json();
-                console.log(r);
-                console.log('transfer done');
-            };
-            fileReader.readAsArrayBuffer(file);
-        }
-
-    }
-
-    blobFile(file, bytes_per_chunk) {
-        const splitSession = [];
-        const blob = file;
-        const BYTES_PER_CHUNK = bytes_per_chunk;
-        const SIZE = blob.size;
-        let start = 0;
-        let end = 0;
-        while (start < SIZE) {
-            start = end;
-            end = start + BYTES_PER_CHUNK;
-            const slide = blob.slice(start, end, 'multipart/form-data');
-            splitSession.push(slide);
-        }
-        return splitSession;
-    }
-
-    finish() {
-        const upload_phase = 'finish';
-        console.log('finish');
-    }
 
     video(event) {
         const file = event.target.files[0];
+        const time = new Date('2018.09.28').getTime() / 1000;
         const formData = new FormData();
-        formData.append('myFile', file);
+
+        formData.append('my video', file);
         formData.append('Content-Type', 'multipart / form - data');
         formData.append('access_token', this.GJ_access_token);
-        formData.append('description', 'hello');
+        formData.append('description', 'Shedule post with video');
+        formData.append('published', 'false');
+        formData.append('scheduled_publish_time', time.toString());
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://graph-video.facebook.com/v3.1/249376455821855/videos');
         xhr.send(formData);
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
-                console.log(xhr.response);
+                const res = xhr.response;
+                console.log(res);
             }
         };
     }
 
+    schedulePost() {
+        const token = this.GJ_access_token;
+        FB.api(`https://graph.facebook.com/v3.1/me/feed`, 'POST',
+            {
+                access_token: token,
+                message: 'shedule post video ne',
+                published: false,
+                scheduled_publish_time: 'tomorrow',
+            }, (response) => {
+                console.log(response);
+            }
+        );
+    }
+
+    getSchedulePost() {
+        const token = this.GJ_access_token;
+        FB.api(
+            'me/scheduled_posts', 'GET',
+            {
+                access_token: token,
+            }, (response) => {
+                console.log('Schedule posts get from FB: ');
+                console.log(response);
+            }
+        );
+    }
+
+    editSchedulePost(postId) {
+        const token = this.GJ_access_token;
+        const id = postId;
+        const time = new Date('2018.10.30').getTime() / 1000;
+
+        FB.api(`https://graph.facebook.com/v3.1/${id}`, 'POST',
+            {
+                access_token: token,
+                published: false,
+                message: 'This one is edited 2',
+                scheduled_publish_time: time,
+            }, (response) => {
+                console.log(response);
+            }
+        );
+    }
 }
 

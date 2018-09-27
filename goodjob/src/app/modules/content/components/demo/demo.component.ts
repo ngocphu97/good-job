@@ -34,16 +34,18 @@ export class DemoComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   view = 'month';
-
   viewDate: Date = new Date();
-
   clickedDate: Date;
-
+  refresh: Subject<any> = new Subject();
+  events: CalendarEvent[] = [];
+  activeDayIsOpen = true;
+  eventsFromFB: Array<Event> = [];
+  eventsFillter: any = [];
+  connectAccount = new Array<Client>();
   modalData: {
     action: string;
     event: CalendarEvent;
   };
-
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fa fa-fw fa-pencil"></i>',
@@ -59,16 +61,6 @@ export class DemoComponent implements OnInit {
       }
     }
   ];
-
-  refresh: Subject<any> = new Subject();
-
-  events: CalendarEvent[] = [];
-
-  activeDayIsOpen = true;
-
-  eventsFromFB: Array<Event> = [];
-  eventsFillter: any = [];
-  connectAccount = new Array<Client>();
 
   constructor(private modal: NgbModal, private service: ContentService) { }
 
