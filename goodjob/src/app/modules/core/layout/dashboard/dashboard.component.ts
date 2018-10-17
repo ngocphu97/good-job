@@ -23,10 +23,4 @@ export class DashboardComponent implements OnInit {
     console.log(user);
   }
 
-  // getUsers() {
-  //   this.navigateService.getUsers().subscribe((data) => {
-  //     this.users = data;
-  //     console.log(this.users);
-  //   });
-  // }
 }

@@ -16,7 +16,7 @@ export class EditPostComponent implements OnInit {
     clients: any = [];
 
     // tslint:disable-next-line:max-line-length
-    GJ_access_token = 'EAAFiVT3Gv5EBACmRc3ZB7ldw5QZC1aFOKmVgVTaPXu9VmARBkKGSB3EcfsR2mRkOnC22YjMi8wm6nvJqvqPgjPBcqYIVmZBR5f7bxRbwI8SwVmFOheH9U1d164QkrZAPm6ZA8iSHZAri22RQoeYyZCIK8L2KLKkgZCH61z1xIKyNTY9ofzHtYZABBTZCcJ6xsQyx3jcQQzpr006OW6D4tfPluH';
+    GJ_access_token = 'EAAFiVT3Gv5EBAOA6WrZBud09aTGb6rbUqeZAPVo454CZAh9SJ2DAtlJZCNox7t96IZBIgyEMJCSoIXAJ05OiMZAwu3Iz9WN0QBcoHV2FuDHgXr62MTe4GcFI2RKy5qKVhZBmQrBRORRUHfXNNzezMshEoo4HqBpZBPkVl87Jc3fKZB0Gwj6iWXN9o2dQB5lZBfLhJrsYobYZC6vOgZDZD';
 
     constructor(private http: HttpClient, private service: ContentService) {
     }
@@ -151,13 +151,21 @@ export class EditPostComponent implements OnInit {
         formData.append('published', 'false');
         formData.append('scheduled_publish_time', time.toString());
 
+        const response: any = fetch(`https://graph-video.facebook.com/v3.1/249376455821855/videos`, {
+            body: formData,
+            method: 'POST',
+        });
+        response.then(res => {
+            console.log('res fetch', res);
+        });
+
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://graph-video.facebook.com/v3.1/249376455821855/videos');
         xhr.send(formData);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 const res = xhr.response;
-                console.log(res);
+                console.log('res xhr: ', res);
             }
         };
     }
@@ -204,6 +212,10 @@ export class EditPostComponent implements OnInit {
                 console.log(response);
             }
         );
+    }
+
+    logAn() {
+        FB.AppEvents.logPageView();
     }
 }
 

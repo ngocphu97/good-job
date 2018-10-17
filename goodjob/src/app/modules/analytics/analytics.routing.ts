@@ -3,7 +3,7 @@ import { AnalyticsPageComponent } from './containers/analytics-page/analytics-pa
 
 export const routes: Routes = [
   {
-    path: ':name',
+    path: 'test',
     component: AnalyticsPageComponent
   }
 ];
