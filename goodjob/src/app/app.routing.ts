@@ -19,7 +19,7 @@ export const routes: Routes = [
         loadChildren: 'app/modules/content/content.module#ContentModule'
       },
       {
-        path: 'analytics',
+        path: 'thong_ke',
         loadChildren: 'app/modules/analytics/analytics.module#AnalyticsModule'
       },
     ]

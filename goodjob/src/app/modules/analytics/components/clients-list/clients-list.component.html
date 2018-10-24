@@ -1,141 +1,73 @@
-<div class="total">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-subtitle>
-        {{ 'total impressions' | uppercase }}
-      </mat-card-subtitle>
-      <mat-card-title>
-        <h1>7.2K</h1>
-      </mat-card-title>
-    </mat-card-header>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-subtitle>
-        {{ 'total engagement' | uppercase }}
-      </mat-card-subtitle>
-      <mat-card-title>
-        <h1>477</h1>
-      </mat-card-title>
-    </mat-card-header>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-subtitle>
-        {{ 'total clicks' | uppercase }}
-      </mat-card-subtitle>
-      <mat-card-title>
-        <h1>179</h1>
-      </mat-card-title>
-    </mat-card-header>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-subtitle>
-        {{ 'avg. paid reach' | uppercase }}
-      </mat-card-subtitle>
-      <mat-card-title>
-        <h1>0</h1>
-      </mat-card-title>
-    </mat-card-header>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-subtitle>
-        {{ 'avg. organic reach' | uppercase }}
-      </mat-card-subtitle>
-      <mat-card-title>
-        <h1>180.9</h1>
-      </mat-card-title>
-    </mat-card-header>
-  </mat-card>
-</div>
+<table mat-table [dataSource]="dataSource_post" class="mat-elevation-z8">
 
-<form>
-  <mat-form-field style="width: 100%;">
-    <input matInput (keyup)="applyFilter($event.target.value)" [formControl]="myControl" [matAutocomplete]="auto" placeholder="Filter">
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option.date}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
 
-<div class="mat-elevation-z8" id="client-posts">
+  postId: '',
+  thumbnail: '',
+  content: '',
+  reach: 0,
+  paidReach: 0,
+  organicReach: 0,
+  engagement: 0,
+  click: 0,
+  ctr: 0,
+  negative: 0
 
-  <table mat-table matSort [dataSource]="dataSource">
+  <!-- Position Column -->
+  <ng-container matColumnDef="postId">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.postId}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="Post ID">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="postId"> Post ID </th>
-      <td mat-footer-cell *matFooterCellDef></td>
-      <td mat-cell *matCellDef="let element">
-        {{element.postId}}
-      </td>
-    </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="thumbnail">
+    <th mat-header-cell *matHeaderCellDef> Thumbnail </th>
+    <td mat-cell *matCellDef="let element"> {{element.thumbnail}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="Post">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="date">Post</th>
-      <td mat-footer-cell *matFooterCellDef> Averages </td>
-      <td mat-cell *matCellDef="let element">
-        <small style="color: #8D98A9">{{element.date}}</small>
-        <br> {{ (element.post.length>20)? (element.post | slice:0:50) + '..' : (element.post) }}
-        <br>
-        <img src="{{element.image}}" alt="" class="post-img">
-        <!-- <button (click)="checkElement(element)" matButton>GO!</button> -->
-      </td>
-    </ng-container>
+  <!-- Weight Column -->
+  <ng-container matColumnDef="content">
+    <th mat-header-cell *matHeaderCellDef> Content </th>
+    <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+  </ng-container>
 
-    <!-- Impressions Column -->
-    <ng-container matColumnDef="Impressions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="impressions"> Impressions </th>
-      <td mat-footer-cell *matFooterCellDef> {{getTotalImpressions() | number: '1.2'}} </td>
-      <td mat-cell *matCellDef="let element">
-        <b> {{element.impressions}}</b>
-      </td>
-    </ng-container>
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="reach">
+    <th mat-header-cell *matHeaderCellDef> reach </th>
+    <td mat-cell *matCellDef="let element"> {{element.reach}} </td>
+  </ng-container>
 
-    <!-- Engagement Column -->
-    <ng-container matColumnDef="Engagement">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="engagement"> Engagement </th>
-      <td mat-footer-cell *matFooterCellDef> {{getTotalEngagement() | number: '1.2'}} </td>
-      <td mat-cell *matCellDef="let element">
-        <b>{{element.engagement}} -- 1 </b>
-      </td>
+  <ng-container matColumnDef="paidReach">
+    <th mat-header-cell *matHeaderCellDef> paidReach </th>
+    <td mat-cell *matCellDef="let element"> {{element.paidReach}} </td>
+  </ng-container>
 
-    </ng-container>
+  <ng-container matColumnDef="organicReach">
+    <th mat-header-cell *matHeaderCellDef> organicReach </th>
+    <td mat-cell *matCellDef="let element"> {{element.organicReach}} </td>
+  </ng-container>
 
-    <!-- Clicks Column -->
-    <ng-container matColumnDef="Clicks">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="clicks"> Clicks </th>
-      <td mat-footer-cell *matFooterCellDef> {{getTotalClicks() | number: '1.2'}} </td>
-      <td mat-cell *matCellDef="let element">
-        <b>{{element.clicks}}</b>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="engagement">
+    <th mat-header-cell *matHeaderCellDef> engagement </th>
+    <td mat-cell *matCellDef="let element"> {{element.engagement}} </td>
+  </ng-container>
 
-    <!-- Paid reach Column -->
-    <ng-container matColumnDef="Paid reach">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="paidReach"> Paid reach </th>
-      <td mat-footer-cell *matFooterCellDef> {{getTotalPaidReach() | number: '1.2'}} </td>
-      <td mat-cell *matCellDef="let element">
-        <b>{{element.paidReach}}</b>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="click">
+    <th mat-header-cell *matHeaderCellDef> click </th>
+    <td mat-cell *matCellDef="let element"> {{element.click}} </td>
+  </ng-container>
 
-    <!-- Organic reach Column -->
-    <ng-container matColumnDef="Organic reach">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="organicReach"> Organic reach </th>
-      <td mat-footer-cell *matFooterCellDef> {{getTotalOrganicReach() | number: '1.2'}} </td>
-      <td mat-cell *matCellDef="let element">
-        <b> {{element.organicReach}}</b>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="ctr">
+    <th mat-header-cell *matHeaderCellDef> ctr </th>
+    <td mat-cell *matCellDef="let element"> {{element.ctr}} </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr class="row-hover" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-  </table>
+  <ng-container matColumnDef="negative">
+    <th mat-header-cell *matHeaderCellDef> negative </th>
+    <td mat-cell *matCellDef="let element"> {{element.negative}} </td>
+  </ng-container>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -1,11 +1,150 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
-
-import { PeriodicElement } from '../../models/client.model';
 import { AnalyticsService } from '../../services/analytics.service';
+import { SourceFromFB } from '../../models/source';
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+// export interface SourceFromFB {
+//   postId: string;
+//   thumbnail: string;
+//   content: string;
+//   reach: number;
+//   paidReach: number;
+//   organicReach: number;
+//   engagement: number;
+//   click: number;
+//   ctr: number;
+//   negative: number;
+// }
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+];
+
+const source_from_FB: SourceFromFB[] = [
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+  {
+    postId: '1283761982376183713',
+    thumbnail: 'url()',
+    content: 'hello',
+    reach: 0,
+    paidReach: 0,
+    organicReach: 0,
+    engagement: 0,
+    click: 0,
+    ctr: 0,
+    negative: 0
+  },
+];
 
 @Component({
   selector: 'app-clients-list',
@@ -14,82 +153,17 @@ import { AnalyticsService } from '../../services/analytics.service';
 })
 export class ClientsListComponent implements OnInit {
 
-  client_post: Array<PeriodicElement>;
+  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  // tslint:disable-next-line:max-line-length
+  displayedColumns: string[] = ['postId', 'thumbnail' , 'content' , 'reach', 'paidReach', 'organicReach', 'engagement', 'click', 'ctr', 'negative'];
 
-  displayedColumns: string[] = [
-    'Post ID',
-    'Post',
-    'Impressions',
-    'Engagement',
-    'Clicks',
-    'Paid reach',
-    'Organic reach'
-  ];
-  dataSource = new MatTableDataSource<PeriodicElement>(this.client_post);
-
-  myControl = new FormControl();
-  options: PeriodicElement[] = this.client_post;
-  filteredOptions: Observable<any>;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  dataSource = ELEMENT_DATA;
+  dataSource_post = source_from_FB;
 
   constructor(private service: AnalyticsService) {
-    this.getClientPost();
-    console.log(this.dataSource);
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<PeriodicElement>(this.client_post);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
 
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith<string | PeriodicElement>(''),
-        map(value => typeof value === 'string' ? value : value.date),
-        map(date => date ? this._filter(date) : this.options.slice())
-      );
-  }
-
-  getClientPost() {
-    this.service.getClientPost().subscribe(data => {
-
-      this.client_post = data;
-      console.log(this.client_post);
-    });
-  }
-
-  private _filter(value: string): PeriodicElement[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.post.toLowerCase().includes(filterValue));
-  }
-
-  displayFn(date?: PeriodicElement): string | undefined {
-    return date ? date.date : undefined;
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  getTotalImpressions() {
-    return this.client_post.map(t => t.impressions).reduce((acc, value) => acc + value, 0);
-  }
-
-  getTotalEngagement() {
-    return this.client_post.map(t => t.engagement).reduce((acc, value) => acc + value, 0);
-  }
-
-  getTotalClicks() {
-    return this.client_post.map(t => t.clicks).reduce((acc, value) => acc + value, 0);
-  }
-
-  getTotalPaidReach() {
-    return this.client_post.map(t => t.paidReach).reduce((acc, value) => acc + value, 0);
-  }
-
-  getTotalOrganicReach() {
-    return this.client_post.map(t => t.organicReach).reduce((acc, value) => acc + value, 0);
   }
 }

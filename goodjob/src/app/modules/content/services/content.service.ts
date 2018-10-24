@@ -20,7 +20,7 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBANUNHyikKCg1gUVrlgPlMaJgob0etGbYN6wknKJVFBE8WeqyThpjKx593vZCupRBcAuQrZAkZB4h2zIv7D1qJjmMhESfO9TmGxEuYBANzGnbI2GLsiNoCZCerYuhvn72EBKCo7jCqs9JE4tgNDULihNBiZCfTXbWS3uSJm6odwLgNYRpzB8F6B9TrZCYPrsEE3SPhJcA9cxpUMsBAlIOYZD';
+  access_token = 'EAANQlAVxZBd4BAMfpIsAk4fYr5m9XON4tUp2xE02bqZAouNKNcCA2xWLfpsL5jaHzjCoDUaoIRIZBnx3XdICIMX9JqxLlNPJgyNfC73N70zgN9qBlFUMqz6AmUFHPZBbCDLMzvCVeIydBHQ5EdaFWVW75HV7wj7uYIXUZAEQJrzpKpIqlOgzZCctpEZBZA7H1cfu2ChrzepojR2yW9GQvvnOm5aWxBXpEYoZD';
 
   connectAccount = [];
 
@@ -90,7 +90,6 @@ export class ContentService {
 
           // page feeds
           const feed = response.accounts.data[i].feed;
-
 
           const client: Client = {
             id: id,
@@ -162,6 +161,7 @@ export class ContentService {
         access_token: token,
         fields: 'accounts{feed,access_token, name, photos.width(150).height(150){picture}}'
       }, (response) => {
+        console.log('response', response);
         const length = response.accounts.data.length;
         for (let i = 0; i < length; i++) {
           const id = response.accounts.data[i].id;
@@ -179,12 +179,14 @@ export class ContentService {
           };
           connectAccount.push(client);
         }
+
         console.log(this.connectAccount);
         if (response.error) {
           console.log(response.error);
         }
       }
     );
+
     return connectAccount;
   }
 
