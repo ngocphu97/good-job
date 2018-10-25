@@ -58,8 +58,10 @@ export class ClientsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getPostReach();
+    // this.service.getPostReach();
     // this.getFeeds();
+    // this.service.getEngagement();
+    this.service.getCTR();
   }
 
   getFeeds() {
