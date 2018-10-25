@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
 import { SourceFromFB } from '../../models/source';
+import { Feed } from '../../models/feed';
 
 export interface PeriodicElement {
   name: string;
@@ -8,19 +9,6 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
-
-// export interface SourceFromFB {
-//   postId: string;
-//   thumbnail: string;
-//   content: string;
-//   reach: number;
-//   paidReach: number;
-//   organicReach: number;
-//   engagement: number;
-//   click: number;
-//   ctr: number;
-//   negative: number;
-// }
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
@@ -47,103 +35,7 @@ const source_from_FB: SourceFromFB[] = [
     click: 0,
     ctr: 0,
     negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
-  {
-    postId: '1283761982376183713',
-    thumbnail: 'url()',
-    content: 'hello',
-    reach: 0,
-    paidReach: 0,
-    organicReach: 0,
-    engagement: 0,
-    click: 0,
-    ctr: 0,
-    negative: 0
-  },
+  }
 ];
 
 @Component({
@@ -155,15 +47,23 @@ export class ClientsListComponent implements OnInit {
 
   // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['postId', 'thumbnail' , 'content' , 'reach', 'paidReach', 'organicReach', 'engagement', 'click', 'ctr', 'negative'];
+  displayedColumns: string[] = ['postId', 'thumbnail', 'content', 'reach', 'paidReach', 'organicReach', 'engagement', 'click', 'ctr', 'negative'];
 
   dataSource = ELEMENT_DATA;
   dataSource_post = source_from_FB;
+
+  feeds: Feed[] = [];
 
   constructor(private service: AnalyticsService) {
   }
 
   ngOnInit() {
+    this.service.getPostReach();
+    // this.getFeeds();
+  }
 
+  getFeeds() {
+    this.feeds = this.service.getFeeds();
+    console.log('day la feed', this.feeds);
   }
 }
