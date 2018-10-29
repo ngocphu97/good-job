@@ -1,18 +1,4 @@
-<table mat-table [dataSource]="dataSource_post" class="mat-elevation-z8">
-
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-  postId: '',
-  thumbnail: '',
-  content: '',
-  reach: 0,
-  paidReach: 0,
-  organicReach: 0,
-  engagement: 0,
-  click: 0,
-  ctr: 0,
-  negative: 0
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Position Column -->
   <ng-container matColumnDef="postId">
@@ -71,3 +57,9 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<ul>
+  <li *ngFor="let ds of d">
+    {{ds.id}}
+  </li>
+</ul>

@@ -148,7 +148,6 @@ export class ContentService {
         }
       }
     );
-
     return events;
   }
 
