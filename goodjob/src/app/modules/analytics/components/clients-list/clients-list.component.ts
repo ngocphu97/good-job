@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { AnalyticsService } from '../../services/analytics.service';
+import { Observable } from 'rxjs';
+import { SourceFromFB } from '../../models/source';
 import { MatTableDataSource } from '@angular/material';
-
 
 @Component({
   selector: 'app-clients-list',
@@ -8,179 +10,28 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./clients-list.component.scss']
 })
 export class ClientsListComponent implements OnInit {
+
   displayedColumns: string[] = [
     'postId',
-    'thumbnail',
-    'content',
-    'reach',
-    'paidReach',
-    'organicReach',
-    'engagement',
-    'click',
-    'ctr',
-    'negative'
+    // 'thumbnail',
+    // 'content',
+    // 'reach',
+    // 'paidReach',
+    // 'organicReach',
+    // 'engagement',
+    // 'click',
+    // 'ctr',
+    // 'negative'
   ];
 
-  @Input() DATA;
+  @Input() data: Array<any>;
+  dataSource: MatTableDataSource<SourceFromFB>;
 
-  d = [
-    {
-      click: 0,
-      content: '😈',
-      ctr: 0,
-      engagement: 828,
-      negative: 0,
-      organicReach: 74,
-      paidReach: 9537,
-      postId: '1415019512144250_2045258492453679',
-      reach: 9611,
-      thumbnail: 'h'
-    },
-    {
-      click: 0,
-      content: '😈',
-      ctr: 0,
-      engagement: 828,
-      negative: 0,
-      organicReach: 74,
-      paidReach: 9537,
-      postId: '1415019512144250_2045258492453679',
-      reach: 9611,
-      thumbnail: 'h'
-    },
-    {
-      click: 0,
-      content: '😈',
-      ctr: 0,
-      engagement: 828,
-      negative: 0,
-      organicReach: 74,
-      paidReach: 9537,
-      postId: '1415019512144250_2045258492453679',
-      reach: 9611,
-      thumbnail: 'h'
-    },
-    {
-      click: 0,
-      content: '😈',
-      ctr: 0,
-      engagement: 828,
-      negative: 0,
-      organicReach: 74,
-      paidReach: 9537,
-      postId: '1415019512144250_2045258492453679',
-      reach: 9611,
-      thumbnail: 'h'
-    },
-    {
-      click: 0,
-      content: '😈',
-      ctr: 0,
-      engagement: 828,
-      negative: 0,
-      organicReach: 74,
-      paidReach: 9537,
-      postId: '1415019512144250_2045258492453679',
-      reach: 9611,
-      thumbnail: 'h'
-    },
-    {
-      click: 0,
-      content: '😈',
-      ctr: 0,
-      engagement: 828,
-      negative: 0,
-      organicReach: 74,
-      paidReach: 9537,
-      postId: '1415019512144250_2045258492453679',
-      reach: 9611,
-      thumbnail: 'h'
-    },
-  ];
-
-
-  constructor() {
-    const dataSource = new MatTableDataSource(this.d);
+  constructor(private service: AnalyticsService) {
   }
 
   ngOnInit() {
-    const d1 = [
-      {
-        click: 0,
-        content: '😈',
-        ctr: 0,
-        engagement: 828,
-        negative: 0,
-        organicReach: 74,
-        paidReach: 9537,
-        postId: '1415019512144250_2045258492453679',
-        reach: 9611,
-        thumbnail: 'h'
-      },
-      {
-        click: 0,
-        content: '😈',
-        ctr: 0,
-        engagement: 828,
-        negative: 0,
-        organicReach: 74,
-        paidReach: 9537,
-        postId: '1415019512144250_2045258492453679',
-        reach: 9611,
-        thumbnail: 'h'
-      },
-      {
-        click: 0,
-        content: '😈',
-        ctr: 0,
-        engagement: 828,
-        negative: 0,
-        organicReach: 74,
-        paidReach: 9537,
-        postId: '1415019512144250_2045258492453679',
-        reach: 9611,
-        thumbnail: 'h'
-      },
-      {
-        click: 0,
-        content: '😈',
-        ctr: 0,
-        engagement: 828,
-        negative: 0,
-        organicReach: 74,
-        paidReach: 9537,
-        postId: '1415019512144250_2045258492453679',
-        reach: 9611,
-        thumbnail: 'h'
-      },
-      {
-        click: 0,
-        content: '😈',
-        ctr: 0,
-        engagement: 828,
-        negative: 0,
-        organicReach: 74,
-        paidReach: 9537,
-        postId: '1415019512144250_2045258492453679',
-        reach: 9611,
-        thumbnail: 'h'
-      },
-      {
-        click: 0,
-        content: '😈',
-        ctr: 0,
-        engagement: 828,
-        negative: 0,
-        organicReach: 74,
-        paidReach: 9537,
-        postId: '1415019512144250_2045258492453679',
-        reach: 9611,
-        thumbnail: 'h'
-      },
-    ];
-    this.d = d1;
-
+    // this.dataSource = new MatTableDataSource<SourceFromFB>(this.data);
+    console.log('data - list', this.data);
   }
-
-
 }

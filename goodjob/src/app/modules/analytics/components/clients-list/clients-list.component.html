@@ -1,65 +1,25 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<!-- <div *ngIf="unconfDataSource.length > 0">
+  co data
+  <ul>
+    <li *ngFor="let i of unconfDataSource">
+      {{i.postId}} -- {{i.content}} -- {{i.reach}} -- {{i.paidReach}}
+      -- {{i.organicReach}} -- {{i.engagement}} -- {{i.click}} -- {{i.ctr}} -- {{i.negative}}
+    </li>
+  </ul>
+</div>
 
-  <!-- Position Column -->
+<div *ngIf="unconfDataSource.length === 0">
+  Nothing here
+</div> -->
+
+<table mat-table [dataSource]="data" class="mat-elevation-z8">
+
   <ng-container matColumnDef="postId">
     <th mat-header-cell *matHeaderCellDef> No. </th>
     <td mat-cell *matCellDef="let element"> {{element.postId}} </td>
   </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="thumbnail">
-    <th mat-header-cell *matHeaderCellDef> Thumbnail </th>
-    <td mat-cell *matCellDef="let element"> {{element.thumbnail}} </td>
-  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="content">
-    <th mat-header-cell *matHeaderCellDef> Content </th>
-    <td mat-cell *matCellDef="let element"> {{element.content}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="reach">
-    <th mat-header-cell *matHeaderCellDef> reach </th>
-    <td mat-cell *matCellDef="let element"> {{element.reach}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="paidReach">
-    <th mat-header-cell *matHeaderCellDef> paidReach </th>
-    <td mat-cell *matCellDef="let element"> {{element.paidReach}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="organicReach">
-    <th mat-header-cell *matHeaderCellDef> organicReach </th>
-    <td mat-cell *matCellDef="let element"> {{element.organicReach}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="engagement">
-    <th mat-header-cell *matHeaderCellDef> engagement </th>
-    <td mat-cell *matCellDef="let element"> {{element.engagement}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="click">
-    <th mat-header-cell *matHeaderCellDef> click </th>
-    <td mat-cell *matCellDef="let element"> {{element.click}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="ctr">
-    <th mat-header-cell *matHeaderCellDef> ctr </th>
-    <td mat-cell *matCellDef="let element"> {{element.ctr}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="negative">
-    <th mat-header-cell *matHeaderCellDef> negative </th>
-    <td mat-cell *matCellDef="let element"> {{element.negative}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
-<ul>
-  <li *ngFor="let ds of d">
-    {{ds.id}}
-  </li>
-</ul>

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { MatSort, MatTableDataSource } from '@angular/material';
+
 
 @Component({
   selector: 'app-analytics-page',
@@ -9,53 +11,71 @@ import { Observable } from 'rxjs';
 })
 export class AnalyticsPageComponent implements OnInit {
 
+  @ViewChild(MatSort) sort: MatSort;
+
   feeds = [];
+  feedsLength = 0;
+  DATA: Array<any> = [];
+  displayedColumns: string[] = [
+    // 'postId',
+    // 'thumbnail',
+    'content',
+    'reach',
+    'paidReach',
+    'organicReach',
+    'engagement',
+    'click',
+    // 'ctr',
+    'negative',
+    'impressions'
+  ];
+
+  temp = [];
+
+  feeds$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
+  dataSource: any;
 
   constructor(private service: AnalyticsService) {
   }
 
   ngOnInit() {
-    let DATA = [];
-    this.getFeed().subscribe(data => {
-      DATA = data;
-      console.log(DATA);
-    });
-  }
 
-  getFeed(): Observable<Array<any>> {
-    const D = [];
-    return new Observable((observer) => {
-      this.service.getFeedsObservable().subscribe((feeds) => {
-        this.feeds = feeds;
-        // console.log('Get feeds success', this.feeds[0]);
-        this.feeds.forEach(f => {
-          // console.log(f.id, f.picture, f.message);
-          this.service.getDataFromPostId(f.id).subscribe(e => {
-            // console.log('data', e);
-            const data = {
-              postId: f.id,
-              thumbnail: f.picture,
-              content: f.message,
-              reach: e.reach,
-              paidReach: e.paidReach,
-              organicReach: e.organicReach,
-              engagement: e.engagement,
-              click: e.click,
-              ctr: e.ctr,
-              negative: e.negative
-            };
-            // console.log('data', data);
-            D.push(data);
+    this.service
+      .getFeedsObservable()
+      .subscribe(
+        (feeds) => {
+          if (!feeds || feeds.length < 1) {
+            return;
+          }
+          feeds.forEach(f => {
+            this.service
+              .getDataFromPostId(f.id)
+              .subscribe(e => {
+                const d = {
+                  postId: f.id,
+                  thumbnail: f.picture,
+                  content: f.message,
+                  reach: e.reach,
+                  paidReach: e.paidReach,
+                  organicReach: e.organicReach,
+                  engagement: e.engagement,
+                  click: e.click,
+                  // ctr: e.ctr,
+                  negative: e.negative,
+                  impressions: e.impressions
+                };
+
+                this.temp.push(d);
+                this.feeds$.next(this.temp);
+              });
           });
-        });
-        observer.next(D);
-        observer.complete();
-      },
-        (error) => {
-          console.log('Get Feeds Error ', error);
         }
       );
-      console.log('this.DATA - page', D);
-    });
   }
+
+  applyFilter(filterValue: string) {
+    // this.feeds$.pipe(map())
+    console.log(this.feeds$);
+  }
+
 }

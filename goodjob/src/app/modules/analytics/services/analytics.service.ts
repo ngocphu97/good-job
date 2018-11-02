@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAKm4AKhBF7m8Alo5qhgmuHDjUrP9rbI9hRb4GZBXFBJqGANcN1svPQeB7hfDtAYe4UJZCa6e46ZBgBmwFGiaZCbz3xwGY1kQsEXjpIlsHgu126WZBgma2RUXufpIc9SK3AZAQ9vyua4Hd4G337VZA6H6SBHUExFWH0wrKElZA3mLZBAOKzgD11HP7ZAZCL6EYucwgZDZD';
+  access_token = 'EAANQlAVxZBd4BAPe39yLQ067b610ZCyXZADuLyOSMnzljfYOzKqXNHExkZCUjAkCnP8t6MK8e8Rjs3yyz4890LXdDcB0l0mjzjN5JLGCoVRB86nCvrqh8MFZAPyjQldIdN4kJnersGrntiRlMWlfHyNJxUA9LEIsJcIvZA1YgZCZB0XuQHakfKfvOaBaTHtL9lkHzXEIXZBGbCSOzHvZC533LbHvL0KxdxcVMZD';
 
   feeds: Feed[] = [];
 
@@ -37,8 +37,10 @@ export class AnalyticsService {
             if (feed.message === undefined) {
               feed.message = 'No messages';
             }
+            if (feed.thumnail === undefined) {
+              feed.message = 'No thumnail';
+            }
           });
-          // console.log(feeds);
           resolve(feeds);
         }
       );
@@ -55,7 +57,6 @@ export class AnalyticsService {
           fields: 'feed{id,link,message,created_time,is_published,picture.width(150).height(150)}'
         }, (response) => {
           if (response.error) {
-            // observable execution
             observer.error(response.error);
             observer.complete();
           }
@@ -66,11 +67,8 @@ export class AnalyticsService {
               feed.message = 'No messages';
             }
           });
-
-          // observable execution
           observer.next(feeds);
           observer.complete();
-          observer.unsubscribe();
         }
       );
     });
@@ -108,6 +106,7 @@ export class AnalyticsService {
 
   //   });
   // }
+
   getSharesComments(postId: string): Observable<Array<any>> {
     const token = this.access_token;
     const id = postId;
@@ -196,10 +195,7 @@ export class AnalyticsService {
             const value = response.insights.data[i].values[0].value;
             values.push(value);
             totalEngagement = totalEngagement + value;
-            // them vo day
           }
-          // console.log(values);
-          // console.log(totalEngagement);
           observer.next(totalEngagement);
           observer.complete();
           observer.unsubscribe();
@@ -265,18 +261,19 @@ export class AnalyticsService {
     let click = 0;
     let ctr = 0;
     let negative = 0;
+    let cmts = 0;
+    let shares = 0;
+    let impressions = 0;
 
     return new Observable((observer) => {
-      // làm quần gì đó
-
       FB.api(`/${id}`, 'GET',
         {
           access_token: token,
           // reach, paid_reach, reaction, negative
           // tslint:disable-next-line:max-line-length
-          fields: 'insights.metric(post_impressions_unique, post_impressions_paid_unique, post_reactions_like_total, post_reactions_love_total, post_reactions_wow_total, post_reactions_haha_total, post_reactions_sorry_total, post_reactions_anger_total, post_negative_feedback){title,values},shares,comments.summary(true).limit(0)'
+          fields: 'insights.metric(post_impressions_unique, post_impressions_paid_unique, post_reactions_like_total, post_reactions_love_total, post_reactions_wow_total, post_reactions_haha_total, post_reactions_sorry_total, post_reactions_anger_total, post_negative_feedback,post_engaged_users,post_impressions){title,values},shares,comments.summary(true).limit(0)'
         }, (response) => {
-          // console.log(response);
+          console.log(response);
 
           // post reach
           reach = response.insights.data[0].values[0].value;
@@ -292,14 +289,27 @@ export class AnalyticsService {
             totalReaction = totalReaction + response.insights.data[i].values[0].value;
           }
 
+          // cmt
+          cmts = response.comments.summary.total_count;
+
+          // share
+          if (response.shares === undefined) {
+            shares = 0;
+          } else {
+            shares = response.shares.count;
+          }
+
           // engagement
-          engagement = totalReaction;
+          engagement = totalReaction + cmts + shares;
 
           // click
-          click = 0;
+          click = response.insights.data[9].values[0].value;
+
+          // post_impressions
+          impressions = response.insights.data[10].values[0].value;
 
           // ctr
-          ctr = 0;
+          ctr = (click / impressions) * 100;
 
           // negative
           negative = response.insights.data[8].values[0].value;
@@ -312,6 +322,7 @@ export class AnalyticsService {
             click: click,
             ctr: ctr,
             negative: negative,
+            impressions: impressions
           };
 
           if (response.error) {
@@ -320,11 +331,9 @@ export class AnalyticsService {
 
           observer.next(dataFromFb);
           observer.complete();
-          observer.unsubscribe();
         }
       );
     });
   }
-
 
 }

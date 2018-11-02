@@ -1,19 +1,86 @@
 <mat-tab-group dynamicHeight>
+
+  <mat-tab label="Content">
+    <div class="example-large-box">
+
+
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+
+      <table mat-table [dataSource]="feeds$" class="mat-elevation-z8" matSort>
+
+        <ng-container matColumnDef="content">
+          <th mat-header-cell *matHeaderCellDef> Content </th>
+          <td class="td-custom" mat-cell *matCellDef="let element">
+            <img src="{{element.thumbnail}}" alt="" style="height: 50px; width: 50px">
+            <span>
+              {{ (element.content.length > 10)? (element.content | slice:0:50) + '...' : (element.content) }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reach">
+          <th mat-header-cell *matHeaderCellDef> reach </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.reach}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paidReach">
+          <th mat-header-cell *matHeaderCellDef> Paidreach </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.paidReach}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="organicReach">
+          <th mat-header-cell *matHeaderCellDef> organic </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.organicReach}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="engagement">
+          <th mat-header-cell *matHeaderCellDef> engagement </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.engagement}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="click">
+          <th mat-header-cell *matHeaderCellDef> click </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.click}} </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="ctr">
+          <th mat-header-cell *matHeaderCellDef> ctr </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.ctr}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="negative">
+          <th mat-header-cell *matHeaderCellDef> negative </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.negative}} </td>
+        </ng-container>
+        <ng-container matColumnDef="impressions">
+          <th mat-header-cell *matHeaderCellDef> impressions </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.impressions}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+      <div *ngIf="!feeds$">
+        Nothing here dude
+      </div>
+
+
+    </div>
+  </mat-tab>
+
   <mat-tab label="Scheudle">
     <div class="example-large-box">
       <app-calendar></app-calendar>
     </div>
   </mat-tab>
-  <mat-tab label="Content">
-    <div class="example-large-box">
-      <app-clients-list [DATA]="DATA"></app-clients-list>
-    </div>
-  </mat-tab>
+
   <mat-tab label="Global">
     <div class="example-large-box">
       <app-analytics-detail></app-analytics-detail>
     </div>
   </mat-tab>
 </mat-tab-group>
-
-<!-- <app-analytics-detail></app-analytics-detail> -->
