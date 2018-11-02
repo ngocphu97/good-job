@@ -39,7 +39,6 @@ export class AnalyticsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.service
       .getFeedsObservable()
       .subscribe(
