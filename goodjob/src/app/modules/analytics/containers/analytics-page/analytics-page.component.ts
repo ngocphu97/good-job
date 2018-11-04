@@ -20,6 +20,7 @@ export class AnalyticsPageComponent implements OnInit {
     // 'postId',
     // 'thumbnail',
     'content',
+    'time',
     'reach',
     'paidReach',
     'organicReach',
@@ -30,10 +31,21 @@ export class AnalyticsPageComponent implements OnInit {
     'impressions'
   ];
 
+  time = [
+    { value: 0, viewValue: 'None' },
+    { value: 7, viewValue: '7 Days' },
+    { value: 30, viewValue: '30 Days' },
+    { value: 90, viewValue: '90 Days' }
+  ];
+
+  selected = 0;
+
   temp = [];
 
   feeds$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-  dataSource: any;
+  // dataSource: any;
+  dataSource = new MatTableDataSource<any>();
+  dataFilter = [];
 
   constructor(private service: AnalyticsService) {
   }
@@ -54,6 +66,7 @@ export class AnalyticsPageComponent implements OnInit {
                   postId: f.id,
                   thumbnail: f.picture,
                   content: f.message,
+                  time: new Date(f.created_time),
                   reach: e.reach,
                   paidReach: e.paidReach,
                   organicReach: e.organicReach,
@@ -66,6 +79,9 @@ export class AnalyticsPageComponent implements OnInit {
 
                 this.temp.push(d);
                 this.feeds$.next(this.temp);
+                this.dataSource = new MatTableDataSource<any>(this.temp);
+                this.dataFilter = this.temp;
+                this.dataSource.sort = this.sort;
               });
           });
         }
@@ -73,8 +89,39 @@ export class AnalyticsPageComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    // this.feeds$.pipe(map())
-    console.log(this.feeds$);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  applyFilterDate(filterValue: any) {
+    this.dataSource.data = filterValue;
+  }
+
+  onSelectedTimeValue() {
+    const time = this.selected;
+    const data = this.dataFilter;
+    let temp = [];
+
+    if (time === 0) {
+      temp = data;
+      this.applyFilterDate(temp);
+    }
+
+    // day before
+    const startDate = new Date();
+    const pastDate = startDate.getDate() - time;
+    startDate.setDate(pastDate);
+
+    // today
+    const endDate = new Date();
+
+    data.forEach((d, i) => {
+      if (d.time.getTime() >= startDate.getTime()) {
+        console.log(i);
+        // console.log(d.time);
+        // console.log(d.content);
+        temp.push(d);
+      }
+    });
+    this.applyFilterDate(temp);
+  }
 }

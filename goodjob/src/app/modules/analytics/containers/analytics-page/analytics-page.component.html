@@ -8,10 +8,19 @@
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
       </mat-form-field>
 
-      <table mat-table [dataSource]="feeds$" class="mat-elevation-z8" matSort>
+      <h4>Chọn thời gian muốn xem</h4>
+      <mat-form-field>
+        <mat-select [(value)]="selected" (selectionChange)="onSelectedTimeValue($event.value)">
+          <mat-option *ngFor="let t of time" [value]="t.value">
+            {{t.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
         <ng-container matColumnDef="content">
-          <th mat-header-cell *matHeaderCellDef> Content </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Content </th>
           <td class="td-custom" mat-cell *matCellDef="let element">
             <img src="{{element.thumbnail}}" alt="" style="height: 50px; width: 50px">
             <span>
@@ -20,28 +29,33 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> time </th>
+          <td class="td-custom" mat-cell *matCellDef="let element"> {{element.time | date:'medium' }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="reach">
-          <th mat-header-cell *matHeaderCellDef> reach </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> reach </th>
           <td class="td-custom" mat-cell *matCellDef="let element"> {{element.reach}} </td>
         </ng-container>
 
         <ng-container matColumnDef="paidReach">
-          <th mat-header-cell *matHeaderCellDef> Paidreach </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Paidreach </th>
           <td class="td-custom" mat-cell *matCellDef="let element"> {{element.paidReach}} </td>
         </ng-container>
 
         <ng-container matColumnDef="organicReach">
-          <th mat-header-cell *matHeaderCellDef> organic </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> organic </th>
           <td class="td-custom" mat-cell *matCellDef="let element"> {{element.organicReach}} </td>
         </ng-container>
 
         <ng-container matColumnDef="engagement">
-          <th mat-header-cell *matHeaderCellDef> engagement </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> engagement </th>
           <td class="td-custom" mat-cell *matCellDef="let element"> {{element.engagement}} </td>
         </ng-container>
 
         <ng-container matColumnDef="click">
-          <th mat-header-cell *matHeaderCellDef> click </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> click </th>
           <td class="td-custom" mat-cell *matCellDef="let element"> {{element.click}} </td>
         </ng-container>
 
@@ -51,23 +65,17 @@
         </ng-container> -->
 
         <ng-container matColumnDef="negative">
-          <th mat-header-cell *matHeaderCellDef> negative </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> negative </th>
           <td class="td-custom" mat-cell *matCellDef="let element"> {{element.negative}} </td>
         </ng-container>
         <ng-container matColumnDef="impressions">
-          <th mat-header-cell *matHeaderCellDef> impressions </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> impressions </th>
           <td class="td-custom" mat-cell *matCellDef="let element"> {{element.impressions}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-
-
-      <div *ngIf="!feeds$">
-        Nothing here dude
-      </div>
-
 
     </div>
   </mat-tab>

@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAPe39yLQ067b610ZCyXZADuLyOSMnzljfYOzKqXNHExkZCUjAkCnP8t6MK8e8Rjs3yyz4890LXdDcB0l0mjzjN5JLGCoVRB86nCvrqh8MFZAPyjQldIdN4kJnersGrntiRlMWlfHyNJxUA9LEIsJcIvZA1YgZCZB0XuQHakfKfvOaBaTHtL9lkHzXEIXZBGbCSOzHvZC533LbHvL0KxdxcVMZD';
+  access_token = 'EAANQlAVxZBd4BAKKrZBJZAuFX5XimBQqbMZAJigSdN96gYNZAp0gTJUPaJh7uIMaNbCfT2s5wEHebj048zBxnFNVXcib6kVj1B3ZBhmnE9xJrUgiWgeoa0MZBAqYMynltwwZCD0nSTErwlGEyFhSgfZAd6htYmZBhexZCwSlh84w7xku9oBGaBmZB27Aw3XG7HzIyF1ZBbQHWiy33IwZDZD';
 
   feeds: Feed[] = [];
 
@@ -73,39 +73,6 @@ export class AnalyticsService {
       );
     });
   }
-
-  // getSharesComments(postId: string): Observable<Array<any>> {
-  //   const token = this.access_token;
-  //   const id = postId;
-
-  //   return new Observable((observer) => {
-  //     FB.api(`/${id}`, 'GET',
-  //       {
-  //         access_token: token,
-  //         fields: 'shares,comments.summary(true).limit(0)'
-  //       }, (response) => {
-  //         if (response.error) {
-  //           console.log(response.error);
-  //         }
-  //         console.log(response);
-
-  //         const feeds: Array<any> = response;
-  //         feeds.forEach(feed => {
-  //           // if (feed.message === undefined) {
-  //           //   feed.message = 'No messages';
-  //           // }
-  //           console.log(feed);
-  //         });
-
-  //         // observable execution
-  //         observer.next(feeds);
-  //         observer.complete();
-  //         observer.unsubscribe();
-  //       }
-  //     );
-
-  //   });
-  // }
 
   getSharesComments(postId: string): Observable<Array<any>> {
     const token = this.access_token;
@@ -273,7 +240,7 @@ export class AnalyticsService {
           // tslint:disable-next-line:max-line-length
           fields: 'insights.metric(post_impressions_unique, post_impressions_paid_unique, post_reactions_like_total, post_reactions_love_total, post_reactions_wow_total, post_reactions_haha_total, post_reactions_sorry_total, post_reactions_anger_total, post_negative_feedback,post_engaged_users,post_impressions){title,values},shares,comments.summary(true).limit(0)'
         }, (response) => {
-          console.log(response);
+          // console.log(response);
 
           // post reach
           reach = response.insights.data[0].values[0].value;
