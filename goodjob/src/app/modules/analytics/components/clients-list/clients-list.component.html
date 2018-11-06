@@ -1,25 +1,74 @@
-<!-- <div *ngIf="unconfDataSource.length > 0">
-  co data
-  <ul>
-    <li *ngFor="let i of unconfDataSource">
-      {{i.postId}} -- {{i.content}} -- {{i.reach}} -- {{i.paidReach}}
-      -- {{i.organicReach}} -- {{i.engagement}} -- {{i.click}} -- {{i.ctr}} -- {{i.negative}}
-    </li>
-  </ul>
-</div>
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
 
-<div *ngIf="unconfDataSource.length === 0">
-  Nothing here
-</div> -->
+<h4>Chọn thời gian muốn xem</h4>
+<mat-form-field>
+  <mat-select [(value)]="selected" (selectionChange)="onSelectedTimeValue($event.value)">
+    <mat-option *ngFor="let t of time" [value]="t.value">
+      {{t.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-<table mat-table [dataSource]="data" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
-  <ng-container matColumnDef="postId">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.postId}} </td>
+  <ng-container matColumnDef="content">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Content </th>
+    <td class="td-custom" mat-cell *matCellDef="let element">
+      <img src="{{element.thumbnail}}" alt="" style="height: 50px; width: 50px">
+      <span>
+        {{ (element.content.length > 10)? (element.content | slice:0:50) + '...' : (element.content) }}
+      </span>
+    </td>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <ng-container matColumnDef="time">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> time </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.time | date:'medium' }} </td>
+  </ng-container>
 
+  <ng-container matColumnDef="reach">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> reach </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.reach}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="paidReach">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Paidreach </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.paidReach}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="organicReach">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> organic </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.organicReach}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="engagement">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> engagement </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.engagement}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="click">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> click </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.click}} </td>
+  </ng-container>
+
+  <!-- <ng-container matColumnDef="ctr">
+    <th mat-header-cell *matHeaderCellDef> ctr </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.ctr}} </td>
+  </ng-container> -->
+
+  <ng-container matColumnDef="negative">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> negative </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.negative}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="impressions">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> impressions </th>
+    <td class="td-custom" mat-cell *matCellDef="let element"> {{element.impressions}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
 </table>

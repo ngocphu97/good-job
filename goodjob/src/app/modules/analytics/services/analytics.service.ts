@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAKKrZBJZAuFX5XimBQqbMZAJigSdN96gYNZAp0gTJUPaJh7uIMaNbCfT2s5wEHebj048zBxnFNVXcib6kVj1B3ZBhmnE9xJrUgiWgeoa0MZBAqYMynltwwZCD0nSTErwlGEyFhSgfZAd6htYmZBhexZCwSlh84w7xku9oBGaBmZB27Aw3XG7HzIyF1ZBbQHWiy33IwZDZD';
+  access_token = 'EAANQlAVxZBd4BANGyV2P2ZBy91KSvKBTnYXO1D4LIMms12jYsZB4IDCKB5eFN42Pl50ZBv4j2JRcjHtXULd4K33dOEzzA9k8XvLZALQBitseTGBCsxInC9hVV2huByUBXZBNYqBOswkJxLNZBotkki1ZARUcQVGul0t5ft18dtZCAccF1MIkcRCPGpS7UwVNf1AqFNfGIbaJULwZDZD';
 
   feeds: Feed[] = [];
 
