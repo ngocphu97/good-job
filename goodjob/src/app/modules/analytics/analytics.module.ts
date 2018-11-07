@@ -11,6 +11,7 @@ import { AnalyticsDetailComponent } from './components/analytics-detail/analytic
 import { ExportToFileComponent } from './components/export-to-file/export-to-file.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
+    ChartsModule,
     SharedModule,
   ],
   declarations: [

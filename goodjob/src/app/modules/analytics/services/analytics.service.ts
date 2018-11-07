@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BANGyV2P2ZBy91KSvKBTnYXO1D4LIMms12jYsZB4IDCKB5eFN42Pl50ZBv4j2JRcjHtXULd4K33dOEzzA9k8XvLZALQBitseTGBCsxInC9hVV2huByUBXZBNYqBOswkJxLNZBotkki1ZARUcQVGul0t5ft18dtZCAccF1MIkcRCPGpS7UwVNf1AqFNfGIbaJULwZDZD';
+  access_token = 'EAANQlAVxZBd4BAHKWBxzkSPXR2Cpkh2HahmewxZAfr52BKRi5P2GwRgWjcwCpPX08rrZA27UzQO5p3E8lBtaCFXZAxsx2KVpjyPEzpIP0CEzZBAIV2XEk2tStzTsZAZAMzRhwT3GRC0kR1mGoj25pF36ekIZAVetgI6MCfojiDEUqX5Y3w6DZBjrx4frsK7KVddrKDCixp3SrfwZDZD';
 
   feeds: Feed[] = [];
 
@@ -217,10 +217,8 @@ export class AnalyticsService {
   getDataFromPostId(postId): Observable<any> {
     const token = this.access_token;
     const id = postId;
-    const data = [];
 
     let totalReaction = 0;
-
     let reach = 0;
     let paidReach = 0;
     let organicReach = 0;
@@ -240,44 +238,32 @@ export class AnalyticsService {
           // tslint:disable-next-line:max-line-length
           fields: 'insights.metric(post_impressions_unique, post_impressions_paid_unique, post_reactions_like_total, post_reactions_love_total, post_reactions_wow_total, post_reactions_haha_total, post_reactions_sorry_total, post_reactions_anger_total, post_negative_feedback,post_engaged_users,post_impressions){title,values},shares,comments.summary(true).limit(0)'
         }, (response) => {
-          // console.log(response);
-
           // post reach
           reach = response.insights.data[0].values[0].value;
-
           // paid reach
           paidReach = response.insights.data[1].values[0].value;
-
           // organic reach
           organicReach = reach - paidReach;
-
           // total reaction
           for (let i = 2; i <= 7; i++) {
             totalReaction = totalReaction + response.insights.data[i].values[0].value;
           }
-
           // cmt
           cmts = response.comments.summary.total_count;
-
           // share
           if (response.shares === undefined) {
             shares = 0;
           } else {
             shares = response.shares.count;
           }
-
           // engagement
           engagement = totalReaction + cmts + shares;
-
           // click
           click = response.insights.data[9].values[0].value;
-
           // post_impressions
           impressions = response.insights.data[10].values[0].value;
-
           // ctr
           ctr = (click / impressions) * 100;
-
           // negative
           negative = response.insights.data[8].values[0].value;
 
@@ -300,6 +286,31 @@ export class AnalyticsService {
           observer.complete();
         }
       );
+    });
+  }
+
+  getPageImpressionsByAgeGenderUnique(): Observable<any> {
+    const id = '1415019512144250';
+    const token = this.access_token;
+    return new Observable((observer) => {
+      FB.api(`/${id}`, 'GET',
+        {
+          access_token: token,
+          fields: 'insights.metric(page_impressions_by_age_gender_unique){title,values}'
+        }, (response) => {
+          if (response.error) {
+            observer.error(response.error);
+            observer.complete();
+          }
+          // console.log(response);
+
+          const datas = {
+            data: response.insights.data[1].values[1].value,
+            endTime: response.insights.data[1].values[1].end_time
+          };
+          observer.next(datas);
+          observer.complete();
+        });
     });
   }
 

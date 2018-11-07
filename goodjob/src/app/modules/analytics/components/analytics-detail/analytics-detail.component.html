@@ -1,2 +1,11 @@
-
-add chart :(
+<div class="gender-chart" >
+  <canvas baseChart
+    [data]="doughnutChartData" 
+    [labels]="doughnutChartLabels" 
+    [chartType]="doughnutChartType"
+    (chartHover)="chartHovered($event)" 
+    (chartClick)="chartClicked($event)"
+    [colors]="colors"
+    [datasets]="datasets">
+</canvas>
+</div>

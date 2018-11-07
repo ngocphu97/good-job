@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { BehaviorSubject } from 'rxjs';
 
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-analytics-page',
@@ -10,11 +10,24 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./analytics-page.component.scss']
 })
 export class AnalyticsPageComponent implements OnInit {
+  temp: any;
+  data$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
+
+
 
   constructor(private service: AnalyticsService) {
   }
 
   ngOnInit() {
+  }
+
+  // events
+  chartClicked(e: any): void {
+    console.log(e);
+  }
+
+  chartHovered(e: any): void {
+    console.log(e);
   }
 
 }
