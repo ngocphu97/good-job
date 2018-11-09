@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BANqDRpfA3TKF1ymi7ZCv9dKuRzR3cy0kZBcTdXFZBe6J3jdDhI10HC6U9ctAZCBOqZAxAv1hX2WrcQxa6ghjkIHehOmdHJHizPQZCE58toKeJmi1oDjDc8kqpgwxvTEayUhbfcwVz7VzLvJcQNmAJSZCZCAzhO3RZAKapgZCZClm737WdnBloA3eMK43z7b7ZCic2gZDZD';
+  access_token = 'EAANQlAVxZBd4BALwhpCzBuG7pWQZAet4yeQdAqunlJsJsRjZCCHquUwXwaxmUFa8IeTZAx0ADxHT7eXo9xik2Wf5qcME5OxKFuR9ISNSpZBxA1Hyp7g8ECnjuYy1xb2bL8PbYSFfai4Plm5RAwq71guL7EiH1mDpWnI6RB5qoZCMP1lUOnYtA59bXO0iJs3H3gUQgBYZAZCgBgZDZD';
 
   feeds: Feed[] = [];
 
@@ -309,6 +309,26 @@ export class AnalyticsService {
             endTime: response.insights.data[1].values[1].end_time
           };
           observer.next(datas);
+          observer.complete();
+        });
+    });
+  }
+
+  getPageFansCity(): Observable<any> {
+    const id = '1415019512144250';
+    const token = this.access_token;
+    return new Observable((observer) => {
+      FB.api(`/${id}`, 'GET',
+        {
+          access_token: token,
+          fields: 'insights.metric(page_fans_city){title,values}'
+        }, (response) => {
+          if (response.error) {
+            observer.error(response.error);
+            observer.complete();
+          }
+          const data = response.insights.data[0].values[1].value;
+          observer.next(data);
           observer.complete();
         });
     });

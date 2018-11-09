@@ -1,4 +1,8 @@
-.gender-chart {
-    width: 500px !important;
+.chart-container {
+    display: flex;
+}
+
+.chart {
+    width: 33% !important;
     height: 100% !important;
 }

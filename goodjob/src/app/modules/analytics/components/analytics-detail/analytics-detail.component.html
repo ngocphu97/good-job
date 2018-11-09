@@ -1,47 +1,56 @@
-<div class="gender-chart" >
-  <canvas baseChart
-    [data]="doughnutChartData" 
-    [labels]="doughnutChartLabels" 
-    [chartType]="doughnutChartType"
-    (chartHover)="chartHovered($event)" 
-    (chartClick)="chartClicked($event)"
-    [colors]="colors"
-    [datasets]="datasets">
-</canvas>
-</div>
+<div class="chart-container">
 
-<!-- Female -->
-<div class="gender-chart">
-  <canvas baseChart
-          [data]="femaleChartData"
-          [labels]="barChartLabels"
-          [chartType]="barChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"
-          [colors]="colors"
-          [options]="barChartOptions"
-          [legend]="barChartLegend"
-          [datasets]="barChartFemaleData"
-         >
-  </canvas>
-</div>
 
-<!-- Male -->
-<div class="gender-chart">
-  <canvas baseChart
-          [data]="maleChartData"
-          [labels]="barChartLabels"
-          [chartType]="barChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"
-          [options]="barChartOptions"
-          [colors]="colors"
-          [legend]="barChartLegend"
-          [datasets]="barChartMaleData"
-         >
-  </canvas>
+  <!-- Female -->
+  <div class="chart">
+    <canvas baseChart [data]="femaleChartData" [labels]="barChartLabels" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)" [colors]="colors" [options]="barChartOptions" [legend]="barChartLegend"
+      [datasets]="barChartFemaleData">
+    </canvas>
+  </div>
+
+  <!-- Doughnut Chart -->
+  <div class="chart">
+    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+      (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)" [colors]="colors" [datasets]="datasets">
+    </canvas>
+  </div>
+
+  <!-- Male -->
+  <div class="chart">
+    <canvas baseChart [data]="maleChartData" [labels]="barChartLabels" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)" [options]="barChartOptions" [colors]="colors" [legend]="barChartLegend"
+      [datasets]="barChartMaleData">
+    </canvas>
+  </div>
 </div>
 
 <p>
-  Kết luận: <strong>{{hightestGender}}</strong> trong độ tuổi <strong>{{hightestByAge}}</strong> chiếm đa số Fan của bạn.
+  Kết luận: <strong>{{hightestGender}}</strong> trong độ tuổi <strong>{{hightestByAge}}</strong> chiếm đa số Fan của
+  bạn.
+</p>
+
+<h2>fan theo thành phố</h2>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+  <ng-container matColumnDef="city">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Thành Phố </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="fan">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fan </th>
+    <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+  </ng-container>
+  <ng-container matColumnDef="percent">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> % </th>
+    <td mat-cell *matCellDef="let element"> {{element.percent}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<p>
+  Kết luận: <strong>{{hightestPercentFansCity}}% </strong> Fan của bạn đến từ <strong>{{hightestFansCity}}</strong>.
 </p>
