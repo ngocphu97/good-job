@@ -21,13 +21,4 @@ export class AnalyticsPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  // events
-  chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  chartHovered(e: any): void {
-    console.log(e);
-  }
-
 }

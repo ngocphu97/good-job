@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
 import { BehaviorSubject } from 'rxjs';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { BaseChartDirective } from 'ng2-charts/charts/charts';
 
 @Component({
     selector: 'app-analytics-detail',
@@ -12,7 +13,11 @@ export class AnalyticsDetailComponent implements OnInit {
 
     @ViewChild(MatSort) sort: MatSort;
 
+    @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
+
     data$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
+
     temp: any;
     hightestGender = '';
     hightestByAge = '';
@@ -80,11 +85,67 @@ export class AnalyticsDetailComponent implements OnInit {
             ]
         }
     ];
+    // chart engagement
+    barChartLabels1 = [];
+    engagementData = [];
+
+    barChartType1 = 'bar';
+    barChartLegend1 = true;
+    barChartData1: any[] = [
+        {
+            data: this.engagementData,
+            label: 'Engagement'
+        }
+    ];
+
+    // page Fans
+    barChartLabelsPageFans = [];
+    pageFansData = [];
+
+    barChartDataPageFans: any[] = [
+        {
+            data: this.pageFansData,
+            label: 'Page Fans'
+        }
+    ];
+
+    choosingDayEngagementOptions = [
+        {
+            optionName: 'None',
+            date_preset: 'last_7d'
+        },
+        {
+            optionName: '7 Ngày',
+            date_preset: 'last_7d'
+        },
+        {
+            optionName: '30 Ngày',
+            date_preset: 'last_30d'
+        },
+        {
+            optionName: '90 Ngày',
+            date_preset: 'last_90d'
+        },
+    ];
+    selected: any;
 
     constructor(private service: AnalyticsService) {
     }
 
     ngOnInit() {
+        this.service
+            .getPageEngagement('last_7d')
+            .subscribe(
+                (datas) => {
+                    if (!datas || datas.length < 1) {
+                        return;
+                    }
+
+                    this.pageEngagement(datas);
+                    this.data$.next(datas);
+                }
+            );
+
         this.service
             .getPageImpressionsByAgeGenderUnique()
             .subscribe(
@@ -97,6 +158,7 @@ export class AnalyticsDetailComponent implements OnInit {
                     this.data$.next(datas);
                 }
             );
+
         this.service
             .getPageFansCity()
             .subscribe(
@@ -104,12 +166,35 @@ export class AnalyticsDetailComponent implements OnInit {
                     if (!data || data.length < 1) {
                         return;
                     }
-                    console.log(data);
                     this.fansByCity(data);
                     this.dataSource.sort = this.sort;
                     this.data$.next(data);
                 });
     }
+
+    pageEngagement(data) {
+
+        data.forEach(e => {
+            const date = new Date(e.end_time);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const dayLabel = day + '/' + month;
+
+            console.log(dayLabel);
+
+            this.barChartLabels1.push(dayLabel);
+            this.engagementData.push(e.value);
+        });
+
+        setTimeout(() => {
+            if (this.chart && this.chart.chart && this.chart.chart.config) {
+                this.chart.chart.config.data.labels = this.barChartLabels1;
+                this.chart.chart.update();
+            }
+        });
+
+    }
+
 
     // Doughnut chart
     initDoughnutChart(data) {
@@ -223,8 +308,29 @@ export class AnalyticsDetailComponent implements OnInit {
         this.hightestFansCity = conclusion.name;
         this.hightestPercentFansCity = conclusion.percent;
 
-        console.log(conclusion);
 
         this.dataSource = new MatTableDataSource<any>(fansByCity);
     }
+
+    onSelectedTimeValue(value) {
+
+        console.log(value);
+        this.service.getPageEngagement(value)
+            .subscribe(
+                (datas) => {
+                    if (!datas || datas.length < 1) {
+                        return;
+                    }
+
+                    const cloneData = [];
+                    const cloneLabel = [];
+                    this.barChartLabels1 = cloneLabel;
+                    this.engagementData = cloneData;
+
+                    this.pageEngagement(datas);
+                    this.data$.next(datas);
+                }
+            );
+    }
+
 }

@@ -214,8 +214,5 @@ export class EditPostComponent implements OnInit {
         );
     }
 
-    logAn() {
-        FB.AppEvents.logPageView();
-    }
 }
 

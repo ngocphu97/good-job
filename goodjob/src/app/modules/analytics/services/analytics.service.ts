@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BALwhpCzBuG7pWQZAet4yeQdAqunlJsJsRjZCCHquUwXwaxmUFa8IeTZAx0ADxHT7eXo9xik2Wf5qcME5OxKFuR9ISNSpZBxA1Hyp7g8ECnjuYy1xb2bL8PbYSFfai4Plm5RAwq71guL7EiH1mDpWnI6RB5qoZCMP1lUOnYtA59bXO0iJs3H3gUQgBYZAZCgBgZDZD';
+  access_token = 'EAANQlAVxZBd4BAPiuyvRR1h7X6rXR9wkpcPWoHO0LbmZAob9A2HomHVWZAuJ3FWf3bZBmdZBfxkfd2U9U7gZAnwxovQWTSp2gZB6vZCYZC6PnVJGHV22xp4BSVpzmMG0s376LpUuMZCMQZCMsJAn9yM84YLC2NsRruAhtXMMvJuD8Bb47mcCgZAfjBk6MEyxU4TSlkLCVhkbmAWelAZDZD';
 
   feeds: Feed[] = [];
 
@@ -333,5 +333,54 @@ export class AnalyticsService {
         });
     });
   }
+
+  getPageEngagement(date_preset): Observable<any> {
+  // engagement = total reaction + share + commet
+    const token = this.access_token;
+    return new Observable((observer) => {
+      FB.api(`/me/insights`, 'GET',
+        {
+          access_token: token,
+          'metric': 'page_impressions',
+          'date_preset': date_preset,
+          'period': 'day'
+        }, (response) => {
+          if (response.error) {
+            observer.error(response.error);
+            observer.complete();
+          }
+          const data = response.data[0].values;
+          console.log(data);
+          observer.next(data);
+          observer.complete();
+        });
+    });
+  }
+
+  getPageFans(date_preset): Observable<any> {
+  // engagement = total reaction + share + commet
+    const token = this.access_token;
+    return new Observable((observer) => {
+      FB.api(`/me/insights`, 'GET',
+        {
+          access_token: token,
+          'metric': 'page_fans',
+          'date_preset': date_preset,
+          'period': 'day'
+        }, (response) => {
+          if (response.error) {
+            observer.error(response.error);
+            observer.complete();
+          }
+          const data = response.data[0].values;
+          console.log(data);
+          observer.next(data);
+          observer.complete();
+        });
+    });
+  }
+
+
+
 
 }

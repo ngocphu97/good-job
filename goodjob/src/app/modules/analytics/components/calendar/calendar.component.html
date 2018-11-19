@@ -1,3 +1,28 @@
-<p>
-  calendar works!
-</p>
+<div>
+  <h2>Tổng Like Theo Thời Gian</h2>
+    <div>
+        Chọn khoảng thời gian muốn xem
+        <mat-form-field>
+            <mat-select [(value)]="selected" (selectionChange)="onSelectedTimeValue($event.value)">
+              <mat-option *ngFor="let o of choosingDayEngagementOptions" value="{{o.date_preset}}">
+                {{o.optionName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <p>You selected: {{selected}}</p>
+    </div>
+
+    <div style="display: block">
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+    <button (click)="randomize()">Update</button>
+  </div>

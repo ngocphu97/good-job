@@ -32,7 +32,7 @@ export class ClientsListComponent implements OnInit {
   ];
 
   time = [
-    { value: 0, viewValue: 'None' },
+    { value: 0, viewValue: 'All' },
     { value: 7, viewValue: '7 Days' },
     { value: 30, viewValue: '30 Days' },
     { value: 90, viewValue: '90 Days' }
