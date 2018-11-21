@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAPiuyvRR1h7X6rXR9wkpcPWoHO0LbmZAob9A2HomHVWZAuJ3FWf3bZBmdZBfxkfd2U9U7gZAnwxovQWTSp2gZB6vZCYZC6PnVJGHV22xp4BSVpzmMG0s376LpUuMZCMQZCMsJAn9yM84YLC2NsRruAhtXMMvJuD8Bb47mcCgZAfjBk6MEyxU4TSlkLCVhkbmAWelAZDZD';
+  access_token = 'EAANQlAVxZBd4BAKgZCdoGvE04N8yk12VZCiOAmln5FLnGc5JBZBpMTyM9A1AqhFNQZB2SXowpSSOwk0fTnDsO80CZCeVmbb7aZAZAQPb9BTDARl4oKIPcBmVlPi9fxQPPi15Ns1NGYMOEyEXIDyZC7BEQWxZBtmNmmBV4ExdZAtnXi3LIXGoKvCxE7E9mX8krESXIcZBDP0fFLwZCVgZDZD';
 
   feeds: Feed[] = [];
 
@@ -335,7 +335,7 @@ export class AnalyticsService {
   }
 
   getPageEngagement(date_preset): Observable<any> {
-  // engagement = total reaction + share + commet
+    // engagement = total reaction + share + commet
     const token = this.access_token;
     return new Observable((observer) => {
       FB.api(`/me/insights`, 'GET',
@@ -350,7 +350,6 @@ export class AnalyticsService {
             observer.complete();
           }
           const data = response.data[0].values;
-          console.log(data);
           observer.next(data);
           observer.complete();
         });
@@ -358,7 +357,7 @@ export class AnalyticsService {
   }
 
   getPageFans(date_preset): Observable<any> {
-  // engagement = total reaction + share + commet
+    // engagement = total reaction + share + commet
     const token = this.access_token;
     return new Observable((observer) => {
       FB.api(`/me/insights`, 'GET',
@@ -373,14 +372,32 @@ export class AnalyticsService {
             observer.complete();
           }
           const data = response.data[0].values;
-          console.log(data);
           observer.next(data);
           observer.complete();
         });
     });
   }
 
-
+  getPageFansOnline(): Observable<any> {
+    const token = this.access_token;
+    return new Observable((observer) => {
+      FB.api(`/me/insights`, 'GET',
+        {
+          access_token: token,
+          'metric': 'page_fans_online',
+          'date_preset': 'last_7d',
+          'period': 'day'
+        }, (response) => {
+          if (response.error) {
+            observer.error(response.error);
+            observer.complete();
+          }
+          const data = response.data[0].values;
+          observer.next(data);
+          observer.complete();
+        });
+    });
+  }
 
 
 }

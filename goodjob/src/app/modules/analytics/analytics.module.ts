@@ -12,6 +12,8 @@ import { ExportToFileComponent } from './components/export-to-file/export-to-fil
 import { CalendarComponent } from './components/calendar/calendar.component';
 
 import { ChartsModule } from 'ng2-charts';
+import { NetLikeComponent } from './components/net-like/net-like.component';
+import { PageFansOnlineComponent } from './components/page-fans-online/page-fans-online.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,9 @@ import { ChartsModule } from 'ng2-charts';
     ClientsListComponent,
     AnalyticsDetailComponent,
     ExportToFileComponent,
-    CalendarComponent
+    CalendarComponent,
+    NetLikeComponent,
+    PageFansOnlineComponent
   ]
 
 })

@@ -1,8 +1,8 @@
 <div>
-  <h2>Tổng Like Theo Thời Gian</h2>
+  <h2>Thời Gian Fans Online</h2>
     <div>
-        Chọn khoảng thời gian muốn xem
-        <mat-form-field>
+      Chọn ngày muốn xem
+      <mat-form-field>
             <mat-select [(value)]="selected" (selectionChange)="onSelectedTimeValue($event.value)">
               <mat-option *ngFor="let o of choosingDayEngagementOptions" value="{{o.date_preset}}">
                 {{o.optionName}}
@@ -15,6 +15,7 @@
 
     <div style="display: block">
       <canvas baseChart
+              [data]="pageFansData"
               [datasets]="barChartData"
               [labels]="barChartLabels"
               [options]="barChartOptions"

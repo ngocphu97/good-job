@@ -180,8 +180,6 @@ export class AnalyticsDetailComponent implements OnInit {
             const month = date.getMonth() + 1;
             const dayLabel = day + '/' + month;
 
-            console.log(dayLabel);
-
             this.barChartLabels1.push(dayLabel);
             this.engagementData.push(e.value);
         });

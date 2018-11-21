@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AnalyticsService } from '../../services/analytics.service';
+import { BaseChartDirective } from 'ng2-charts';
 import { BehaviorSubject } from 'rxjs';
-import { MatSort, MatTableDataSource } from '@angular/material';
-import { BaseChartDirective } from 'ng2-charts/charts/charts';
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  selector: 'app-net-like',
+  templateUrl: './net-like.component.html',
+  styleUrls: ['./net-like.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class NetLikeComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   data$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
