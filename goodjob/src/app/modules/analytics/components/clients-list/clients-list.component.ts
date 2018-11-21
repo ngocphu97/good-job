@@ -115,7 +115,6 @@ export class ClientsListComponent implements OnInit {
 
     data.forEach((d, i) => {
       if (d.time.getTime() >= startDate.getTime()) {
-        console.log(i);
         // console.log(d.time);
         // console.log(d.content);
         temp.push(d);

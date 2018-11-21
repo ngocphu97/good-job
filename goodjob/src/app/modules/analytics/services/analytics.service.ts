@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAKgZCdoGvE04N8yk12VZCiOAmln5FLnGc5JBZBpMTyM9A1AqhFNQZB2SXowpSSOwk0fTnDsO80CZCeVmbb7aZAZAQPb9BTDARl4oKIPcBmVlPi9fxQPPi15Ns1NGYMOEyEXIDyZC7BEQWxZBtmNmmBV4ExdZAtnXi3LIXGoKvCxE7E9mX8krESXIcZBDP0fFLwZCVgZDZD';
+  access_token = 'EAANQlAVxZBd4BACdgOKaSZCTbPMvE5D80fKGp3RtVC1gELYn3oQrrPf71Ix3fW0F1BQMZAksUzdH7hg2MMCwxxe76P4p0Rv4ZAaSOpG4xZBwDWY4qLnlbA1tUjdAl46jZAbhsCnHaLkSd7AjQhaS8PHJYtzA9WPfFJEA7U8L0eLOaLGEZA5ZC5qlOfkWSydZCNBacogss14DHngZDZD';
 
   feeds: Feed[] = [];
 
@@ -302,7 +302,6 @@ export class AnalyticsService {
             observer.error(response.error);
             observer.complete();
           }
-          // console.log(response);
 
           const datas = {
             data: response.insights.data[1].values[1].value,

@@ -29,12 +29,12 @@ export class PageFansOnlineComponent implements OnInit {
   barChartData: any[] = [
     {
       data: this.pageFansData,
-      label: 'Page Fans Online'
+      label: 'Page Fans Online Time'
     }
   ];
 
   lineChartColors: Array<any> = [
-    { // grey
+    {
       backgroundColor: 'rgba(148,159,177,0.2)',
       borderColor: 'rgba(148,159,177,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -146,7 +146,6 @@ export class PageFansOnlineComponent implements OnInit {
 
     this.dataFromFB.forEach(d => {
       if (d.end_time === value) {
-
         const valueBefore = d.value;
         const dataPipe = Object.keys(valueBefore)
           .map(function (k) {
@@ -161,8 +160,6 @@ export class PageFansOnlineComponent implements OnInit {
         });
       }
     });
-
-    console.log(this.pageFansData);
 
     setTimeout(() => {
       if (this.chart && this.chart.chart && this.chart.chart.config) {

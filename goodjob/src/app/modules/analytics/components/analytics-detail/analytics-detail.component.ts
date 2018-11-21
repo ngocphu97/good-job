@@ -311,8 +311,6 @@ export class AnalyticsDetailComponent implements OnInit {
     }
 
     onSelectedTimeValue(value) {
-
-        console.log(value);
         this.service.getPageEngagement(value)
             .subscribe(
                 (datas) => {
