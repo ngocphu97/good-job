@@ -73,7 +73,7 @@ export class CalendarComponent implements OnInit {
           if (!datas || datas.length < 1) {
             return;
           }
-
+          console.log(datas);
           this.pageFans(datas);
           this.data$.next(datas);
         }
@@ -107,7 +107,7 @@ export class CalendarComponent implements OnInit {
           if (!datas || datas.length < 1) {
             return;
           }
-
+          console.log(datas);
           const cloneData = [];
           const cloneLabel = [];
           this.barChartLabels = cloneLabel;

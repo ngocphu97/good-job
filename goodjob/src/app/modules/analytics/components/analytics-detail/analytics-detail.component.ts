@@ -140,7 +140,6 @@ export class AnalyticsDetailComponent implements OnInit {
                     if (!datas || datas.length < 1) {
                         return;
                     }
-
                     this.pageEngagement(datas);
                     this.data$.next(datas);
                 }

@@ -1,5 +1,6 @@
 <h1>hello</h1>
 
+<!-- upload file images  -->
 <div class="input-image">
 
   <input type="file" (change)="onAccept($event)" accept=".png, .jpg, .jpeg, .pdf" name="file" id="file" multiple />
@@ -20,7 +21,11 @@
 <textarea name="" id="" cols="30" rows="10" #message>
   </textarea>
 
-<button (click)="onUploadMuiltiPhotos(message.value)">upload Multi photo</button>
+<button (click)="onUploadMuiltiPhotos(message.value)">Upload Multi photo</button>
+
+<br>
+
+<!-- upload file video11  -->
 
 <input type="file" (change)="video($event)"> upload file
 

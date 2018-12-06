@@ -1,3 +1,64 @@
-<p>
-  add-group-form works!
-</p>
+<div class="project-name">
+  <mat-form-field>
+    <input matInput placeholder="Project Name">
+  </mat-form-field>
+  <div class="project-actions">
+    <button class="save-action" mat-raised-button color="accent">Save</button>
+    <button mat-raised-button color="warn">Delete</button>
+  </div>
+</div>
+
+<div class="select-profiles">
+  <h4>Select profile for this group</h4>
+  <mat-card class="card">
+    <div *ngFor="let memberConnectAccout of memberConnectAccounts" class="card-container" matTooltip="{{memberConnectAccout.name}}"
+      [matTooltipPosition]="position.value" aria-label="Button that displays a tooltip when focused or hovered over">
+      <img class="profiles-img" src="{{memberConnectAccout.picture}}" alt="">
+    </div>
+    <div class="card-container" matTooltip="Info about the profile" [matTooltipPosition]="position.value" aria-label="Button that displays a tooltip when focused or hovered over">
+      <i class="material-icons profiles-img">
+        add
+      </i>
+    </div>
+  </mat-card>
+</div>
+
+<h4>Select member(s) for this group</h4>
+<div class="select-members-list">
+  <div class="card-member" *ngFor="let member of listMember">
+
+    <div class="card-member-item">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar class="card-ava">
+            <img class="header-image" src="{{member.picture}}" alt="">
+          </div>
+          <mat-card-title>{{member.name}}</mat-card-title>
+          <mat-card-subtitle>{{member.id}}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Edit tasks for {{member.name}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <section class="example-section">
+            <mat-list role="list">
+              <mat-list-item role="listitem" *ngFor="let task of tasks">
+                <mat-slide-toggle class="example-margin" [color]="color" [checked]="checked">
+                  {{task.describe}}
+                </mat-slide-toggle>
+              </mat-list-item>
+            </mat-list>
+          </section>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+  </div>
+</div>

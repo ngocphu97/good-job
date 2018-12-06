@@ -22,7 +22,11 @@ export const routes: Routes = [
         path: 'thong_ke',
         loadChildren: 'app/modules/analytics/analytics.module#AnalyticsModule'
       },
+      {
+        path: 'them',
+        loadChildren: 'app/modules/group/group.module#GroupModule'
+      },
     ]
   },
-  { path: '**', redirectTo: '/wellcome' },
+  { path: '**', redirectTo: '/content' },
 ];

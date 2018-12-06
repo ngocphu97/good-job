@@ -11,7 +11,7 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BACdgOKaSZCTbPMvE5D80fKGp3RtVC1gELYn3oQrrPf71Ix3fW0F1BQMZAksUzdH7hg2MMCwxxe76P4p0Rv4ZAaSOpG4xZBwDWY4qLnlbA1tUjdAl46jZAbhsCnHaLkSd7AjQhaS8PHJYtzA9WPfFJEA7U8L0eLOaLGEZA5ZC5qlOfkWSydZCNBacogss14DHngZDZD';
+  access_token = 'EAANQlAVxZBd4BAH40VafnaIbZCLIsXiaSJgPLST3ZBdjIZCi42khCCMuSxz9cdLxeC7Nm9uwzWOMp46WYS76blptZClWkGV1jTPpCQK7zQADPsOZB3ffnuZCBZCgDoM3uyZBOqhVfRCWf2xuq7u0EYoykLu1qowyu460hjJ9buDqlC4sLyrtsRvNSsacuYIKuXZC7VfLCwDD3pNrjypseoZCi2O';
 
   feeds: Feed[] = [];
 
@@ -204,7 +204,6 @@ export class AnalyticsService {
         access_token: token,
         fields: 'insights.metric(post_negative_feedback){title,values}'
       }, (response) => {
-        console.log(response);
         value = response.insights.data[0].values[0].value;
         if (response.error) {
           console.log(response.error);
@@ -238,6 +237,9 @@ export class AnalyticsService {
           // tslint:disable-next-line:max-line-length
           fields: 'insights.metric(post_impressions_unique, post_impressions_paid_unique, post_reactions_like_total, post_reactions_love_total, post_reactions_wow_total, post_reactions_haha_total, post_reactions_sorry_total, post_reactions_anger_total, post_negative_feedback,post_engaged_users,post_impressions){title,values},shares,comments.summary(true).limit(0)'
         }, (response) => {
+
+          console.log(response);
+
           // post reach
           reach = response.insights.data[0].values[0].value;
           // paid reach
@@ -391,6 +393,7 @@ export class AnalyticsService {
             observer.error(response.error);
             observer.complete();
           }
+          console.log(response);
           const data = response.data[0].values;
           observer.next(data);
           observer.complete();

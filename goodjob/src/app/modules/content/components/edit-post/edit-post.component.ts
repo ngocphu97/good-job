@@ -16,7 +16,7 @@ export class EditPostComponent implements OnInit {
     clients: any = [];
 
     // tslint:disable-next-line:max-line-length
-    GJ_access_token = 'EAAFiVT3Gv5EBAOA6WrZBud09aTGb6rbUqeZAPVo454CZAh9SJ2DAtlJZCNox7t96IZBIgyEMJCSoIXAJ05OiMZAwu3Iz9WN0QBcoHV2FuDHgXr62MTe4GcFI2RKy5qKVhZBmQrBRORRUHfXNNzezMshEoo4HqBpZBPkVl87Jc3fKZB0Gwj6iWXN9o2dQB5lZBfLhJrsYobYZC6vOgZDZD';
+    GJ_access_token = 'EAANQlAVxZBd4BAKq5UY2EyuFrZB23hZCzzZAiM1zdvMayhKjKjMsjfxMCTvIVSZADEBbe7uu2ELIxWFonj7UgxtN7bIMtzFbX6zkD1rnzGx8tOZAcVYSk3d2rKxUmaGPP7JxkCWfRFNaiiUqFwgHYb4X32NoG3z4nXumyZBWbrquhdp4qqSUPsnWzNH5c4WjYKhv6tyLgqrAAMtVLYHttYC';
 
     constructor(private http: HttpClient, private service: ContentService) {
     }
@@ -141,15 +141,15 @@ export class EditPostComponent implements OnInit {
 
     video(event) {
         const file = event.target.files[0];
-        const time = new Date('2018.09.28').getTime() / 1000;
+        // const time = new Date('2018.09.28').getTime() / 1000;
         const formData = new FormData();
 
         formData.append('my video', file);
         formData.append('Content-Type', 'multipart / form - data');
         formData.append('access_token', this.GJ_access_token);
         formData.append('description', 'Shedule post with video');
-        formData.append('published', 'false');
-        formData.append('scheduled_publish_time', time.toString());
+        formData.append('published', 'true');
+        // formData.append('scheduled_publish_time', time.toString());
 
         const response: any = fetch(`https://graph-video.facebook.com/v3.1/249376455821855/videos`, {
             body: formData,
