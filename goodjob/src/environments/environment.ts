@@ -5,7 +5,7 @@
 import { Environment } from './environment.interface';
 
 export const environment: Environment = {
-  production: false,
+  production: true,
   authentication: {
     tokenKey: 'AccessToken',
     autoAuthorizedUris: [
