@@ -9,6 +9,7 @@ import { guards } from './guards';
 import { routes } from './auth.routing';
 import { containers } from './containers';
 import { components } from './components';
+import { SharedModule } from '../shared';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { components } from './components';
     CommonModule,
     RouterModule.forChild(routes),
     BrowserModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   declarations: [
     ...containers,

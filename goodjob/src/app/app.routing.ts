@@ -7,7 +7,7 @@ export const routes: Routes = [
     component: DashboardComponent,
     children: [
       {
-        path: '',
+        path: 'wellcome',
         loadChildren: 'app/modules/wellcome/wellcome.module#WellcomeModule'
       },
       {
@@ -19,14 +19,14 @@ export const routes: Routes = [
         loadChildren: 'app/modules/content/content.module#ContentModule'
       },
       {
-        path: 'thong_ke',
+        path: 'analytics',
         loadChildren: 'app/modules/analytics/analytics.module#AnalyticsModule'
       },
       {
-        path: 'them',
+        path: 'group',
         loadChildren: 'app/modules/group/group.module#GroupModule'
       },
     ]
   },
-  { path: '**', redirectTo: '/content' },
+  { path: '**', redirectTo: '/wellcome' },
 ];

@@ -10,6 +10,7 @@ export class LoginFormComponent implements OnInit {
 
   email: string;
   password: string;
+  color = 'warn';
 
   @Output() loginSignal = new EventEmitter();
   @Output() logoutSignal = new EventEmitter();
