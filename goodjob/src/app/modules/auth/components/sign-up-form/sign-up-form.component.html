@@ -1,0 +1,68 @@
+<div class="gudjob-login">
+    <div class="left">
+      <div class="gudjob-logo">
+        <img src="https://gudjob.net/storage/2018/07/Glogo.png" alt="Gudjob Logo">
+      </div>
+    </div>
+  
+    <div class="right">
+        <form class="login-form" action="">
+            <h3>SIGN UP</h3>
+            <ng-container>
+              <mat-form-field [color]="color" appearance="outline">
+                <mat-icon matSuffix>
+                  how_to_reg
+                </mat-icon>
+                <mat-label>Full Name</mat-label>
+                <input type="text" matInput placeholder="Full Name">
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container>
+                <mat-form-field [color]="color" appearance="outline">
+                  <mat-icon matSuffix>vpn_key</mat-icon>
+                  <mat-label>Password</mat-label>
+                  <input type="password" matInput placeholder="*********">
+                </mat-form-field>
+              </ng-container>
+
+              <ng-container>
+                  <mat-form-field [color]="color" appearance="outline">
+                    <mat-icon matSuffix>vpn_key</mat-icon>
+                    <mat-label>Re-enter Password</mat-label>
+                    <input type="password" matInput placeholder="Re-enter Password">
+                  </mat-form-field>
+                </ng-container>
+        
+            <ng-container>
+              <mat-form-field [color]="color" appearance="outline">
+                <mat-icon matSuffix>vpn_key</mat-icon>
+                <mat-label>Email</mat-label>
+                <input type="email" matInput placeholder="Email">
+              </mat-form-field>
+            </ng-container>
+        
+            <div class="actions login-actions">
+        
+              <button class="gudjob-btn" mat-raised-button color="accent" (click)="loginWithGJ()">
+                Sign up
+              </button>
+        
+              <button class="gudjob-btn" mat-raised-button color="primary" (click)="loginWithFb()">
+                <i class="fab fa-facebook-f" style="font-size: 25px"></i>
+              </button>
+        
+            </div>
+        
+            <div class="social">
+              <span>or</span>
+            </div>
+        
+            <div class="sign-up">
+              <a routerLink="">Sign Up</a>
+            </div>
+        
+          </form>
+    </div>
+  </div>
+  

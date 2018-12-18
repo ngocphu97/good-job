@@ -1,0 +1,101 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+  }
+  
+  .login-form h3 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .gudjob-btn {
+    width: 130px;
+    height: 36.5px;
+    border-radius: 18.5px;
+  }
+  
+  .gudjob-btn .gudjob-f {
+    width: 33px;
+    height: 33px;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .actions.login-actions {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .sign-up {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .social {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .social::before {
+    content: '';
+    display: block;
+    width: 125px;
+    position: absolute;
+    top: 0.9em;
+    border-top: 1px solid #000000;
+  }
+  
+  .social::after {
+    content: '';
+    left: 55%;
+    display: block;
+    width: 125px;
+    position: absolute;
+    top: 0.9em;
+    border-top: 1px solid #000000;
+  }
+  
+  .gudjob-login {
+    height: 100%;
+  }
+  
+  .gudjob-login
+    .left{
+    float: left;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .gudjob-login
+    .right{
+    float: right;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid #000000;
+  }
+  
+  .gudjob-logo {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .gudjob-logo img {
+    width: 300px;
+  }
+  

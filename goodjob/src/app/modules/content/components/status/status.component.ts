@@ -15,6 +15,8 @@ declare var FB: any;
 export class StatusComponent implements OnInit {
   links = ['First', 'Second', 'Third'];
   activeLink = this.links[0];
+  eventsSuccess = [];
+  eventsFails = [];
 
   events: CalendarEvent[] = [];
 

@@ -1,5 +1,12 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
+
+@font-face {
+  font-family: 'Montserrat', sans-serif;
+  src: url('https://fonts.googleapis.com/css?family=Montserrat');
+}
+
 html {
   height: 100%;
 }

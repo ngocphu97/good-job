@@ -20,8 +20,6 @@
           [data]="engagementData" 
           [labels]="barChartLabels1" 
           [chartType]="barChartType1" 
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)" 
           [legend]="barChartLegend" 
           [datasets]="barChartData1">
       </canvas>
@@ -40,15 +38,14 @@
           baseChart [data]="femaleChartData" 
           [labels]="barChartLabels" 
           [chartType]="barChartType" 
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)" 
           [colors]="colors" 
           [options]="barChartOptions" 
           [legend]="barChartLegend"
           [datasets]="barChartFemaleData">
       </canvas>
     </div>
-
+    <!-- (chartHover)="chartHovered($event)" 
+    (chartClick)="chartClicked($event)"  -->
     <!-- Doughnut Chart -->
     <div class="chart">
       <canvas 
@@ -56,8 +53,6 @@
           [data]="doughnutChartData" 
           [labels]="doughnutChartLabels" 
           [chartType]="doughnutChartType"
-          (chartHover)="chartHovered($event)" 
-          (chartClick)="chartClicked($event)" 
           [colors]="colors" 
           [datasets]="datasets">
       </canvas>
@@ -70,8 +65,6 @@
           [data]="maleChartData" 
           [labels]="barChartLabels" 
           [chartType]="barChartType" 
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)" 
           [options]="barChartOptions" 
           [colors]="colors" 
           [legend]="barChartLegend"

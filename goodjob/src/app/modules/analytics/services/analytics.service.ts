@@ -11,43 +11,13 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAH40VafnaIbZCLIsXiaSJgPLST3ZBdjIZCi42khCCMuSxz9cdLxeC7Nm9uwzWOMp46WYS76blptZClWkGV1jTPpCQK7zQADPsOZB3ffnuZCBZCgDoM3uyZBOqhVfRCWf2xuq7u0EYoykLu1qowyu460hjJ9buDqlC4sLyrtsRvNSsacuYIKuXZC7VfLCwDD3pNrjypseoZCi2O';
+  access_token = 'EAANQlAVxZBd4BADa0zvcJQ0K77CkGsVbRuV8ioA7AbUWRjWeB3KDIoWm1Pd4x0uhs868ywGM4hKZCktmOMPuCWsOrao7tOSyMWDAyDhlRyMBRmwlNePSBN4T1QpT1lirNevMKJxRjRZBVImbN0xZB4wFuhZCJLZAAgfcRmDzxFrBU9Oe12NWFcO9ZAZB2MAtUTJMERIiQyPDSwZDZD';
 
   feeds: Feed[] = [];
 
   constructor(private http: HttpClient) { }
 
-  // Return kieu Promise
-  getFeeds(): Promise<Array<any>> {
-    const token = this.access_token;
-
-    return new Promise(function (resolve, reject) {
-      FB.api(`/me`, 'GET',
-        {
-          access_token: token,
-          fields: 'feed{id,link,message,created_time,is_published,picture.width(150).height(150)}'
-        }, (response) => {
-          if (response.error) {
-            reject(response.error);
-            console.log(response.error);
-          }
-
-          const feeds: Array<any> = response.feed.data;
-          feeds.forEach(feed => {
-            if (feed.message === undefined) {
-              feed.message = 'No messages';
-            }
-            if (feed.thumnail === undefined) {
-              feed.message = 'No thumnail';
-            }
-          });
-          resolve(feeds);
-        }
-      );
-    });
-  }
-
-  getFeedsObservable(): Observable<Array<any>> {
+ getFeedsObservable(): Observable<Array<any>> {
     const token = this.access_token;
 
     return new Observable((observer) => {

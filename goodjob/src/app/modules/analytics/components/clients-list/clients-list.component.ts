@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
 import { Observable, BehaviorSubject } from 'rxjs';
+import * as _ from 'lodash';
 import { SourceFromFB } from '../../models/source';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
@@ -46,10 +47,14 @@ export class ClientsListComponent implements OnInit {
   // dataSource: any;
   dataSource = new MatTableDataSource<any>();
   dataFilter = [];
+
+  x: any;
+
   constructor(private service: AnalyticsService) {
   }
 
   ngOnInit() {
+
     this.service
       .getFeedsObservable()
       .subscribe(
@@ -77,7 +82,11 @@ export class ClientsListComponent implements OnInit {
                 };
 
                 this.temp.push(d);
-                this.feeds$.next(this.temp);
+                this.x = this.temp;
+                console.log('this.x', this.x);
+
+                // this.feeds$.next(this.temp);
+
                 this.dataSource = new MatTableDataSource<any>(this.temp);
                 this.dataFilter = this.temp;
                 this.dataSource.sort = this.sort;
@@ -95,7 +104,7 @@ export class ClientsListComponent implements OnInit {
     this.dataSource.data = filterValue;
   }
 
-  onSelectedTimeValue() {
+  onSelectedTimeValue(event) {
     const time = this.selected;
     const data = this.dataFilter;
     let temp = [];

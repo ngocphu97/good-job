@@ -158,7 +158,7 @@ export class ContentService {
     FB.api(`/me`, 'GET',
       {
         access_token: token,
-        fields: 'accounts{feed,access_token, name, photos.width(150).height(150){picture}}'
+        fields: 'accounts{feed,access_token,name,photos.width(150).height(150){picture}}'
       }, (response) => {
         console.log('response', response);
         const length = response.accounts.data.length;
@@ -193,6 +193,7 @@ export class ContentService {
     const files = multiSelectedFile;
     const fbMediaId: any = [];
     const lenght = multiSelectedFile.length;
+
     files.forEach(file => {
       const fileReader = new FileReader();
       if (file) {
