@@ -8,6 +8,14 @@
   margin-left: 70px;
 }
 
+.gudjob-add-project-btn {
+  border-radius: 50%;
+}
+
+.gudjob-add-project-btn:focus {
+  outline: 0;
+}
+
 .gudjob-public-btn {
   width: 199px;
   height: 37px;
@@ -20,7 +28,7 @@
 }
 
 .project-list {
-  margin-left: 70px;
+  padding-left: 35px;
   margin-top: 30px;
   width: 100%;
 }
