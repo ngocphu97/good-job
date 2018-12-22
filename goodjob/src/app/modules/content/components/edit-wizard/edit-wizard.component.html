@@ -62,7 +62,7 @@
                 </li>
               </ul>
             </div>
-            
+
             <mat-card>
               <mat-card-content>
                 Edit content
@@ -81,7 +81,8 @@
                       class="inputfile" />
 
                     <label mat-button for="file">
-                      <span>Add image</span>
+                      <span> Add image +
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -98,7 +99,7 @@
               <mat-card-content>
                 Preview content
                 <mat-form-field appearance="outline" style="width: 100%">
-                  <textarea spellcheck="true" style="width: 100%" matInput placeholder="Textarea" rows="20">{{content}}</textarea>
+                  <textarea spellcheck="true" style="width: 100%" matInput placeholder="Textarea" rows="7">{{content}}</textarea>
                 </mat-form-field>
 
                 <span>Preview image(s)</span>
@@ -107,6 +108,7 @@
                     <mat-grid-tile *ngFor="let item of base64textString">
 
                       <img class="img-preview" src={{item}} alt="" id="img">
+
                       <button class="img-preview-delete" mat-raised-button color="accent" (click)="onDeleteImgPreview(item)">
                         <i class="material-icons">
                           delete

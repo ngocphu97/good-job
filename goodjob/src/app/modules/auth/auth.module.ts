@@ -10,7 +10,6 @@ import { routes } from './auth.routing';
 import { containers } from './containers';
 import { components } from './components';
 import { SharedModule } from '../shared';
-import { SignUpPageComponent } from './containers/sign-up-page/sign-up-page.component';
 
 
 @NgModule({
@@ -24,7 +23,6 @@ import { SignUpPageComponent } from './containers/sign-up-page/sign-up-page.comp
   declarations: [
     ...containers,
     ...components,
-    SignUpPageComponent
   ],
   providers: [
     ...services,

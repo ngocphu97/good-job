@@ -1,19 +1,36 @@
-.publish {
+.side-nav {
+  width: 268px;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 70px;
 }
 
-.publish button {
-  width: 83%;
-  border-radius: 20px;
+.gudjob-public-btn {
+  width: 199px;
+  height: 37px;
+  border-radius: 40.5px;
+  background-color: #f06f5f;
 }
 
-:host ::ng-deep .mat-pseudo-checkbox {
-  border: 2px solid #fff;
+.gudjob-public-btn:focus {
+  outline: 0;
 }
 
-:host ::ng-deep .mat-card-avatar {
-  width: 33px;
-  height: 33px;
-  border-radius: 50%;
+.project-list {
+  margin-left: 70px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.project-list-select {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.project {
+  margin-top: 10px;
 }

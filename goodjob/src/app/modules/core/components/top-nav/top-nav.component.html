@@ -1,1 +1,72 @@
-wellcome
+<div class="top-nav">
+  <div class="gudjob-logo">
+    <img src="https://scontent.fsgn1-1.fna.fbcdn.net/v/t1.0-1/p200x200/38067998_2142529909365941_6082361658997473280_n.png?_nc_cat=106&_nc_ht=scontent.fsgn1-1.fna&oh=8af4ca5ce237dea325206f8d4ba27292&oe=5C9117CF"
+      alt="">
+  </div>
+
+
+
+  <div class="gudjob-actions">
+
+    <button mat-icon-button [matMenuTriggerFor]="list">
+      <mat-icon style="color: #ffffff">event_note</mat-icon>
+    </button>
+    <mat-menu #list="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="calendar">
+      <mat-icon style="color: #ffffff">calendar_today</mat-icon>
+    </button>
+    <mat-menu #calendar="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="chart">
+      <mat-icon style="color: #ffffff">insert_chart_outlined</mat-icon>
+    </button>
+    <mat-menu #chart="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="dehaze">
+      <mat-icon style="color: #ffffff">dehaze</mat-icon>
+    </button>
+    <mat-menu #dehaze="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+
+  </div>
+</div>

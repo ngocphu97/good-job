@@ -1,3 +1,6 @@
 <div class="login-form">
-  <app-login-form (logoutSignal)="logoutWithFb()"></app-login-form>
+  <app-login-form (loginSignal)="loginWithFb()" (logoutSignal)="logoutWithFb()"></app-login-form>
+  <p *ngIf="message != '' ">
+    {{message}};
+  </p>
 </div>

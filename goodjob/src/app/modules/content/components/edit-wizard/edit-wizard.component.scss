@@ -5,6 +5,15 @@
   padding: 0;
 }
 
+:host::ng-deep .mat-horizontal-stepper-header-container {
+  width: 50%;
+}
+
+:host::ng-deep .mat-step-icon {
+  color: #ffffff;
+  background: #f06f5f;
+}
+
 .card-content {
   height: 100%;
   width: 100%;
@@ -37,6 +46,7 @@
 }
 
 .actions {
+  padding-top: 4px;
   display: flex;
   justify-content: space-between;
 }

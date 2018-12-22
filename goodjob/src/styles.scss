@@ -1,17 +1,25 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
-
+@import '~@angular/material/theming';
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
-
-@font-face {
-  font-family: 'Montserrat', sans-serif;
-  src: url('https://fonts.googleapis.com/css?family=Montserrat');
-}
 
 html {
   height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 body {
   height: 100%;
+  padding: 0;
   margin: 0;
+}
+
+// .fancyFont {
+//   font-family: 'Montserrat';
+//   font-weight: 500;
+// }
+
+* {
+  font-family: Montserrat /*Replace with your custom font*/, sans-serif; 
+  /*Add the !important to overwrite all elements*/
 }

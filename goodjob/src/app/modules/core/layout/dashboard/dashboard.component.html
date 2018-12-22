@@ -1,11 +1,16 @@
-<div class="container1">
-  <div class="side-nav">
-    <app-side-nav (userSelected)="onUserSelected($event)"></app-side-nav>
-  </div>
+<div class="gudjob-container">
 
-  <div class="main-content">
-    <div class="main">
-      <router-outlet></router-outlet>
+    <div class="top-nav">
+        <app-top-nav></app-top-nav>
     </div>
-  </div>
+  
+    <div class="side-nav">
+      <app-side-nav (userSelected)="onUserSelected($event)"></app-side-nav>
+    </div>
+  
+    <div class="main-content">
+        <router-outlet></router-outlet>
+    </div>
+  
+
 </div>

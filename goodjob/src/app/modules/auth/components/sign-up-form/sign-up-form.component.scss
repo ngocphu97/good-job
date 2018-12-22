@@ -98,4 +98,53 @@
   .gudjob-logo img {
     width: 300px;
   }
+
+  @media only screen and (max-width: 900px) {
+    .gudjob-login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  
+    .gudjob-logo {
+      height: 0;
+    }
+  
+    .gudjob-logo img {
+      padding: 0;
+      margin: 0;
+    }
+  
+    .gudjob-login .left {
+      display: block;
+      width: 100%;
+      height: 50px;
+    }
+  
+    .gudjob-login .right {
+      display: block;
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .social {
+      width: 100%;
+      overflow: hidden;
+      margin-top: 0px;
+      height: 30px;
+    }
+  
+    .sign-up {
+      margin: 0;
+    }
+  
+    .actions.login-actions {
+      margin-top: 15px;
+      height: 100%;
+      margin-bottom: 15px;
+    }
+  }
   

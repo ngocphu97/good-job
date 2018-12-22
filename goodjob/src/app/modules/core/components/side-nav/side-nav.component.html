@@ -1,19 +1,15 @@
 <div class="side-nav">
   <div class="publish">
-    <a routerLink="/content" type="button" mat-raised-button color="accent" style="width: 83%;">
-      <i class="material-icons">
-        public
-      </i>
+    <button mat-flat-button class="gudjob-public-btn">
       Publish
-    </a>
+    </button>
   </div>
 
-  <mat-nav-list>
-    <mat-list-item *ngFor="let user of connectAccount" style="color: #fff" (click)="onSelect(user)">
-      <span matLine>{{ user.name }}</span>
-      <button mat-icon-button>
-        <img mat-card-avatar src="{{user.image}}" alt="">
-      </button>
-    </mat-list-item>
-  </mat-nav-list>
+  <div class="project-list">
+    <mat-radio-group class="project-list-select">
+      <mat-radio-button class="project" value="project1">Project 1</mat-radio-button>
+      <mat-radio-button class="project" value="project2">Project 2</mat-radio-button>
+    </mat-radio-group>
+  </div>
 
+</div>

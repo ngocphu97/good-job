@@ -13,6 +13,7 @@ export class LoginPageComponent implements OnInit {
 
   connectAccount = new Array<any>();
   text: any;
+  message = '';
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -31,14 +32,14 @@ export class LoginPageComponent implements OnInit {
 
   loginWithFb() {
     const router = this.router;
-    FB.login(function (response) {
-      console.log(response);
+    let mess = this.message;
+    FB.login((response) => {
       if (response.authResponse) {
-        console.log('Welcome! Fetching your information.... ');
+        router.navigate(['/home']);
       } else {
+        mess = 'Your infomation is not correct, please try again. Thank you.';
         console.log('User cancelled login or did not fully authorize.');
       }
-      router.navigate(['/content']);
     });
   }
 

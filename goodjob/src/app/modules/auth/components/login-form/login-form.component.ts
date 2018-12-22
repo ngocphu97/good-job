@@ -31,6 +31,4 @@ export class LoginFormComponent implements OnInit {
     this.logoutSignal.emit();
   }
 
-
-
 }

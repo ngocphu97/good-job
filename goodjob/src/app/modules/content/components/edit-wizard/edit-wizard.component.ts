@@ -21,6 +21,7 @@ import { Client } from '../../models/client';
 export class EditWizardComponent implements OnInit {
 
   isLinear = false;
+  color = 'accent';
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
