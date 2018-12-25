@@ -20,7 +20,7 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BANA4ZBrCf35WFKzMWkACbptczKYr6Swtmr9WSoRwatTumZA0VBXUefHbJrfqb4k5Piq9utRcSYTttkNFLkf4fc08QM9OMMu7ZBOvAx3exgvDwRhEwK4NwccnvZBJSehsWqkFDkeZCL8BzJscdqIPYAi9982KQAbBXJtpcrUdE36y7j0c1x0u8B3vgmwozEveYjDySXwOjZC8JEDWwcYXQZD';
+  access_token = 'EAANQlAVxZBd4BAH8WrjbS68oXuflByJKec5pNXvH0XlscoKL79tRyarPKjF5VL86ZCP0I6ou8BQvqDWvSgbqa92IGYSqTj9aFtAm8wwmckS4KfJ1O2gsN1Yf3OZAGc7bDWujvE8iQ7Cmy3aZCltZBd1F1sQ6FNqtGBcpm6UQoNmLWq3uITv3FEPYI2YlSjD0ZD';
 
   connectAccount = [];
 
@@ -38,7 +38,6 @@ export class ContentService {
       secondary: '#FDF1BA'
     }
   };
-
 
   constructor(private http: HttpClient) { }
 
@@ -73,7 +72,6 @@ export class ContentService {
         // tslint:disable-next-line:max-line-length
         fields: 'accounts{feed{link,message,created_time,is_published,picture.width(150).height(150)}, name, photos.width(150).height(150){picture}}'
       }, (response) => {
-        console.log(response);
         const length = response.accounts.data.length;
         for (let i = 0; i < length; i++) {
           const id = response.accounts.data[i].id;
@@ -144,7 +142,6 @@ export class ContentService {
           }
         }
         if (response.error) {
-          console.log(response.error);
         }
       }
     );
@@ -160,7 +157,6 @@ export class ContentService {
         access_token: token,
         fields: 'accounts{feed,access_token,name,photos.width(150).height(150){picture}}'
       }, (response) => {
-        console.log('response', response);
         const length = response.accounts.data.length;
         for (let i = 0; i < length; i++) {
           const id = response.accounts.data[i].id;
@@ -178,14 +174,11 @@ export class ContentService {
           };
           connectAccount.push(client);
         }
-
-        console.log(this.connectAccount);
         if (response.error) {
           console.log(response.error);
         }
       }
     );
-
     return connectAccount;
   }
 
@@ -229,7 +222,6 @@ export class ContentService {
                 attached_media: fbMediaId
               },
               (res) => {
-                console.log(res);
                 if (res && !res.error) { }
                 return res;
               }

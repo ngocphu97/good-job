@@ -3,6 +3,7 @@ import { NavigateService } from '../../services/navigate/navigate.service';
 import { User } from '../../services/navigate/model/user.model';
 import { Observable } from 'rxjs';
 import { Client } from '../../models/response-data.model';
+import { Router } from '@angular/router';
 
 declare var FB: any;
 
@@ -22,7 +23,7 @@ export class SideNavComponent implements OnInit {
 
   connectAccount = new Array<Client>();
 
-  constructor(private navigateService: NavigateService) { }
+  constructor(private navigateService: NavigateService, private router: Router) { }
 
   ngOnInit() {
     // this.getInfo();
@@ -63,6 +64,10 @@ export class SideNavComponent implements OnInit {
         }
       }
     );
+  }
+
+  onSelectEditContent() {
+    this.router.navigateByUrl('/content');
   }
 
 

@@ -1,3 +1,7 @@
+<div *ngIf="onPostSuccess === true"> 
+  Your post has been posted !
+</div>
+
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
@@ -67,8 +71,18 @@
               <mat-card-content>
                 Edit content
                 <mat-form-field appearance="outline" style="width: 100%">
-                  <textarea spellcheck="true" [(ngModel)]="content" style="width: 100%" matInput placeholder="Textarea"
-                    rows="10" formControlName="secondCtrl" #post></textarea>
+                  <textarea spellcheck="true" [(ngModel)]="content" style="width: 100%" matInput rows="10"
+                    formControlName="secondCtrl" #post>
+                    🏮🏮 Bánh Trung Thu Givral 🏮🏮 đang vô cùng Hot trên thị trường bánh trung thu năm nay. Bạn có thắc mắc bên trong chiếc hộp vô cùng bắt mắt ấy là gì?
+                    Tiki khui hộp giải đáp thắc mắc cho cả nhà đây ạ!
+                    ----------------------------------
+                    Trung Thu đang đến, Tiki đã sẵn sàng giúp bạn gửi những món quà ấm áp đến người bạn yêu thương!
+                    📍 Nhập mã "TRUNGTHU05" - GIẢM 5% cho ĐH Bánh Trung Thu từ 200.000đ - Giảm tối đa 100.000đ!
+                    📍 Nhập mã "TRUNGTHU08" - GIẢM 8% cho ĐH Bánh Trung Thu từ 1.000.000đ - Giảm tối đa 200.000đ!
+                    Chương trình chỉ áp dụng cho các sản phẩm Bánh Trung Thu thuộc TIKI TRADING. 
+                    ----------------------------------
+                    💌💌 Còn chần chừ gì mà không chọn quà Trung Thu ngay hôm nay với những gợi ý siêu hay ho tại đây http://bit.ly/Chọn-Quà-Trung-Thu-Tiki
+                  </textarea>
                 </mat-form-field>
 
               </mat-card-content>
@@ -81,14 +95,18 @@
                       class="inputfile" />
 
                     <label mat-button for="file">
-                      <span> Add image +
+                      <span> Add media +
                       </span>
                     </label>
                   </div>
+
+
                 </div>
                 <div class="actions-right">
                   <button mat-button>Schedule</button>
-                  <button mat-button>Post now</button>
+                  <button mat-button (click)="onUploadMuiltiPhotos(content)">Post Now</button>
+                  <button mat-button (click)="onUploadVideo(content)"> Upload Video </button>
+                  
                 </div>
               </mat-card-actions>
             </mat-card>

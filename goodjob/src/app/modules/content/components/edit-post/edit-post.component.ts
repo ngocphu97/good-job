@@ -16,7 +16,7 @@ export class EditPostComponent implements OnInit {
     clients: any = [];
 
     // tslint:disable-next-line:max-line-length
-    GJ_access_token = 'EAANQlAVxZBd4BAKq5UY2EyuFrZB23hZCzzZAiM1zdvMayhKjKjMsjfxMCTvIVSZADEBbe7uu2ELIxWFonj7UgxtN7bIMtzFbX6zkD1rnzGx8tOZAcVYSk3d2rKxUmaGPP7JxkCWfRFNaiiUqFwgHYb4X32NoG3z4nXumyZBWbrquhdp4qqSUPsnWzNH5c4WjYKhv6tyLgqrAAMtVLYHttYC';
+    GJ_access_token = 'EAANQlAVxZBd4BAC6jS4kQOl4wreYrG5gz8OjliAqDCVaxNPh47C1XjVGLSs0hbLkDR7UPE92zQbrtJ5CfkEXJiHayyCJWkSFp9GWz437JATZABy1qxubDIoOEedjfJpsfO6XlqaxCmsXsPUn9G3XYZCspg5utLkrTtdEtZAAUA4N0TeMD7ah7WhHZBHP9c7YZD';
 
     constructor(private http: HttpClient, private service: ContentService) {
     }
@@ -139,7 +139,8 @@ export class EditPostComponent implements OnInit {
         );
     }
 
-    video(event) {
+    onUploadVideo(event) {
+        console.log('uploading');
         const file = event.target.files[0];
         // const time = new Date('2018.09.28').getTime() / 1000;
         const formData = new FormData();
@@ -149,15 +150,17 @@ export class EditPostComponent implements OnInit {
         formData.append('access_token', this.GJ_access_token);
         formData.append('description', 'Shedule post with video');
         formData.append('published', 'true');
-        // formData.append('scheduled_publish_time', time.toString());
 
-        const response: any = fetch(`https://graph-video.facebook.com/v3.1/249376455821855/videos`, {
-            body: formData,
-            method: 'POST',
-        });
-        response.then(res => {
-            console.log('res fetch', res);
-        });
+        // formData.append('scheduled_publish_time', time.toString());
+        // 249376455821855 : page id
+
+        // const response: any = fetch(`https://graph-video.facebook.com/v3.1/249376455821855/videos`, {
+        //     body: formData,
+        //     method: 'POST',
+        // });
+        // response.then(res => {
+        //     console.log('res fetch', res);
+        // });
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://graph-video.facebook.com/v3.1/249376455821855/videos');
