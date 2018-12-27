@@ -20,7 +20,7 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAH8WrjbS68oXuflByJKec5pNXvH0XlscoKL79tRyarPKjF5VL86ZCP0I6ou8BQvqDWvSgbqa92IGYSqTj9aFtAm8wwmckS4KfJ1O2gsN1Yf3OZAGc7bDWujvE8iQ7Cmy3aZCltZBd1F1sQ6FNqtGBcpm6UQoNmLWq3uITv3FEPYI2YlSjD0ZD';
+  access_token = 'EAANQlAVxZBd4BAEGWTMfhI8t4cbupmgn0ociLFg3vrOZAYj0EEybWj3QPaq0wAOtWQrr96ekA5GqGBPZCJrQ68NMRF7gIIRwlZBY7coDBDyXFNjl5L5ilGVB9n1DBVIA6HqLi7nAlXwEPrqtCiaKaUmTueZBU8VkwVBPFr2kscMRzKXgm3HZBMXFWniwgxF04ZD';
 
   connectAccount = [];
 

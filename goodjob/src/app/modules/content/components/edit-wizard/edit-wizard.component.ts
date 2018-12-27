@@ -18,7 +18,7 @@ declare var FB: any;
 export class EditWizardComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
-  GJ_access_token = 'EAANQlAVxZBd4BAH8WrjbS68oXuflByJKec5pNXvH0XlscoKL79tRyarPKjF5VL86ZCP0I6ou8BQvqDWvSgbqa92IGYSqTj9aFtAm8wwmckS4KfJ1O2gsN1Yf3OZAGc7bDWujvE8iQ7Cmy3aZCltZBd1F1sQ6FNqtGBcpm6UQoNmLWq3uITv3FEPYI2YlSjD0ZD';
+  GJ_access_token = '';
   selectedFile = null;
   multiSelectedFile = [];
 

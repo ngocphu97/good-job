@@ -4,8 +4,6 @@
       alt="">
   </div>
 
-
-
   <div class="gudjob-actions">
 
     <button mat-icon-button [matMenuTriggerFor]="list">
@@ -40,9 +38,9 @@
       <mat-icon style="color: #ffffff">insert_chart_outlined</mat-icon>
     </button>
     <mat-menu #chart="matMenu">
-      <button mat-menu-item>
+      <button (click)="onSelectAnalytics()" mat-menu-item>
         <mat-icon>dialpad</mat-icon>
-        <span>Redial</span>
+        <span>Analytics</span>
       </button>
       <button mat-menu-item>
         <mat-icon>notifications_off</mat-icon>
