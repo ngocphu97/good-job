@@ -4,7 +4,8 @@ import {
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
-  OnInit
+  OnInit,
+  Input
 } from '@angular/core';
 import {
   isSameDay,
@@ -31,6 +32,10 @@ import { ContentService } from '../../services/content.service';
   encapsulation: ViewEncapsulation.None
 })
 export class DemoComponent implements OnInit {
+
+  @Input()
+  selectedGroup: any;
+
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   view = 'month';
@@ -54,7 +59,9 @@ export class DemoComponent implements OnInit {
   }
 
   getFeeds() {
-    this.events = this.service.getFeeds();
+    this.selectedGroup.clients.forEach(c => {
+      this.events = this.service.getFeedsByPageAccessToken(c.name, c.access_token);
+    });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }) {
@@ -74,7 +81,6 @@ export class DemoComponent implements OnInit {
           && e.start.getMonth() === date.getMonth()
           && e.start.getFullYear() === date.getFullYear();
       });
-      console.log(this.events[0].cssClass);
     }
   }
 

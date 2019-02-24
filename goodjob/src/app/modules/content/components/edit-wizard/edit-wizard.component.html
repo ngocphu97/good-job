@@ -1,6 +1,6 @@
-<div *ngIf="onPostSuccess === true"> 
+<!-- <div *ngIf="onPostSuccess === true">
   Your post has been posted !
-</div>
+</div> -->
 
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
@@ -11,14 +11,17 @@
         <li *ngFor="let g of groups" class="item">
           <mat-card class="group-card">
             <mat-card-content class="card-content">
-              <button mat-button matStepperNext (click)="selectGroup(g)" style="width: 100%">
-                GROUP {{g.groupName}}
-              </button>
-              <ul>
-                <li *ngFor="let c of g.clients">
-                  <img src="{{c.image}}" alt="" class="client-avatar">
-                </li>
-              </ul>
+              <div class="selected-group">
+                <button mat-button matStepperNext (click)="selectGroup(g)" style="width: 100%">
+                  GROUP {{g.groupName}}
+                </button>
+                <ul>
+                  <li *ngFor="let c of g.clients" class="client-group">
+                    <img src="{{c.image}}" alt="" class="client-avatar">
+                    <span class="client-name">{{c.name}}</span>
+                  </li>
+                </ul>
+              </div>
 
             </mat-card-content>
           </mat-card>
@@ -87,27 +90,31 @@
 
               </mat-card-content>
               <mat-card-actions class="actions">
+
                 <div class="action-left">
-
                   <div class="input-image">
-
                     <input type="file" (change)="onAccept($event)" accept=".png, .jpg, .jpeg, .pdf" name="file" id="file"
                       class="inputfile" />
-
                     <label mat-button for="file">
-                      <span> Add media +
+                      <span>
+                        Add media +
                       </span>
                     </label>
                   </div>
-
-
                 </div>
+
                 <div class="actions-right">
-                  <button mat-button>Schedule</button>
-                  <button mat-button (click)="onUploadMuiltiPhotos(content)">Post Now</button>
-                  <button mat-button (click)="onUploadVideo(content)"> Upload Video </button>
-                  
+                  <button mat-button>
+                    Schedule
+                  </button>
+                  <button mat-button (click)="onUploadMuiltiPhotos(content)">
+                    Post Now
+                  </button>
+                  <button mat-button (click)="onUploadVideo(content)">
+                    Upload Video
+                  </button>
                 </div>
+
               </mat-card-actions>
             </mat-card>
 
@@ -123,15 +130,17 @@
                 <span>Preview image(s)</span>
                 <div style="margin-top: 10px">
                   <mat-grid-list cols="5" rowHeight="160px">
-                    <mat-grid-tile *ngFor="let item of base64textString">
+                    <mat-grid-tile *ngFor="let item of imagesPreview">
+                      <div>
+                        <img class="img-preview" src={{item}} alt="" id="img">
 
-                      <img class="img-preview" src={{item}} alt="" id="img">
-
-                      <button class="img-preview-delete" mat-raised-button color="accent" (click)="onDeleteImgPreview(item)">
-                        <i class="material-icons">
-                          delete
-                        </i>
-                      </button>
+                        <button class="img-preview-delete" 
+                              mat-raised-button color="accent" 
+                              style="background: #f06f5f"
+                              (click)="onDeleteImgPreview(item)">
+                          <i class="material-icons">delete</i>
+                        </button>
+                      </div>
 
                     </mat-grid-tile>
                   </mat-grid-list>
@@ -144,8 +153,8 @@
         </div>
       </div>
 
-      <div class="calendar">
-        <app-demo></app-demo>
+      <div class="calendar" *ngIf="selectedGroup.clients.length > 0">
+        <app-demo [selectedGroup]='selectedGroup'></app-demo>
       </div>
 
       <div>

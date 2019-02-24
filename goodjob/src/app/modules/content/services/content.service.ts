@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import {
-  CalendarEvent, CalendarEventAction
-} from 'angular-calendar';
+import { CalendarEvent } from 'angular-calendar';
 
 import { Client } from '../models/client';
 import { Group } from '../models/group';
+import { throwError, Observable } from 'rxjs';
+
 
 declare var FB: any;
 
@@ -19,14 +19,15 @@ export class ContentService {
   events: CalendarEvent[] = [];
   clients: Client[] = [];
 
+  // use access_token(get when login)
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAEGWTMfhI8t4cbupmgn0ociLFg3vrOZAYj0EEybWj3QPaq0wAOtWQrr96ekA5GqGBPZCJrQ68NMRF7gIIRwlZBY7coDBDyXFNjl5L5ilGVB9n1DBVIA6HqLi7nAlXwEPrqtCiaKaUmTueZBU8VkwVBPFr2kscMRzKXgm3HZBMXFWniwgxF04ZD';
+  access_token = 'EAANQlAVxZBd4BANKiPrxGnwjKWPajkdXqldBxkDgXIowfXSJklik7l5RdgFNJI2xh9AXNdOVPMQ6Ve8NhQ4UZCZClIYLmQlB6DtVqikh8Mr0vnuzHS8jtZACqYxP0V1o2znCCONXKWewVIvGOWumV73pf11ZAousS1MEaJiUadM79m4HWUCzfB7dMrk9WdMEZD';
 
   connectAccount = [];
 
   colors: any = {
     red: {
-      primary: '#e41c77',
+      primary: '#F06F5F',
       secondary: '#FAE3E3'
     },
     blue: {
@@ -70,9 +71,11 @@ export class ContentService {
       {
         access_token: token,
         // tslint:disable-next-line:max-line-length
-        fields: 'accounts{feed{link,message,created_time,is_published,picture.width(150).height(150)}, name, photos.width(150).height(150){picture}}'
+        fields: 'feed{link,message,created_time,is_published,picture.width(150).height(150)}, name, photos.width(150).height(150){picture}'
       }, (response) => {
-        const length = response.accounts.data.length;
+        const length = response.feed.data.length;
+
+
         for (let i = 0; i < length; i++) {
           const id = response.accounts.data[i].id;
 
@@ -148,6 +151,103 @@ export class ContentService {
     return events;
   }
 
+  getFeedsByPageAccessToken(clientName, access_token): CalendarEvent[] {
+    const token = access_token;
+    const eventColors = this.colors;
+    const events = this.events;
+
+    FB.api(`/me/feed`, 'GET',
+      {
+        access_token: token,
+        fields: `
+          link,
+          message,
+          created_time,
+          is_published,
+          picture.width(150).height(150),
+          name,
+          photos.width(150).height(150){picture}
+        `
+      }, (response) => {
+        console.log(response);
+        const length = response.data.length;
+        let client: Client;
+
+        for (let i = 0; i < length; i++) {
+          const id = response.data[i].id;
+          // page logo
+          // const photo = response.data[i].photos;
+          // const avatar = photo.data[0].picture;
+          const avatar = response.data[i].picture;
+
+          // page name
+          const data = response.data[i].name;
+
+          // page feeds
+          const feed = response.data;
+
+          client = {
+            id: id,
+            name: data,
+            image: avatar,
+            access_token: access_token,
+            feed: feed,
+          };
+
+        }
+
+        for (let j = 0; j < length; j++) {
+
+          let thumb = client.feed[j].picture;
+          if (thumb == null) {
+            thumb = '';
+          }
+
+          if (client.feed[j].message == null) {
+            client.feed[j].message = client.feed[j].name;
+          }
+
+          let shortMessage = '';
+          if (client.feed[j].message.length > 50) {
+            shortMessage = client.feed[j].message.substring(0, 50) + ' ...';
+          }
+
+          if (client.feed[j].story == null) {
+            client.feed[j].story = '';
+          }
+          const convertDateTime = new Date(client.feed[j].created_time);
+          const timeForTitle = this.convertDate(convertDateTime);
+          const title = timeForTitle + ' - ' + shortMessage;
+
+          const event: CalendarEvent = {
+            id: client.feed[j].id,
+            start: convertDateTime,
+            title: title,
+            color: eventColors.red,
+            cssClass: 'my-custom-class',
+            draggable: true,
+            message: client.feed[j].message,
+            story: client.feed[j].story,
+            clientName: clientName,
+            is_published: client.feed[j].is_published,
+            link: client.feed[j].link,
+            thumbnail: client.feed[j].picture,
+            actions: [{
+              label: `<img class="img-custom" src='${client.feed[j].picture}' style='width:30px'/>`,
+              onClick: ({ }: { event: CalendarEvent }): void => {
+              }
+            }]
+          };
+          events.push(event);
+        }
+
+        if (response.error) {
+        }
+      }
+    );
+    return events;
+  }
+
   getInfo(): Client[] {
     const token = this.access_token;
     const connectAccount = this.connectAccount;
@@ -155,7 +255,7 @@ export class ContentService {
     FB.api(`/me`, 'GET',
       {
         access_token: token,
-        fields: 'accounts{feed,access_token,name,photos.width(150).height(150){picture}}'
+        fields: 'accounts{access_token,name,photos.width(150).height(150){picture}}'
       }, (response) => {
         const length = response.accounts.data.length;
         for (let i = 0; i < length; i++) {
@@ -164,15 +264,18 @@ export class ContentService {
           const avatar = photo.data[0].picture;
           const data = response.accounts.data[i].name;
           const access_token = response.accounts.data[i].access_token;
-          const feed = response.accounts.data[i].feed;
+          // const feed = response.accounts.data[i].feed;
+          // const feed = this.getFeedsByPageAccessToken(access_token);
+          const feed = [];
           const client: Client = {
             id: id,
             name: data,
             image: avatar,
             access_token: access_token,
-            feed: feed.data,
+            feed: feed,
           };
           connectAccount.push(client);
+
         }
         if (response.error) {
           console.log(response.error);
@@ -233,6 +336,46 @@ export class ContentService {
         fileReader.readAsArrayBuffer(file);
       }
     });
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
+
+  saveArticle(article): Observable<any> {
+    const url = 'http://localhost:3000/addArticle';
+    return this.http.post<any>(url, article);
+  }
+
+  async uploadImage(photoData) {
+    const url = 'http://localhost:3000/uploadimage';
+    const formData = new FormData();
+
+    formData.append('image', photoData);
+
+    let response = await fetch(url, {
+      body: formData,
+      method: 'POST',
+    });
+
+    return response = await response.json();
+  }
+
+  getImageFormS3(): Observable<any> {
+    const url = 'http://localhost:3000/getImages';
+    return this.http.get(url);
   }
 
 }

@@ -13,8 +13,9 @@ export class HomeService {
 
   getUsers() {
     console.log('connecting ...');
-    this.http.get('http://localhost:3000/api/getUser').subscribe(data => {
-      console.log(data);
+    this.http.get('http://localhost:3000/api/getUser')
+      .subscribe(data => {
+        console.log(data);
     });
   }
 }

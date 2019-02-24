@@ -18,35 +18,22 @@ export class LoginPageComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
-    this.init();
-  }
-
-  init() {
-    FB.init({
-      appId: '389593224888209',
-      autoLogAppEvents: true,
-      xfbml: true,
-      version: 'v3.1'
-    });
   }
 
   loginWithFb() {
     const router = this.router;
-    let mess = this.message;
-    FB.login((response) => {
+    FB.login(function (response) {
       if (response.authResponse) {
+        console.log('you are connect now');
         router.navigate(['/home']);
       } else {
-        mess = 'Your infomation is not correct, please try again. Thank you.';
         console.log('User cancelled login or did not fully authorize.');
       }
     });
   }
 
-  logoutWithFb() {
-    FB.logout(function (response) {
-      console.log(response);
-    });
+  login() {
+    this.router.navigate(['/home']);
   }
 
 }

@@ -8,6 +8,9 @@ import { HomeService } from '../../services/home.service';
 })
 export class HomePageComponent implements OnInit {
 
+  loading = true;
+  defaultImg = 'https://loading.io/spinners/dual-ring/lg.dual-ring-loader.gif';
+
   constructor(private service: HomeService) { }
 
   ngOnInit() {
@@ -18,4 +21,10 @@ export class HomePageComponent implements OnInit {
     this.service.getUsers();
   }
 
+  onLoadingImg() {
+    setTimeout(() => {
+      this.defaultImg = 'https://www.altitudeadventure.co.uk/wp-content/uploads/2016/05/new-sites-coming-soon-banner.png';
+      this.loading = false;
+    }, 1500);
+  }
 }

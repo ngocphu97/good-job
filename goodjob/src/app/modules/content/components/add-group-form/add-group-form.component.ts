@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-
 import { Group } from '../../models/group';
 import { CalendarEvent } from 'calendar-utils';
 import { ContentService } from '../../services/content.service';

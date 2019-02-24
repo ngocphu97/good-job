@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ContentService } from '../../services/content.service';
+import { AnalyticsPageComponent } from 'app/modules/analytics/containers/analytics-page/analytics-page.component';
 
 declare var FB: any;
 
@@ -14,6 +15,19 @@ export class EditPostComponent implements OnInit {
     selectedFile = null;
     multiSelectedFile = [];
     clients: any = [];
+
+    uploadedImageUrl: String;
+
+    imagesFromS3 = [];
+
+    mess: String;
+
+    article = {
+        fullName: <String>'Defaule Name',
+        title: <String>'Default title',
+        articleText: <String>'Default text',
+        imageFile: <any>null,
+    };
 
     // tslint:disable-next-line:max-line-length
     GJ_access_token = 'EAANQlAVxZBd4BAC6jS4kQOl4wreYrG5gz8OjliAqDCVaxNPh47C1XjVGLSs0hbLkDR7UPE92zQbrtJ5CfkEXJiHayyCJWkSFp9GWz437JATZABy1qxubDIoOEedjfJpsfO6XlqaxCmsXsPUn9G3XYZCspg5utLkrTtdEtZAAUA4N0TeMD7ah7WhHZBHP9c7YZD';
@@ -215,6 +229,33 @@ export class EditPostComponent implements OnInit {
                 console.log(response);
             }
         );
+    }
+
+    onSubmit() {
+        const fileReader = new FileReader();
+        const file = this.selectedFile;
+        // let imgUrl = this.uploadedImageUrl;
+        if (file) {
+            fileReader.onloadend = this.onUploadingFile(fileReader);
+            fileReader.readAsArrayBuffer(file);
+        }
+    }
+
+    onUploadingFile(fileReader): any {
+        const photoData = new Blob([fileReader.result], { type: 'image/jpg' });
+        this.service.uploadImage(photoData).then(
+            (res) => {
+                this.uploadedImageUrl = res.imageUrl;
+                this.mess = 'success' + res.imageUrl;
+            }
+        );
+    }
+
+    showImage() {
+        this.service.getImageFormS3().subscribe(data => {
+            this.imagesFromS3.push(data);
+            console.log(data);
+        });
     }
 
 }

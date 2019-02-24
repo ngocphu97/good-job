@@ -3,5 +3,5 @@ export interface Client {
     name: string;
     image: string;
     access_token: string;
-    feed: any;
+    feed?: any;
 }

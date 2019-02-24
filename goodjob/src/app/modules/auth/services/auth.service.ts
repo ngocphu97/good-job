@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '@app/environment';
+
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 import { TokenStoreManager } from './token-storage.service';
 import { LoginModel, AuthToken } from '../models';
 
@@ -10,7 +13,8 @@ import { LoginModel, AuthToken } from '../models';
 export class AuthService {
 
   constructor(private http: HttpClient,
-              private tokenStoreManager: TokenStoreManager) {
+    private tokenStoreManager: TokenStoreManager,
+    private jwtHelper: JwtHelperService) {
   }
 
   public login(user: LoginModel): Observable<any> {
@@ -26,8 +30,9 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const token = this.getAuthToken();
-    return token && AuthToken.isValid(token);
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
+    // return token && AuthToken.isValid(token);
   }
 
   public getAuthToken(): AuthToken {

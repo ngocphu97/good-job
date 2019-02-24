@@ -1,94 +1,49 @@
-<h1>hello</h1>
+<h2>Demo post node js</h2>
 
-<!-- upload file images  -->
-<div class="input-image">
+<button (click)="showImage()">SHow img</button>
 
-  <input type="file" (change)="onAccept($event)" accept=".png, .jpg, .jpeg, .pdf" name="file" id="file" multiple />
+<div *ngIf="imagesFromS3.length === 0 ">
+  Loading images .....
 
-  <label for="file">
-    <span>Add image</span>
-  </label>
 </div>
 
-<div *ngIf="multiSelectedFile.length > 0">
+<div *ngIf="imagesFromS3.length > 0 ">
   <ul>
-    <li *ngFor="let e of multiSelectedFile">
-      {{e.name}}
+    <li *ngFor="let i of imagesFromS3">
+        <img src="{{i}}" alt="{{i}}">
     </li>
   </ul>
 </div>
 
-<textarea name="" id="" cols="30" rows="10" #message>
-  </textarea>
 
-<button (click)="onUploadMuiltiPhotos(message.value)">Upload Multi photo</button>
+<div *ngIf="imageUrl != '' ">
+  {{mess}}
+  <img src={{uploadedImageUrl}} alt="">
 
-<br>
-
-<!-- upload file video11  -->
-
-<input type="file" (change)="onUploadVideo($event)"> upload file
-
-<!-- 
-
-<button (click)="schedulePost()">schedule</button>
-<button (click)="editSchedulePost('249376455821855_2086875551345036')">edit schedule</button>
-<button (click)="getSchedulePost()">get</button> -->
-
-<!-- <input (change)="uploadVideoToFacebookUsingURL(event)" type="file">Upload video using url -->
-<!-- <input (change)="uploadVideoToFacebooFromFile($event)" type="file">Upload video from file -->
-
-<!-- <input type="file" (change)="innitalizeSession($event)" name="file" id="file" #fileUpload>
-
-<button (click)=finishSession(151951951)>upload</button>
-<button (click)="uploadVideoToFacebookUsingURL()">Upload video using url</button> -->
-
-<!-- <form enctype="multipart/form-data" method="post"">
-  <input type="file" name="files">
-  <input type="submit" value="Send">
-</form> -->
-
-<!-- 
-<form action="POST" enctype="multipart/form-data">
-  <input type="file" (change)="onVideoChange($event)" name="file" id="file">
-</form> -->
-
-<!-- <button (click)="innitalizeSession(fileUpload.value)">Upload</button> -->
-<!-- <div>
-  <ul>
-    <li *ngFor="let client of clients">
-      <img src="client.image" alt="" style="height: 30px;">
-      {{client.access_token}}
-    </li>
-  </ul>
 </div>
 
-<div class="input-image">
+<img src="https://gudjobuploadimage.s3.ap-southeast-1.amazonaws.com/1550734179227" alt="">
 
-  <input type="file" (change)="onAccept($event)" accept=".png, .jpg, .jpeg, .pdf" name="file" id="file" />
+<form (ngSubmit)="onSubmit()" #articleForm="ngForm" enctype="application/x-www-form-urlencoded">
+  <div class="form-group">
+    <label for="fullName">Full Name</label>
+    <input type="text" name="fullname" [(ngModel)]="article.fullName" class="form-control" id="fullName" required>
+  </div>
 
-  <label for="file">
-    <span>Add image</span>
-  </label>
-</div>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" name="title" [(ngModel)]="article.title" class="form-control" id="title" required>
+  </div>
 
-<div *ngIf="multiSelectedFile.length > 0">
-  <ul>
-    <li>
-      {{multiSelectedFile.name}}
-    </li>
-  </ul>
-</div>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <textarea class="form-control" name="text" [(ngModel)]="article.articleText" id="articleText" name="articleText" cols="30" rows="10"></textarea>
+  </div>
 
-<textarea name="" id="" cols="30" rows="10" #message>
-  🏮🏮 Bánh Trung Thu Givral 🏮🏮 đang vô cùng Hot trên thị trường bánh trung thu năm nay. Bạn có thắc mắc bên trong chiếc hộp vô cùng bắt mắt ấy là gì?
-  Tiki khui hộp giải đáp thắc mắc cho cả nhà đây ạ!
-  ----------------------------------
-  Trung Thu đang đến, Tiki đã sẵn sàng giúp bạn gửi những món quà ấm áp đến người bạn yêu thương!
-  📍 Nhập mã "TRUNGTHU05" - GIẢM 5% cho ĐH Bánh Trung Thu từ 200.000đ - Giảm tối đa 100.000đ!
-  📍 Nhập mã "TRUNGTHU08" - GIẢM 8% cho ĐH Bánh Trung Thu từ 1.000.000đ - Giảm tối đa 200.000đ!
-  Chương trình chỉ áp dụng cho các sản phẩm Bánh Trung Thu thuộc TIKI TRADING. 
-  ----------------------------------
-  💌💌 Còn chần chừ gì mà không chọn quà Trung Thu ngay hôm nay với những gợi ý siêu hay ho tại đây http://bit.ly/Chọn-Quà-Trung-Thu-Tiki</textarea>
-
-<button (click)="onUploadMuiltiPhotos(message.value)">upload Multi photo</button> -->
+  <div class="form-group">
+    <label for="file">Upload image</label>
+    <input type="file" accept="image/*" name="imageFile" (change)="onFileChanged($event)" [(ngModel)]='article.imageFile' class="form-control" id="imageFile">
+  </div>
+ 
+  <button type="submit">Submit article</button>
+</form>

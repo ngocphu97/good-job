@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class LoginFormComponent implements OnInit {
 
-  email: string;
+  username: string;
   password: string;
   color = 'accent';
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { SplashScreenService } from '@app/core/services';
+declare var FB: any;
 
 @Component({
   selector: 'app-root',
@@ -15,5 +16,15 @@ export class AppComponent {
    */
   constructor(splashScreen: SplashScreenService) {
     this.splashScreen = splashScreen;
+    this.init();
+  }
+
+  init() {
+    FB.init({
+      appId: '389593224888209',
+      autoLogAppEvents: true,
+      xfbml: true,
+      version: 'v3.1'
+    });
   }
 }

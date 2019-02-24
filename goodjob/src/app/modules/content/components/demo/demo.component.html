@@ -1,26 +1,28 @@
-<div>
-  <a href="#">
-    <img style="width: 10px;" src="https://scontent.xx.fbcdn.net/v/t1.0-0/p130x130/39686722_2494926634166215_1798424002222358528_n.jpg?_nc_cat=102&oh=bc9138e57e93a8c9f566c4b2f746275b&oe=5C14DEC3"
-      alt="">
-  </a>
-</div>
-
 <!-- MODAL -->
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
+    <h5 class="modal-title">Preview content</h5>
     <button type="button" class="close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
-    </div>
-    <div>
-      Event:
-      <pre>{{ modalData?.event | json }}</pre>
+      <h4>
+        <strong>{{modalData?.event.start | date:'short'}}</strong> |
+        <strong>{{modalData?.event.clientName}}</strong>
+      </h4>
+
+      <span>
+        Post link: 
+        <a href="{{modalData?.event.link}}">{{modalData?.event.link}}</a>
+      </span>
+      <br>
+      <img src="{{modalData?.event.thumbnail}}" alt="">
+      <p style="white-space: pre-wrap;">
+          {{modalData?.event.message}}
+      </p>
+
     </div>
   </div>
   <div class="modal-footer">
@@ -41,20 +43,26 @@
   <ng-template #default>
     <div style="margin: 5px;">
       <ul>
-        <li *ngFor="let e of day.events; let i = index" [style.background-color]="e.color.primary" class="event-custom">
-          <img src="{{e.thumbnail}}" style="height: 75; width: 75px"> <br>
-          <i>{{i}}: {{ e.clientName }} </i> <br>
-          <i>{{ (e.message.length > 10)? (e.message | slice:0:10) + '...' : (e.message) }}</i>
+        <li *ngFor="let e of day.events; let i = index"
+            [style.background-color]="e.color.primary" 
+            class="event-custom" matTooltip="{{e.clientName}} : {{e.start | date:'short'}}">
+          
+          <img src="{{e.thumbnail}}" class="event-image">
+          <br>
+          <span style="font-size: 6px">
+            {{ (e.message.length > 25)? (e.message | slice:0:25) + '...' : (e.message) }}
+          </span>
+
         </li>
       </ul>
     </div>
   </ng-template>
+
   <ng-template #seeMore style="padding: 5px;">
-    Click to see all events
+    There are <strong>{{day.events.length}}</strong> on this day. Click to see all.
   </ng-template>
 
 </ng-template>
-
 
 <div class="row text-center">
   <div class="col-md-4">
@@ -70,12 +78,15 @@
       </div>
     </div>
   </div>
+
   <div class="col-md-4">
     <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
   </div>
+
   <div class="col-md-4">
     <div class="btn-group">
-      <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">
+      <div class="btn btn-primary" (click)="view = 'month'" 
+        [class.active]="view === 'month'">
         Month
       </div>
       <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">
@@ -92,17 +103,30 @@
 
 <div class="alert alert-info">
   Click on a day on the view.
-  <strong *ngIf="clickedDate">You clicked on this day: {{ clickedDate | date:'fullDate' }}</strong>
+  <strong *ngIf="clickedDate">
+    You clicked on this day: {{ clickedDate | date:'fullDate' }}
+  </strong>
 </div>
 
 <div [ngSwitch]="view" class="calendar">
 
-  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-    [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)" [cellTemplate]="customCellTemplate">
+  <mwl-calendar-month-view 
+      *ngSwitchCase="'month'" 
+      [viewDate]="viewDate" 
+      [events]="events" 
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen" 
+      (dayClicked)="dayClicked($event.day)" 
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)" 
+      [cellTemplate]="customCellTemplate">
   </mwl-calendar-month-view>
 
-  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [ngStyle]="{'background-color':'green !important'}">
+  <mwl-calendar-week-view 
+      *ngSwitchCase="'week'" 
+      [viewDate]="viewDate" 
+      [events]="events" 
+      [ngStyle]="{'background-color':'green !important'}">
   </mwl-calendar-week-view>
 
 </div>
@@ -130,10 +154,10 @@
         <img src="{{event.thumbnail}}" alt="">
       </td>
       <td>
-        <input type="text" class="form-control" [(ngModel)]="event.start" (keyup)="refresh.next()">
+        <span>{{event.start | date:"short"}}</span>
       </td>
       <td>
-        <p>{{event.message}}</p>
+        <p>{{ (event.message.length > 75)? (event.message | slice:0:75) + '...' : (event.message) }}</p>
       </td>
     </tr>
   </tbody>

@@ -1,0 +1,49 @@
+login => service => checklogin
+route to review => service => get posts which are pending
+display post in disable mode
+click to note => append note list 1. 2. 3 ... => note => save => route to index
+
+
+db
+    user: 
+        .userId
+        .username
+        .password
+        .facebookUserId
+        .userAccesstoken(refesh)
+        .avatar
+        .pages
+            .id
+            .pageAccesstoken(resfesh)
+            .pageName
+            .roleOnPage
+        .roleOnApp (user, content, admin)
+
+    role:
+        .roleId
+        .roleName
+
+    feed
+        .feedId
+        .content
+        .thumbnail
+        .analyticId
+    
+    analytic
+        .analyticId 
+        .engagement
+        .reach
+        . ...
+
+    post
+        .postId
+        .content
+        .images
+        .thumbnail
+        .poster
+        .status
+        .scheduleTime
+        .scheduleStatus 
+
+
+

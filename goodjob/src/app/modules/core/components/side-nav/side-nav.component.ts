@@ -16,17 +16,17 @@ export class SideNavComponent implements OnInit {
 
   @Output()
   userSelected = new EventEmitter();
+
   @Input()
   userList: User[];
 
   users: User[] = [];
-
   connectAccount = new Array<Client>();
 
   constructor(private navigateService: NavigateService, private router: Router) { }
 
   ngOnInit() {
-    // this.getInfo();
+    this.getInfo();
   }
 
   onSelect(user: User) {

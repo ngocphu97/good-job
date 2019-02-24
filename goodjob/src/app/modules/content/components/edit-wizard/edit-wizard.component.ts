@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { CalendarEvent } from 'angular-calendar';
 
 import { ContentService } from '../../services/content.service';
-import { Group } from '../../models/group';
+
 import { AddGroupFormComponent } from '../add-group-form/add-group-form.component';
+
 import { Client } from '../../models/client';
+import { Group } from '../../models/group';
 
 declare var FB: any;
 
@@ -28,7 +30,7 @@ export class EditWizardComponent implements OnInit {
   secondFormGroup: FormGroup;
 
   content = '';
-  base64textString = [];
+  imagesPreview = [];
   groups: Group[] = [];
   events: CalendarEvent[] = [];
   clients: Client[] = [];
@@ -42,6 +44,8 @@ export class EditWizardComponent implements OnInit {
 
   onPostSuccess = true;
   onPostFalse = false;
+
+  loading = true;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -58,6 +62,10 @@ export class EditWizardComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+  }
+
+  getInfo() {
+    this.clients = this.service.getInfo();
   }
 
   onAccept(evt) {
@@ -84,27 +92,24 @@ export class EditWizardComponent implements OnInit {
         clients: result[0].clients
       };
       this.groups.push(g);
-      console.log(this.groups);
+
     });
-  }
-
-  handleReaderLoaded(e) {
-    this.base64textString.push('data:image/png;base64,' + window.btoa(e.target.result));
-  }
-
-  onDeleteImgPreview(item) {
-    const index = this.base64textString.indexOf(item);
-    this.base64textString.splice(index, 1);
-  }
-
-  getInfo() {
-    this.clients = this.service.getInfo();
   }
 
   selectGroup(group: Group) {
     this.selectedGroup = this.groups.find(function (g) {
       return g.groupName === group.groupName;
     });
+  }
+
+  handleReaderLoaded(e) {
+    this.imagesPreview
+      .push('data:image/png;base64,' + window.btoa(e.target.result));
+  }
+
+  onDeleteImgPreview(item) {
+    const index = this.imagesPreview.indexOf(item);
+    this.imagesPreview.splice(index, 1);
   }
 
   onUploadMuiltiPhotos(message: string) {
@@ -199,6 +204,4 @@ export class EditWizardComponent implements OnInit {
 
     });
   }
-
-
 }
