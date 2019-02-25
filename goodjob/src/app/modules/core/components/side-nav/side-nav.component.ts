@@ -23,6 +23,44 @@ export class SideNavComponent implements OnInit {
   users: User[] = [];
   connectAccount = new Array<Client>();
 
+  menu = [
+    {
+      name: 'Home',
+      icon: 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png'
+    },
+    {
+      name: 'Content plan',
+      icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png'
+    },
+    {
+      name: 'Analytics',
+      icon: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png'
+    },
+    {
+      name: 'Status',
+      icon: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png'
+    },
+  ];
+
+  projects = [
+    {
+      name: 'Project 1',
+      thumnail: 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png'
+    },
+    {
+      name: 'Project 2',
+      thumnail: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png'
+    },
+    {
+      name: 'Project 3',
+      thumnail: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png'
+    },
+    {
+      name: 'Project 4',
+      thumnail: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png'
+    },
+  ];
+
   constructor(private navigateService: NavigateService, private router: Router) { }
 
   ngOnInit() {
@@ -70,5 +108,8 @@ export class SideNavComponent implements OnInit {
     this.router.navigateByUrl('/content');
   }
 
+  onAddProject() {
+    console.log('add project');
+  }
 
 }

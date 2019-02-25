@@ -1,11 +1,27 @@
-<div class="dev">
-  <p>We are on devloping this module, please comeback later. Thank you.</p>
-  <p>
-    <a mat-button routerLink="/content/test" class="btn"> Testing Place</a>
-  </p>
-  <img src={{defaultImg}} 
-  [className]="loading ? 'loading' : 'loaded'"
-  (load)="onLoadingImg()" alt="img" />
+<div class="container">
+  <div class="group wellcome-user">
+    <app-wellcome-user></app-wellcome-user>
+  </div>
+
+  <div class="group daily-status">
+    <app-daily-status></app-daily-status>
+  </div>
+
+  <div class="group grid">
+    <div class="left">
+      <div class="project">
+        <app-project-list></app-project-list>
+      </div>
+      <div class="member">
+        <app-members></app-members>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="top-project">
+        <app-top-projects></app-top-projects>
+      </div>
+    </div>
+  </div>
+
 </div>
-
-

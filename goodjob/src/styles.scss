@@ -1,6 +1,23 @@
-@import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import '~@angular/material/theming';
+
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+// @import '~@angular/material/_theming';
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
+
+
+@include mat-core();
+
+$my-theme-primary: mat-palette($mat-amber, 800, 700, 900);
+$my-theme-accent : mat-palette($mat-light-blue, 400);
+$my-theme-warn   : mat-palette($mat-light-blue, 900);
+
+$my-theme: mat-light-theme(
+    $my-theme-primary,
+    $my-theme-accent,
+    $my-theme-warn
+);
+
+@include angular-material-theme($my-theme);
 
 html {
   height: 100%;
@@ -14,12 +31,27 @@ body {
   margin: 0;
 }
 
-// .fancyFont {
-//   font-family: 'Montserrat';
-//   font-weight: 500;
-// }
-
 * {
-  font-family: Montserrat /*Replace with your custom font*/, sans-serif; 
-  /*Add the !important to overwrite all elements*/
+  font-family: Montserrat, sans-serif; 
+}
+
+.gp-btn {
+  border-radius: 18.5px !important;
+  min-width: 60.8px;
+}
+
+.gp-btn:focus {
+  outline: none;
+}
+
+.gp-btn-sm {
+  min-width: 120px !important;
+}
+
+.gp-btn-md {
+  min-width: 180px !important;
+}
+
+.gp-text-white {
+  color: #ffffff !important;
 }

@@ -1,17 +1,41 @@
 <div class="side-nav">
-  <div class="publish">
-    <button mat-flat-button class="gudjob-public-btn" (click)="onSelectEditContent()">
-      Publish
-    </button>
+  <div class="group user-avatar">
+    <img src="http://cdn.icepop.com/wp-content/uploads/2018/08/1-1533501921185.jpg" alt="user avatar">
+    <strong>User name</strong>
   </div>
 
-  <div class="project-list">
-    <mat-radio-group class="project-list-select">
-      <mat-radio-button class="project" value="project1">Project 1</mat-radio-button>
-      <mat-radio-button class="project" value="project2">Project 2</mat-radio-button>
-      
-      <button mat-flat-button class="gudjob-public-btn" style="margin-top: 15px;">+ Add project</button>
-    </mat-radio-group>
+  <div class="group">
+    <ul>
+      <li *ngFor="let i of menu" class="menu">
+        <img class="menu-icon" src="{{i.icon}}" alt="">
+        <span>{{i.name}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <ul>
+      <li *ngFor="let i of projects" class="menu">
+        <img class="menu-icon" src="{{i.thumnail}}" alt="">
+        <span>{{i.name}}</span>
+      </li>
+      <li class="menu" (click)="onAddProject()">
+        <i class="material-icons" style="font-size: 40px; color: #29B6F6"> add_circle_outline</i>
+        <span>Add project</span>
+      </li>
+    </ul>
+
+
+  </div>
+
+  <div class="group">
+    <ul>
+      <li class="menu">
+        <img class="menu-icon" src="https://images.vexels.com/media/users/3/136815/isolated/preview/60dddfcb04d1f3fadea8f3a1354d4347-colorful-stroke-settings-icon-by-vexels.png"
+          alt="">
+        <span>Edit</span>
+      </li>
+    </ul>
   </div>
 
 </div>

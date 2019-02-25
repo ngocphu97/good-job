@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/auth/services';
 
 declare var FB: any;
 
@@ -15,7 +15,7 @@ export class LoginPageComponent implements OnInit {
   text: any;
   message = '';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private service: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -30,6 +30,13 @@ export class LoginPageComponent implements OnInit {
         console.log('User cancelled login or did not fully authorize.');
       }
     });
+  }
+
+  loginWithGJ(user: any) {
+    // this.service.login(user).subscribe(res => {
+    //   console.log(res);
+    // });
+    this.router.navigate(['/home']);
   }
 
   login() {

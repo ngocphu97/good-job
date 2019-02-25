@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '@app/environment';
 
-import { JwtHelperService } from '@auth0/angular-jwt';
+// import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { TokenStoreManager } from './token-storage.service';
 import { LoginModel, AuthToken } from '../models';
@@ -12,13 +12,15 @@ import { LoginModel, AuthToken } from '../models';
 @Injectable()
 export class AuthService {
 
+  // http://localhots:3000
+  root = environment.rootApiUrl;
+
   constructor(private http: HttpClient,
-    private tokenStoreManager: TokenStoreManager,
-    private jwtHelper: JwtHelperService) {
+    private tokenStoreManager: TokenStoreManager) {
   }
 
   public login(user: LoginModel): Observable<any> {
-    return this.http.post(`${environment.rootApiUrl}/connect/token`, user);
+    return this.http.post(`${environment.rootApiUrl}/users/login`, user);
   }
 
   public logout(): Observable<any> {
@@ -29,11 +31,11 @@ export class AuthService {
     return this.http.post(`${environment.rootApiUrl}/connect/token`, {});
   }
 
-  public isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !this.jwtHelper.isTokenExpired(token);
-    // return token && AuthToken.isValid(token);
-  }
+  // public isAuthenticated(): boolean {
+  //   const token = localStorage.getItem('token');
+  //   return !this.jwtHelper.isTokenExpired(token);
+  //   // return token && AuthToken.isValid(token);
+  // }
 
   public getAuthToken(): AuthToken {
     return this.tokenStoreManager.get();

@@ -1,0 +1,26 @@
+.wellcome {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.user-logo {
+  max-width: 120px;
+  height: 120px;
+}
+
+.wellcome-text h2 {
+  color: #29b6f6;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.wellcome-text p {
+    letter-spacing: 4px;
+    word-spacing: 7px;
+    margin-bottom: 5px;
+}
+
+.wellcome-text button {
+    float: right;
+}

@@ -1,44 +1,49 @@
 .side-nav {
   width: 268px;
   height: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 20px;
-  margin-left: 70px;
+  margin: 20px 40px;
 }
 
-.gudjob-add-project-btn {
-  border-radius: 50%;
+.group {
+  border-bottom: 1px solid #e9ebee;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
-.gudjob-add-project-btn:focus {
-  outline: 0;
-}
-
-.gudjob-public-btn {
-  width: 199px;
-  height: 37px;
-  border-radius: 40.5px;
-  background-color: #f06f5f;
-}
-
-.gudjob-public-btn:focus {
-  outline: 0;
-}
-
-.project-list {
-  padding-left: 35px;
-  margin-top: 30px;
-  width: 100%;
-}
-
-.project-list-select {
+.group.user-avatar {
   display: flex;
   justify-content: flex-start;
-  flex-direction: column;
+  align-items: center;
 }
 
-.project {
-  margin-top: 10px;
+.group .menu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 5px;
+}
+
+.group ul {
+  margin-bottom: 0;
+}
+
+.group .menu:hover {
+  cursor: pointer;
+  background: #e9ebee;
+}
+
+.menu span {
+  padding-left: 10px;
+}
+
+.user-avatar img {
+  width: 31.5px;
+  height: 31.5px;
+  border-radius: 50%;
+  border: 3px solid #ffe100;
+  margin-right: 10px;
+}
+
+.menu-icon {
+  height: 31.5px;
 }

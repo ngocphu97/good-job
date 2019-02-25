@@ -1,55 +1,36 @@
 <div class="top-nav">
   <div class="gudjob-logo">
-    <img src="https://scontent.fsgn1-1.fna.fbcdn.net/v/t1.0-1/p200x200/38067998_2142529909365941_6082361658997473280_n.png?_nc_cat=106&_nc_ht=scontent.fsgn1-1.fna&oh=8af4ca5ce237dea325206f8d4ba27292&oe=5C9117CF"
-      alt="">
+    <button class="gp-btn gp-btn-md gp-text-white" mat-raised-button color="accent" (click)="onPublishPost()">
+      Public
+    </button>
   </div>
 
   <div class="gudjob-actions">
+    <img class="gp-logo" src="http://blog.edumall.vn/wp-content/uploads/2016/12/goc.png" alt="GP logo">
 
-    <button mat-icon-button [matMenuTriggerFor]="list">
-      <mat-icon style="color: #ffffff">event_note</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="home">
+      <!-- <mat-icon style="color: #ffffff">event_note</mat-icon> -->
+      <img class="menu-icon" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png" alt="">
     </button>
-    <mat-menu #list="matMenu">
-      <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Redial</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
-      </button>
-    </mat-menu>
+
 
     <button mat-icon-button [matMenuTriggerFor]="calendar">
-      <mat-icon style="color: #ffffff">calendar_today</mat-icon>
+      <!-- <mat-icon style="color: #ffffff">calendar_today</mat-icon> -->
+      <img class="menu-icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png" alt="">
     </button>
-    <mat-menu #calendar="matMenu">
-      <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Redial</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
-      </button>
-    </mat-menu>
+
 
     <button mat-icon-button [matMenuTriggerFor]="chart">
-      <mat-icon style="color: #ffffff">insert_chart_outlined</mat-icon>
+      <!-- <mat-icon style="color: #ffffff">insert_chart_outlined</mat-icon> -->
+      <img class="menu-icon" src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png"
+        alt="">
     </button>
-    <mat-menu #chart="matMenu">
-      <button (click)="onSelectAnalytics()" mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Analytics</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
-      </button>
-    </mat-menu>
+
 
     <button mat-icon-button [matMenuTriggerFor]="dehaze">
-      <mat-icon style="color: #ffffff">dehaze</mat-icon>
+      <!-- <mat-icon style="color: #ffffff">dehaze</mat-icon> -->
+      <img class="menu-icon" src="https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png"
+        alt="">
     </button>
     <mat-menu #dehaze="matMenu">
       <button mat-menu-item (click)="logoutWithFb()">
