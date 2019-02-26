@@ -21,7 +21,7 @@ export const routes: Routes = [
     component: EditPostComponent
   },
   {
-    path: 'test1',
+    path: 'demo',
     component: DemoComponent
   }
 ];

@@ -1,0 +1,52 @@
+<p *ngIf="events.length === 0"> No data to display</p>
+
+<mat-accordion *ngIf="events.length > 0" #myaccordion="matAccordion" multi="true">
+  <mat-expansion-panel class="expansion" *ngFor="let event of events; let index = index" [expanded]='expand'>
+    <!-- header -->
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-header">
+
+        <div *ngIf="event.is_published; then thenBlock else elseBlock"></div>
+
+        <ng-template #thenBlock>
+          <span class="event-time">
+            <i class="material-icons" style="color: lightgreen;"> check_circle_outline</i>
+            {{event.start | date:'shortTime'}}</span>
+        </ng-template>
+
+        <ng-template #elseBlock>
+          <span class="event-time">
+            <i class="material-icons" style="color: red;"> check_circle_outline</i>
+            {{event.start | date:'shortTime'}}</span>
+        </ng-template>
+
+        <div class="actions">
+          <button mat-mini-fab style="box-shadow: none;" color="warn">
+            <i style="color: #ffffff;" class="material-icons">loop</i>
+          </button>
+          <button mat-mini-fab style="box-shadow: none;" color="accent">
+            <i style="color: #ffffff;" class="material-icons">create</i>
+          </button>
+          <button mat-mini-fab style="box-shadow: none;" color="accent">
+            <i style="color: #ffffff;" class="material-icons">delete</i>
+          </button>
+        </div>
+
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- body -->
+    <div>
+      <div class="content-preview">
+        <div class="img-preview">
+          <img src="{{event.thumbnail}}" alt="">
+        </div>
+        <p>
+          {{event.message}}
+        </p>
+        <!-- {{ (event.message.length > 75)? (event.message | slice:0:75) + '...' : (event.message) }} -->
+      </div>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>

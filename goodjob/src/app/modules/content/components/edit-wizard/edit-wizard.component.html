@@ -1,7 +1,3 @@
-<!-- <div *ngIf="onPostSuccess === true">
-  Your post has been posted !
-</div> -->
-
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
@@ -39,9 +35,6 @@
         </li>
       </ul>
 
-      <!-- <mat-form-field>
-        <input matInput formControlName="firstCtrl">
-      </mat-form-field> -->
     </form>
   </mat-step>
 
@@ -76,15 +69,6 @@
                 <mat-form-field appearance="outline" style="width: 100%">
                   <textarea spellcheck="true" [(ngModel)]="content" style="width: 100%" matInput rows="10"
                     formControlName="secondCtrl" #post>
-                    🏮🏮 Bánh Trung Thu Givral 🏮🏮 đang vô cùng Hot trên thị trường bánh trung thu năm nay. Bạn có thắc mắc bên trong chiếc hộp vô cùng bắt mắt ấy là gì?
-                    Tiki khui hộp giải đáp thắc mắc cho cả nhà đây ạ!
-                    ----------------------------------
-                    Trung Thu đang đến, Tiki đã sẵn sàng giúp bạn gửi những món quà ấm áp đến người bạn yêu thương!
-                    📍 Nhập mã "TRUNGTHU05" - GIẢM 5% cho ĐH Bánh Trung Thu từ 200.000đ - Giảm tối đa 100.000đ!
-                    📍 Nhập mã "TRUNGTHU08" - GIẢM 8% cho ĐH Bánh Trung Thu từ 1.000.000đ - Giảm tối đa 200.000đ!
-                    Chương trình chỉ áp dụng cho các sản phẩm Bánh Trung Thu thuộc TIKI TRADING. 
-                    ----------------------------------
-                    💌💌 Còn chần chừ gì mà không chọn quà Trung Thu ngay hôm nay với những gợi ý siêu hay ho tại đây http://bit.ly/Chọn-Quà-Trung-Thu-Tiki
                   </textarea>
                 </mat-form-field>
 
@@ -136,7 +120,6 @@
 
                         <button class="img-preview-delete" 
                               mat-raised-button color="accent" 
-                              style="background: #f06f5f"
                               (click)="onDeleteImgPreview(item)">
                           <i class="material-icons">delete</i>
                         </button>
@@ -154,7 +137,7 @@
       </div>
 
       <div class="calendar" *ngIf="selectedGroup.clients.length > 0">
-        <app-demo [selectedGroup]='selectedGroup'></app-demo>
+        <app-calendar [selectedGroup]='selectedGroup'></app-calendar>
       </div>
 
       <div>

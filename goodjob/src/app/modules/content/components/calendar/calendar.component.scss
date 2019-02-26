@@ -1,0 +1,85 @@
+.custom-cell {
+  background-color: #8ddef1 !important;
+  color: #ffffff !important;
+  border: none;
+  font-weight: bolder !important;
+  font-size: 13.5px !important;
+}
+
+.cal-cell-top .cal-day-number {
+  opacity: 1 !important;
+  color: #ffffff;
+}
+
+.calendar:hover {
+  cursor: pointer;
+}
+
+.my-custom-class a {
+  color: darkorange !important;
+}
+
+.event-custom {
+  margin: 1px 0px;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.img-custom {
+  width: 30px !important;
+}
+
+.event-image {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  height: 90px;
+  width: 90px;
+}
+
+// container [ preview event - calendar ]
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+//preview events
+
+.preview-event {
+  width: 40%;
+  background: #769aff;
+  max-height: 731px;
+  overflow-y: auto;
+}
+
+// calendar
+.calendar-container {
+  background-color: #8ddef1;
+  color: #ffffff;
+  width: 60%;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.calendar-header h4 {
+  margin: 20px;
+}
+
+.calendar-header button {
+  box-shadow: none !important;
+}
+
+.custom-btn:focus {
+  outline: none;
+}

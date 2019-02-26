@@ -1,28 +1,8 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
-  OnInit,
-  Input
-} from '@angular/core';
-import {
-  isSameDay,
-  isSameMonth,
-} from 'date-fns';
-import { Subject } from 'rxjs';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent
-} from 'angular-calendar';
-
-import { Client } from '../../models/client';
-import { Event } from '../../models/event';
 import { ContentService } from '../../services/content.service';
+
+declare var FB: any;
 
 @Component({
   selector: 'app-demo',
@@ -33,67 +13,251 @@ import { ContentService } from '../../services/content.service';
 })
 export class DemoComponent implements OnInit {
 
-  @Input()
-  selectedGroup: any;
+  selectedFile = null;
+  multiSelectedFile = [];
+  clients: any = [];
 
-  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  uploadedImageUrl: String;
 
-  view = 'month';
-  viewDate: Date = new Date();
-  clickedDate: Date;
-  refresh: Subject<any> = new Subject();
-  events: CalendarEvent[] = [];
-  activeDayIsOpen = true;
-  eventsFromFB: Array<Event> = [];
-  eventsFillter: any = [];
-  connectAccount = new Array<Client>();
-  modalData: {
-    action: string;
-    event: CalendarEvent;
+  imagesFromS3 = [];
+
+  mess: String;
+
+  article = {
+    fullName: <String>'Defaule Name',
+    title: <String>'Default title',
+    articleText: <String>'Default text',
+    imageFile: <any>null,
   };
 
-  constructor(private modal: NgbModal, private service: ContentService) { }
+  // tslint:disable-next-line:max-line-length
+  GJ_access_token = 'EAANQlAVxZBd4BAC6jS4kQOl4wreYrG5gz8OjliAqDCVaxNPh47C1XjVGLSs0hbLkDR7UPE92zQbrtJ5CfkEXJiHayyCJWkSFp9GWz437JATZABy1qxubDIoOEedjfJpsfO6XlqaxCmsXsPUn9G3XYZCspg5utLkrTtdEtZAAUA4N0TeMD7ah7WhHZBHP9c7YZD';
+
+  constructor(private modal: NgbModal, private service: ContentService) {
+  }
 
   ngOnInit() {
-    this.getFeeds();
   }
 
-  getFeeds() {
-    this.selectedGroup.clients.forEach(c => {
-      this.events = this.service.getFeedsByPageAccessToken(c.name, c.access_token);
-    });
+
+  getInfo() {
+    this.clients = this.service.getInfo();
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }) {
-    if (isSameMonth(date, this.viewDate)) {
-      this.viewDate = date;
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.clickedDate = date;
-      this.eventsFillter = this.events.filter(function (e) {
-        return e.start.getDate() === date.getDate()
-          && e.start.getMonth() === date.getMonth()
-          && e.start.getFullYear() === date.getFullYear();
-      });
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  onUploadOnePhotoFromLocal() {
+    const fileReader = new FileReader();
+    const file = this.selectedFile;
+    if (file) {
+      fileReader.onloadend = async () => {
+        const token = this.GJ_access_token;
+        const photoData = new Blob([fileReader.result], { type: 'image/jpg' });
+        const formData = new FormData();
+
+        formData.append('access_token', token);
+        formData.append('source', photoData);
+        formData.append('message', 'status message');
+
+        let response = await fetch(`https://graph.facebook.com/249376455821855/photos`, {
+          body: formData,
+          method: 'POST',
+        });
+
+        response = await response.json();
+        console.log(response);
+      };
+
+      fileReader.readAsArrayBuffer(file);
     }
   }
 
-  eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {
-    event.start = newStart;
-    event.end = newEnd;
-    this.handleEvent('Dropped or resized', event);
-    this.refresh.next();
+  // select multi photos from input
+  onAccept(evt) {
+    const file = evt.target.files[0];
+    if (file) {
+      this.multiSelectedFile.push(file);
+    }
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+  uploadMultiPhotos(message: string, pageToken: string) {
+    const files = this.multiSelectedFile;
+    const token = this.GJ_access_token;
+    this.service.onUploadMuiltiPhotos(message, files, token);
+  }
+
+  onUploadMuiltiPhotos(message: string) {
+    const files = this.multiSelectedFile;
+    const fbMediaId: any = [];
+    const lenght = this.multiSelectedFile.length;
+    files.forEach(file => {
+      const fileReader = new FileReader();
+      if (file) {
+        fileReader.onloadend = async () => {
+          const token = this.GJ_access_token;
+          const photoData = new Blob([fileReader.result], { type: 'image/jpeg' });
+          const formData = new FormData();
+          const published = 'false';
+
+          formData.append('access_token', token);
+          formData.append('source', photoData);
+          formData.append('message', message);
+          formData.append('published', published);
+
+          let response: any = await fetch(`https://graph.facebook.com/249376455821855/photos`, {
+            body: formData,
+            method: 'POST',
+          });
+          response = await response.json();
+
+          fbMediaId.push({
+            media_fbid: response.id
+          });
+
+          if (fbMediaId.length === lenght) {
+            const mess = message;
+            FB.api(
+              '/me/feed',
+              'POST',
+              {
+                access_token: token,
+                message: mess,
+                attached_media: fbMediaId
+              },
+              (res) => {
+                console.log(res);
+                if (res && !res.error) { }
+                return res;
+              }
+            );
+          }
+
+        };
+
+        fileReader.readAsArrayBuffer(file);
+      }
+    });
+  }
+
+  uploadVideoToFacebookUsingURL() {
+    const url = 'https://s20.onlinevideoconverter.com/download?file=d3e4e4b1i8i8f5d3';
+    const token = this.GJ_access_token;
+
+    FB.api(`https://graph-video.facebook.com/v3.1/249376455821855/videos`, 'POST',
+      {
+        access_token: token,
+        file_url: url
+      }, (response) => {
+        console.log(response);
+      }
+    );
+  }
+
+  onUploadVideo(event) {
+    console.log('uploading');
+    const file = event.target.files[0];
+    // const time = new Date('2018.09.28').getTime() / 1000;
+    const formData = new FormData();
+
+    formData.append('my video', file);
+    formData.append('Content-Type', 'multipart / form - data');
+    formData.append('access_token', this.GJ_access_token);
+    formData.append('description', 'Shedule post with video');
+    formData.append('published', 'true');
+
+    // formData.append('scheduled_publish_time', time.toString());
+    // 249376455821855 : page id
+
+    // const response: any = fetch(`https://graph-video.facebook.com/v3.1/249376455821855/videos`, {
+    //     body: formData,
+    //     method: 'POST',
+    // });
+    // response.then(res => {
+    //     console.log('res fetch', res);
+    // });
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://graph-video.facebook.com/v3.1/249376455821855/videos');
+    xhr.send(formData);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        const res = xhr.response;
+        console.log('res xhr: ', res);
+      }
+    };
+  }
+
+  schedulePost() {
+    const token = this.GJ_access_token;
+    FB.api(`https://graph.facebook.com/v3.1/me/feed`, 'POST',
+      {
+        access_token: token,
+        message: 'shedule post video ne',
+        published: false,
+        scheduled_publish_time: 'tomorrow',
+      }, (response) => {
+        console.log(response);
+      }
+    );
+  }
+
+  getSchedulePost() {
+    const token = this.GJ_access_token;
+    FB.api(
+      'me/scheduled_posts', 'GET',
+      {
+        access_token: token,
+      }, (response) => {
+        console.log('Schedule posts get from FB: ');
+        console.log(response);
+      }
+    );
+  }
+
+  editSchedulePost(postId) {
+    const token = this.GJ_access_token;
+    const id = postId;
+    const time = new Date('2018.10.30').getTime() / 1000;
+
+    FB.api(`https://graph.facebook.com/v3.1/${id}`, 'POST',
+      {
+        access_token: token,
+        published: false,
+        message: 'This one is edited 2',
+        scheduled_publish_time: time,
+      }, (response) => {
+        console.log(response);
+      }
+    );
+  }
+
+  onSubmit() {
+    const fileReader = new FileReader();
+    const file = this.selectedFile;
+    // let imgUrl = this.uploadedImageUrl;
+    if (file) {
+      fileReader.onloadend = this.onUploadingFile(fileReader);
+      fileReader.readAsArrayBuffer(file);
+    }
+  }
+
+  onUploadingFile(fileReader): any {
+    const photoData = new Blob([fileReader.result], { type: 'image/jpg' });
+    this.service.uploadImage(photoData).then(
+      (res) => {
+        this.uploadedImageUrl = res.imageUrl;
+        this.mess = 'success' + res.imageUrl;
+      }
+    );
+  }
+
+  showImage() {
+    this.service.getImageFormS3().subscribe(data => {
+      this.imagesFromS3.push(data);
+      console.log(data);
+    });
   }
 
 }

@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-
+import { throwError, Observable } from 'rxjs';
 import { CalendarEvent } from 'angular-calendar';
 
 import { Client } from '../models/client';
 import { Group } from '../models/group';
-import { throwError, Observable } from 'rxjs';
-
 
 declare var FB: any;
 
@@ -19,9 +17,8 @@ export class ContentService {
   events: CalendarEvent[] = [];
   clients: Client[] = [];
 
-  // use access_token(get when login)
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BANKiPrxGnwjKWPajkdXqldBxkDgXIowfXSJklik7l5RdgFNJI2xh9AXNdOVPMQ6Ve8NhQ4UZCZClIYLmQlB6DtVqikh8Mr0vnuzHS8jtZACqYxP0V1o2znCCONXKWewVIvGOWumV73pf11ZAousS1MEaJiUadM79m4HWUCzfB7dMrk9WdMEZD';
+  access_token = 'EAANQlAVxZBd4BAN6gC4LUJVCYwrnGhFzPawdHhl77SaZCUybozm7EcZCHqdlkBT2xxld90uZCDAdhjkm32OtZB1SqAwD0vOvsHWWDgfXNOzoq5RgkTxhwZCyZAUvIu0zCQNOGgPXqJO0m53XqpYZAdaMBATVKwKYsSjURZB2FJBdq58QXJJbnHg4ZBwTPPL5cSsYAZD';
 
   connectAccount = [];
 
@@ -71,7 +68,7 @@ export class ContentService {
       {
         access_token: token,
         // tslint:disable-next-line:max-line-length
-        fields: 'feed{link,message,created_time,is_published,picture.width(150).height(150)}, name, photos.width(150).height(150){picture}'
+        fields: 'feed{link,message,created_time,is_published,picture.width(9999), full_picture}, name, photos.width(9999).height(150){picture}'
       }, (response) => {
         const length = response.feed.data.length;
 
@@ -103,7 +100,7 @@ export class ContentService {
           for (let j = 0; j < client.feed.length; j++) {
             let thumb = '';
             for (let k = 0; k < feed.data.length; k++) {
-              thumb = feed.data[k].picture;
+              thumb = feed.data[k].full_picture;
               if (thumb == null) {
                 thumb = '';
               }
@@ -134,9 +131,9 @@ export class ContentService {
               clientName: data,
               is_published: client.feed[j].is_published,
               link: client.feed[j].link,
-              thumbnail: feed.data[j].picture,
+              thumbnail: feed.data[j].full_picture,
               actions: [{
-                label: `<img class="img-custom" src='${feed.data[j].picture}' style='width:30px'/>`,
+                label: `<img class="img-custom" src='${feed.data[j].full_picture}' style='width:30px'/>`,
                 onClick: ({ }: { event: CalendarEvent }): void => {
                 }
               }]
@@ -165,6 +162,7 @@ export class ContentService {
           created_time,
           is_published,
           picture.width(150).height(150),
+          full_picture,
           name,
           photos.width(150).height(150){picture}
         `
@@ -197,8 +195,7 @@ export class ContentService {
         }
 
         for (let j = 0; j < length; j++) {
-
-          let thumb = client.feed[j].picture;
+          let thumb = client.feed[j].full_picture;
           if (thumb == null) {
             thumb = '';
           }
@@ -231,7 +228,7 @@ export class ContentService {
             clientName: clientName,
             is_published: client.feed[j].is_published,
             link: client.feed[j].link,
-            thumbnail: client.feed[j].picture,
+            thumbnail: client.feed[j].full_picture,
             actions: [{
               label: `<img class="img-custom" src='${client.feed[j].picture}' style='width:30px'/>`,
               onClick: ({ }: { event: CalendarEvent }): void => {
@@ -240,7 +237,6 @@ export class ContentService {
           };
           events.push(event);
         }
-
         if (response.error) {
         }
       }
@@ -340,16 +336,12 @@ export class ContentService {
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error}`);
     }
-    // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
   }
