@@ -1,4 +1,43 @@
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
+<form [formGroup]="firstFormGroup">
+  <ng-template>SELECT GROUP</ng-template>
+  <ul class="list">
+    <li *ngFor="let g of groups" class="item">
+      <mat-card class="group-card">
+        <mat-card-content class="card-content">
+          <div class="selected-group">
+            <button mat-button (click)="selectGroup(g)" style="width: 100%">
+              GROUP {{g.groupName}}
+            </button>
+            <ul>
+              <li *ngFor="let c of g.clients" class="client-group">
+                <img src="{{c.image}}" alt="" class="client-avatar">
+                <span class="client-name">{{c.name}}</span>
+              </li>
+            </ul>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </li>
+    <li class="item">
+      <mat-card class="group-card" style="text-align: center">
+        <mat-card-content class="card-content">
+          <button mat-button (click)="openDialog()" style="width: 100%">
+            <i class="material-icons" style="font-size: 48px;">
+              playlist_add
+            </i>
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </li>
+  </ul>
+</form>
+
+<div class="calendar" *ngIf="selectedGroup.clients.length > 0">
+  <app-calendar [selectedGroup]='selectedGroup'></app-calendar>
+</div>
+
+<!-- <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>SELECT GROUP</ng-template>
@@ -146,4 +185,4 @@
     </form>
   </mat-step>
 
-</mat-horizontal-stepper>
+</mat-horizontal-stepper> -->

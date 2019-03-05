@@ -22,7 +22,11 @@ export class PreviewPostComponent implements OnInit {
   }
 
   openAll() {
-    this.myPanels.openAll();
+    if (this.events.length === 0) {
+      console.log('no event to display');
+    } else {
+      this.myPanels.openAll();
+    }
   }
 
 }

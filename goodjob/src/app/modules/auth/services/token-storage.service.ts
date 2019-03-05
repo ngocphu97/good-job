@@ -14,6 +14,7 @@ export class TokenStoreManager {
   }
 
   save(value: AuthToken): void {
+    console.log('value: ', value);
     this.localStorage.set(environment.authentication.tokenKey, value);
   }
 

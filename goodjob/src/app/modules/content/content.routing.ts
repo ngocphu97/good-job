@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { CreatePageComponent, SchedulePageComponent, StatusPageComponent } from './containers';
-import { EditPostComponent } from './components/edit-post/edit-post.component';
-import { DemoComponent } from './components/demo/demo.component';
 
 export const routes: Routes = [
   {
@@ -15,14 +13,6 @@ export const routes: Routes = [
   {
     path: 'status',
     component: StatusPageComponent
-  },
-  {
-    path: 'test',
-    component: EditPostComponent
-  },
-  {
-    path: 'demo',
-    component: DemoComponent
   }
 ];
 

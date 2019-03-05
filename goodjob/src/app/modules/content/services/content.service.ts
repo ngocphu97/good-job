@@ -5,6 +5,7 @@ import { CalendarEvent } from 'angular-calendar';
 
 import { Client } from '../models/client';
 import { Group } from '../models/group';
+import { Calendar, flipLeft } from 'igniteui-angular';
 
 declare var FB: any;
 
@@ -18,21 +19,19 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAN6gC4LUJVCYwrnGhFzPawdHhl77SaZCUybozm7EcZCHqdlkBT2xxld90uZCDAdhjkm32OtZB1SqAwD0vOvsHWWDgfXNOzoq5RgkTxhwZCyZAUvIu0zCQNOGgPXqJO0m53XqpYZAdaMBATVKwKYsSjURZB2FJBdq58QXJJbnHg4ZBwTPPL5cSsYAZD';
-
+  access_token = 'EAANQlAVxZBd4BAOjh8GAImtDMG4NSwriJk8aIrKBMK6SENTwpkWRR6AVVyq86wqr3zgoz7bzdCHZAWEtfnsRZASAghQdfl0tvMpYls4ZBZAlIYX4JF7ktyfx8RsH3ySuITJtWW7KZAF349FkaCN0cQZAZCtlrEdpjN4x8XYnrgOZCUOVBO1hR0hJ9mwdFz0Fn3KwZD';
   connectAccount = [];
-
   colors: any = {
     red: {
-      primary: '#F06F5F',
+      primary: '#707070',
       secondary: '#FAE3E3'
     },
     blue: {
-      primary: '#1e90ff',
+      primary: '#556dd3',
       secondary: '#D1E8FF'
     },
     yellow: {
-      primary: '#e3bc08',
+      primary: '#ffe100',
       secondary: '#FDF1BA'
     }
   };
@@ -40,12 +39,9 @@ export class ContentService {
   constructor(private http: HttpClient) { }
 
   convertDate(date: Date): string {
-    const dd = date.getDate();
-    const mm = date.getMonth();
-    const yyyy = date.getFullYear();
     const hh = date.getHours();
     const m = date.getMinutes();
-    const result = dd + ':' + mm + ':' + yyyy + ':' + '-' + hh + ':' + m;
+    const result = hh + ':' + m;
     return result;
   }
 
@@ -59,99 +55,149 @@ export class ContentService {
     return this.groups;
   }
 
-  getFeeds(): CalendarEvent[] {
-    const token = this.access_token;
+  getScheduledPost(clientName, access_token) {
+    const token = access_token;
     const eventColors = this.colors;
     const events = this.events;
 
     FB.api(`/me`, 'GET',
       {
         access_token: token,
-        // tslint:disable-next-line:max-line-length
-        fields: 'feed{link,message,created_time,is_published,picture.width(9999), full_picture}, name, photos.width(9999).height(150){picture}'
+        fields: `
+          scheduled_posts{
+            id,
+            full_picture,
+            message,
+            story,
+            created_time,
+            link,
+            name
+          }
+        `
       }, (response) => {
-        const length = response.feed.data.length;
+        if (response.error) {
+          throw new Error(response.error);
+        } else {
+          console.log(response.scheduled_posts);
+          if (response.scheduled_posts !== undefined) {
+            response.scheduled_posts.data.forEach(d => {
+              const convertDateTime = new Date(d.created_time);
+              const timeForTitle = this.convertDate(convertDateTime);
+              const title = `<p class="scheduledPost">${timeForTitle}</p>`;
+              const label = `
+                      <i class="material-icons icon-week-custom-scheduled">schedule</i>
+                      <img class="img-custom-week-view" src='${d.full_picture}'/>
+                    `;
 
-
-        for (let i = 0; i < length; i++) {
-          const id = response.accounts.data[i].id;
-
-          // page logo
-          const photo = response.accounts.data[i].photos;
-          const avatar = photo.data[0].picture;
-
-          // page name
-          const data = response.accounts.data[i].name;
-
-          // page access_token
-          const access_token = response.accounts.data[i].access_token;
-
-          // page feeds
-          const feed = response.accounts.data[i].feed;
-
-          const client: Client = {
-            id: id,
-            name: data,
-            image: avatar,
-            access_token: access_token,
-            feed: feed.data,
-          };
-
-          for (let j = 0; j < client.feed.length; j++) {
-            let thumb = '';
-            for (let k = 0; k < feed.data.length; k++) {
-              thumb = feed.data[k].full_picture;
-              if (thumb == null) {
-                thumb = '';
-              }
-            }
-            if (client.feed[j].message == null) {
-              client.feed[j].message = 'This post has no message!!';
-            }
-            if (client.feed[j].message.length > 50) {
-              client.feed[j].message
-                = client.feed[j].message.substring(0, 50) + ' ...';
-            }
-            if (client.feed[j].story == null) {
-              client.feed[j].story = '';
-            }
-            const convertDateTime = new Date(client.feed[j].created_time);
-            const timeForTitle = this.convertDate(convertDateTime);
-            const title = data + ' - ' + timeForTitle + ' - ' + client.feed[j].message;
-
-            const event: CalendarEvent = {
-              id: client.feed[j].id,
-              start: convertDateTime,
-              title: title,
-              color: eventColors.red,
-              cssClass: `my-custom-class`,
-              draggable: true,
-              message: client.feed[j].message,
-              story: client.feed[j].story,
-              clientName: data,
-              is_published: client.feed[j].is_published,
-              link: client.feed[j].link,
-              thumbnail: feed.data[j].full_picture,
-              actions: [{
-                label: `<img class="img-custom" src='${feed.data[j].full_picture}' style='width:30px'/>`,
-                onClick: ({ }: { event: CalendarEvent }): void => {
-                }
-              }]
-            };
-            events.push(event);
+              const event: CalendarEvent = {
+                id: d.id,
+                start: convertDateTime,
+                title: title,
+                color: eventColors.red,
+                cssClass: 'my-custom-class',
+                draggable: true,
+                message: d.message,
+                story: d.story,
+                clientName: clientName,
+                is_published: false,
+                link: d.link,
+                thumbnail: d.full_picture,
+                meta: {
+                  type: 'secondary'
+                },
+                actions: [{
+                  label: label,
+                  onClick: ({ }: { event: CalendarEvent }): void => {
+                  }
+                }]
+              };
+              events.push(event);
+            });
+          } else {
+            console.log('Error');
           }
         }
-        if (response.error) {
-        }
-      }
-    );
+
+      });
     return events;
+  }
+
+  addCalendarEvent(feed, clientName, metaType) {
+    let title = '';
+    let label = '';
+    let eventColor: any;
+    let thumb = feed.full_picture;
+    const convertDateTime = new Date(feed.created_time);
+    const timeForTitle = this.convertDate(convertDateTime);
+
+    if (thumb == null) {
+      thumb = '';
+    }
+
+    if (feed.message == null) {
+      feed.message = feed.name;
+    }
+
+    if (feed.is_published) {
+      title = `<p class="publishedPost">${timeForTitle}</p>`;
+      label = `
+              <i class="material-icons icon-week-custom-done">check_circle_outline</i>
+              <img class="img-custom-week-view" src='${feed.full_picture}'/>
+            `;
+      eventColor = this.colors.blue;
+    } else {
+      title = `<p class="scheduledPost">${timeForTitle}</p>`;
+      label = `
+                <i class="material-icons icon-week-custom-scheduled">schedule</i>
+                <img class="img-custom-week-view" src='${feed.full_picture}'/>
+              `;
+    }
+
+    const event: CalendarEvent = {
+      id: feed.id,
+      start: convertDateTime,
+      title: title,
+      color: eventColor,
+      cssClass: 'my-custom-class',
+      draggable: false,
+      message: feed.message,
+      clientName: clientName,
+      is_published: feed.is_published,
+      link: feed.link,
+      thumbnail: feed.full_picture,
+      meta: {
+        type: metaType
+      },
+      actions: [{
+        label: label,
+        onClick: ({ }: { event: CalendarEvent }): void => {
+        }
+      }]
+    };
+    this.events.push(event);
+  }
+
+  addClient(response) {
+    const id = response.id;
+    const avatar = response.photos.data[0].picture;
+    const data = response.name;
+    const access_token = response.access_token;
+    const feed = [];
+
+    const client: Client = {
+      id: id,
+      name: data,
+      image: avatar,
+      access_token: access_token,
+      feed: feed,
+    };
+    return client;
   }
 
   getFeedsByPageAccessToken(clientName, access_token): CalendarEvent[] {
     const token = access_token;
-    const eventColors = this.colors;
     const events = this.events;
+    this.getScheduledPost(clientName, access_token);
 
     FB.api(`/me/feed`, 'GET',
       {
@@ -167,77 +213,12 @@ export class ContentService {
           photos.width(150).height(150){picture}
         `
       }, (response) => {
-        console.log(response);
-        const length = response.data.length;
-        let client: Client;
+        response.data.forEach(d => {
+          this.addCalendarEvent(d, clientName, 'info');
+        });
 
-        for (let i = 0; i < length; i++) {
-          const id = response.data[i].id;
-          // page logo
-          // const photo = response.data[i].photos;
-          // const avatar = photo.data[0].picture;
-          const avatar = response.data[i].picture;
-
-          // page name
-          const data = response.data[i].name;
-
-          // page feeds
-          const feed = response.data;
-
-          client = {
-            id: id,
-            name: data,
-            image: avatar,
-            access_token: access_token,
-            feed: feed,
-          };
-
-        }
-
-        for (let j = 0; j < length; j++) {
-          let thumb = client.feed[j].full_picture;
-          if (thumb == null) {
-            thumb = '';
-          }
-
-          if (client.feed[j].message == null) {
-            client.feed[j].message = client.feed[j].name;
-          }
-
-          let shortMessage = '';
-          if (client.feed[j].message.length > 50) {
-            shortMessage = client.feed[j].message.substring(0, 50) + ' ...';
-          }
-
-          if (client.feed[j].story == null) {
-            client.feed[j].story = '';
-          }
-          const convertDateTime = new Date(client.feed[j].created_time);
-          const timeForTitle = this.convertDate(convertDateTime);
-          const title = timeForTitle + ' - ' + shortMessage;
-
-          const event: CalendarEvent = {
-            id: client.feed[j].id,
-            start: convertDateTime,
-            title: title,
-            color: eventColors.red,
-            cssClass: 'my-custom-class',
-            draggable: true,
-            message: client.feed[j].message,
-            story: client.feed[j].story,
-            clientName: clientName,
-            is_published: client.feed[j].is_published,
-            link: client.feed[j].link,
-            thumbnail: client.feed[j].full_picture,
-            actions: [{
-              label: `<img class="img-custom" src='${client.feed[j].picture}' style='width:30px'/>`,
-              onClick: ({ }: { event: CalendarEvent }): void => {
-              }
-            }]
-          };
-          events.push(event);
-        }
         if (response.error) {
+          alert(response.error);
         }
       }
     );
@@ -246,39 +227,22 @@ export class ContentService {
 
   getInfo(): Client[] {
     const token = this.access_token;
-    const connectAccount = this.connectAccount;
-
     FB.api(`/me`, 'GET',
       {
         access_token: token,
         fields: 'accounts{access_token,name,photos.width(150).height(150){picture}}'
       }, (response) => {
-        const length = response.accounts.data.length;
-        for (let i = 0; i < length; i++) {
-          const id = response.accounts.data[i].id;
-          const photo = response.accounts.data[i].photos;
-          const avatar = photo.data[0].picture;
-          const data = response.accounts.data[i].name;
-          const access_token = response.accounts.data[i].access_token;
-          // const feed = response.accounts.data[i].feed;
-          // const feed = this.getFeedsByPageAccessToken(access_token);
-          const feed = [];
-          const client: Client = {
-            id: id,
-            name: data,
-            image: avatar,
-            access_token: access_token,
-            feed: feed,
-          };
-          connectAccount.push(client);
-
-        }
         if (response.error) {
-          console.log(response.error);
+          alert(response.error);
+        } else {
+          response.accounts.data.forEach((r) => {
+            const c = this.addClient(r);
+            this.connectAccount.push(c);
+          });
         }
       }
     );
-    return connectAccount;
+    return this.connectAccount;
   }
 
   onUploadMuiltiPhotos(message: string, multiSelectedFile: any, pageToken: string) {
@@ -369,5 +333,4 @@ export class ContentService {
     const url = 'http://localhost:3000/getImages';
     return this.http.get(url);
   }
-
 }

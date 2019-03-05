@@ -1,6 +1,4 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { User } from '@app/core/services/navigate/model/user.model';
-import { NavigateService } from '@app/core/services';
 import { Router } from '@angular/router';
 
 declare var FB: any;
@@ -21,11 +19,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  onUserSelected(user: User) {
+  onUserSelected(user: any) {
     this.router.navigate(['/analytics', user.name]);
   }
 
-  onLogoutFB() {
+  onLogoutFB(event) {
     const router = this.router;
     FB.logout((response) => {
       console.log('You are log out');

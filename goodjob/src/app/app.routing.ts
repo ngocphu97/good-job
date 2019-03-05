@@ -14,16 +14,19 @@ export const routes: Routes = [
         // canActivate: [AuthGuard]
       },
       {
-        path: 'content',
-        loadChildren: 'app/modules/content/content.module#ContentModule'
+        path: 'content-plan',
+        loadChildren: 'app/modules/content/content.module#ContentModule',
+        data: { preload: true, delay: false },
       },
       {
         path: 'analytics',
-        loadChildren: 'app/modules/analytics/analytics.module#AnalyticsModule'
+        loadChildren: 'app/modules/analytics/analytics.module#AnalyticsModule',
+        data: { preload: true, delay: true },
       },
       {
         path: 'group',
-        loadChildren: 'app/modules/group/group.module#GroupModule'
+        loadChildren: 'app/modules/group/group.module#GroupModule',
+        data: { preload: false, delay: true },
       },
     ]
   },

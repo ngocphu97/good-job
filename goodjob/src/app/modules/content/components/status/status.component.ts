@@ -26,7 +26,7 @@ export class StatusComponent implements OnInit {
   }
 
   getFeed() {
-    this.events = this.service.getFeeds();
+    // this.events = this.service.getFeeds();
     console.log(this.events);
   }
 }

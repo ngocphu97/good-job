@@ -4,6 +4,19 @@
   border: none;
   font-weight: bolder !important;
   font-size: 13.5px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-cell:hover {
+  background: #85C9F5 !important;
+}
+
+.cal-cell-top:focus {
+  background: #85C9F5 !important;
+  border: none;
 }
 
 .cal-cell-top .cal-day-number {
@@ -16,7 +29,35 @@
 }
 
 .my-custom-class a {
-  color: darkorange !important;
+  color: #ffffff;
+}
+
+.my-custom-class {
+  height: 100%;
+}
+
+.my-custom-class .cal-event {
+  height: auto;
+  border: 1px solid black;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.my-custom-class p {
+  margin: 0;
+}
+
+.cal-event-action {
+  vertical-align: text-bottom !important;
+}
+
+.cal-event-actions {
+  vertical-align: inherit !important;
+}
+
+.cal-week-view .cal-events-row {
+  height: 150px !important;
+  margin-top: 2px;
 }
 
 .event-custom {
@@ -30,8 +71,11 @@
   margin-bottom: 5px;
 }
 
-.img-custom {
-  width: 30px !important;
+.img-custom-week-view {
+  width: 100%;
+  margin-bottom: -5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .event-image {
@@ -40,6 +84,32 @@
   justify-self: center;
   height: 90px;
   width: 90px;
+}
+
+.publishedPost {
+  background: #556dd3;
+  color: #ffffff;
+  text-align: center;
+}
+
+.icon-week-custom-scheduled {
+  color: #707070;
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.icon-week-custom-done {
+  color: #556dd3;
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.scheduledPost {
+  background: #707070;
+  color: #ffffff;
+  text-align: center;
 }
 
 // container [ preview event - calendar ]
@@ -53,7 +123,8 @@
 .preview-event {
   width: 40%;
   background: #769aff;
-  max-height: 731px;
+  height: auto;
+  max-height: 679px;
   overflow-y: auto;
 }
 

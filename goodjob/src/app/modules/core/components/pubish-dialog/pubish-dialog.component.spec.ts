@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DemoComponent } from './demo.component';
+import { PubishDialogComponent } from './pubish-dialog.component';
 
-describe('DemoComponent', () => {
-  let component: DemoComponent;
-  let fixture: ComponentFixture<DemoComponent>;
+describe('PubishDialogComponent', () => {
+  let component: PubishDialogComponent;
+  let fixture: ComponentFixture<PubishDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DemoComponent ]
+      declarations: [ PubishDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DemoComponent);
+    fixture = TestBed.createComponent(PubishDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

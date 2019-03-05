@@ -1,7 +1,4 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { NavigateService } from '../../services/navigate/navigate.service';
-import { User } from '../../services/navigate/model/user.model';
-import { Observable } from 'rxjs';
 import { Client } from '../../models/response-data.model';
 import { Router } from '@angular/router';
 
@@ -17,35 +14,35 @@ export class SideNavComponent implements OnInit {
   @Output()
   userSelected = new EventEmitter();
 
-  @Input()
-  userList: User[];
-
-  users: User[] = [];
   connectAccount = new Array<Client>();
 
   menu = [
     {
       name: 'Home',
-      icon: 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png'
+      icon: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png',
+      url: '/'
     },
     {
       name: 'Content plan',
-      icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png'
+      icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png',
+      url: '/content-plan'
     },
     {
       name: 'Analytics',
-      icon: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png'
+      icon: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png',
+      url: '/analytics'
     },
     {
       name: 'Status',
-      icon: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png'
+      icon: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png',
+      url: '/status'
     },
   ];
 
   projects = [
     {
       name: 'Project 1',
-      thumnail: 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png'
+      thumnail: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png'
     },
     {
       name: 'Project 2',
@@ -61,20 +58,17 @@ export class SideNavComponent implements OnInit {
     },
   ];
 
-  constructor(private navigateService: NavigateService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.getInfo();
   }
 
-  onSelect(user: User) {
+  onSelect(user: any) {
     this.userSelected.emit(user);
   }
 
   getUsers() {
-    this.navigateService.getUsers().subscribe((data) => {
-      return this.users = data;
-    });
+    // get users from service
   }
 
   getInfo() {

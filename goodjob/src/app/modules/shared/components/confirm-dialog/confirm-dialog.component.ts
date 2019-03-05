@@ -17,12 +17,11 @@ export class ConfirmDialogComponent {
   options: ConfirmOptions = {
     title: 'Delete',
     message: 'Are you sure want to delete?',
-    confirmButtonText: 'Delete',
-    cancelButtonText: 'Cancel'
+    confirmButtonText: 'Delete'
+    // cancelButtonText: 'Cancel'
   };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data?: ConfirmOptions) {
-
-    this.options = {...this.options, ...data};
+    this.options = { ...this.options, ...data };
   }
 }

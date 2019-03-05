@@ -1,14 +1,27 @@
-import { Component, OnInit, ViewChild, Input, TemplateRef, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  TemplateRef,
+  ChangeDetectionStrategy,
+  ViewEncapsulation
+} from '@angular/core';
 import { ContentService } from '../../services/content.service';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarDateFormatter } from 'angular-calendar';
+import {
+  CalendarEvent,
+  CalendarEventTimesChangedEvent,
+  CalendarMonthViewDay,
+  CalendarDateFormatter,
+  CalendarEventTitleFormatter
+} from 'angular-calendar';
 
 import { Client } from '../../models/client';
-import { CustomDateFormatter } from './custom-date-formatter.provider';
+import { CustomDateFormatter, CustomEventTitleFormatter } from './custom-date-formatter.provider';
+import { CalendarView } from 'igniteui-angular';
 
 @Component({
   selector: 'app-calendar',
@@ -19,43 +32,53 @@ import { CustomDateFormatter } from './custom-date-formatter.provider';
     {
       provide: CalendarDateFormatter,
       useClass: CustomDateFormatter
+    },
+    {
+      provide: CalendarEventTitleFormatter,
+      useClass: CustomEventTitleFormatter
     }
   ],
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
 
-  constructor(private modal: NgbModal, private http: HttpClient, private service: ContentService) {
+  constructor(private service: ContentService) {
   }
 
   @Input() selectedGroup: any;
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
+  CalendarView = CalendarView;
   view = 'month';
   viewDate: Date = new Date();
   clickedDate: Date;
   refresh: Subject<any> = new Subject();
   events: CalendarEvent[] = [];
   activeDayIsOpen = true;
+  selectedDate = false;
   eventsFillter: any = [];
   connectAccount = new Array<Client>();
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
   showDelayTooltip = '2000';
 
   ngOnInit() {
-    this.getFeeds();
+    this.getFeedsByPageAccessToken();
+    this.activeDayIsOpen = false;
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }) {
     body.forEach(day => {
       day.cssClass = 'custom-cell';
+
+      const groups: any = {};
+      day.events.forEach((event: CalendarEvent<{ type: string }>) => {
+        groups[event.meta.type] = groups[event.meta.type] || [];
+        groups[event.meta.type].push(event);
+      });
+      day['eventGroups'] = Object.entries(groups);
     });
   }
 
-  getFeeds() {
+  getFeedsByPageAccessToken() {
     setTimeout(() => {
       this.selectedGroup.clients.forEach(c => {
         this.events = this.service.getFeedsByPageAccessToken(c.name, c.access_token);
@@ -67,6 +90,7 @@ export class CalendarComponent implements OnInit {
     if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;
       this.activeDayIsOpen = false;
+      this.selectedDate = true;
       this.clickedDate = date;
       this.eventsFillter = this.events.filter((e) => {
         return e.start.getDate() === date.getDate()
@@ -84,7 +108,14 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    this.eventsFillter = this.events.filter((e) => {
+      return e.start.getDate() === event.start.getDate()
+        && e.start.getMonth() === event.start.getMonth()
+        && e.start.getFullYear() === event.start.getFullYear();
+    });
+  }
+
+  changeView(view) {
+    this.view = view;
   }
 }

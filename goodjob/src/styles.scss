@@ -9,13 +9,11 @@
 
 $my-theme-primary: mat-palette($mat-amber, 800, 700, 900);
 $my-theme-accent : mat-palette($mat-light-blue, 400);
-$my-theme-warn   : mat-palette($mat-light-blue, 900);
+$my-theme-warn : mat-palette($mat-light-blue, 900);
 
-$my-theme: mat-light-theme(
-    $my-theme-primary,
-    $my-theme-accent,
-    $my-theme-warn
-);
+$my-theme: mat-light-theme($my-theme-primary,
+$my-theme-accent,
+$my-theme-warn);
 
 @include angular-material-theme($my-theme);
 
@@ -32,7 +30,7 @@ body {
 }
 
 * {
-  font-family: Montserrat, sans-serif; 
+  font-family: Montserrat, sans-serif;
 }
 
 .gp-btn {
@@ -55,3 +53,4 @@ body {
 .gp-text-white {
   color: #ffffff !important;
 }
+

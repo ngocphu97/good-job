@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, PreloadingStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
@@ -19,14 +19,17 @@ import { routes } from './app.routing';
 import { CustomRouterStateSerializer, metaReducers, reducers } from '@app/core/store';
 
 import { OverlayModule } from '@angular/cdk/overlay';
-import { ThumnailDirective } from './modules/content/directive/thumnail.directive';
+import { AppPreloadingStrategy } from './app_preloading_strategy';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, {useHash: false}),
+    RouterModule.forRoot(routes, {
+      useHash: false,
+      preloadingStrategy: AppPreloadingStrategy
+    }),
 
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer
@@ -78,8 +81,7 @@ import { ThumnailDirective } from './modules/content/directive/thumnail.directiv
     AuthModule
   ],
   declarations: [
-    AppComponent,
-    ThumnailDirective
+    AppComponent
   ],
   providers: [
     /**
@@ -88,6 +90,7 @@ import { ThumnailDirective } from './modules/content/directive/thumnail.directiv
      * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
      */
     {provide: RouterStateSerializer, useClass: CustomRouterStateSerializer},
+    {provide: AppPreloadingStrategy, useClass: AppPreloadingStrategy},
   ],
   bootstrap: [AppComponent]
 })

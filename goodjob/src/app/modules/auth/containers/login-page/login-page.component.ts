@@ -12,19 +12,19 @@ declare var FB: any;
 export class LoginPageComponent implements OnInit {
 
   connectAccount = new Array<any>();
-  text: any;
-  message = '';
+  accessToken: any;
 
   constructor(private service: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  loginWithFb() {
+  loginWithFb(event) {
     const router = this.router;
     FB.login(function (response) {
       if (response.authResponse) {
-        console.log('you are connect now');
+        this.accessToken = response.authResponse;
+        this.service.saveAuthToken(this.accessToken);
         router.navigate(['/home']);
       } else {
         console.log('User cancelled login or did not fully authorize.');
@@ -33,9 +33,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginWithGJ(user: any) {
-    // this.service.login(user).subscribe(res => {
-    //   console.log(res);
-    // });
+    // this.service.loginWithGudjob(user).subscribe(res => console.log(res));
     this.router.navigate(['/home']);
   }
 

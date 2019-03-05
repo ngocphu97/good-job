@@ -9,6 +9,7 @@ import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { components } from './components';
 import { SharedModule } from '@app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { PubishDialogComponent } from './components/pubish-dialog/pubish-dialog.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     SharedModule
   ],
+  entryComponents: [
+    PubishDialogComponent
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: RetryInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HandleHttpResponseInterceptor, multi: true },
@@ -24,7 +28,8 @@ import { FormsModule } from '@angular/forms';
   ],
   declarations: [
     DashboardComponent,
-    components
+    PubishDialogComponent,
+    components,
   ]
 })
 export class CoreModule {

@@ -1,34 +1,43 @@
 <div class="top-nav">
   <div class="gudjob-logo">
-    <button class="gp-btn gp-btn-md gp-text-white" mat-raised-button color="accent" (click)="onPublishPost()">
+    <button class="gp-btn gp-btn-md gp-text-white" mat-raised-button color="accent" (click)="openDialog()">
       Public
     </button>
   </div>
 
   <div class="gudjob-actions">
-    <img class="gp-logo" src="http://blog.edumall.vn/wp-content/uploads/2016/12/goc.png" alt="GP logo">
+    <img class="gp-logo" src="https://gudjob.net/storage/2018/07/callme@3x-768x446.png" alt="GP logo">
 
+    <!-- Home -->
     <button mat-icon-button [matMenuTriggerFor]="home">
-      <!-- <mat-icon style="color: #ffffff">event_note</mat-icon> -->
-      <img class="menu-icon" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png" alt="">
+      <img class="menu-icon" src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png" alt="">
     </button>
+    <mat-menu #home="matMenu">
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item>Help</button>
+    </mat-menu>
 
-
+    <!-- calendar -->
     <button mat-icon-button [matMenuTriggerFor]="calendar">
-      <!-- <mat-icon style="color: #ffffff">calendar_today</mat-icon> -->
       <img class="menu-icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png" alt="">
     </button>
+    <mat-menu #calendar="matMenu">
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item>Help</button>
+    </mat-menu>
 
-
+    <!-- chart -->
     <button mat-icon-button [matMenuTriggerFor]="chart">
-      <!-- <mat-icon style="color: #ffffff">insert_chart_outlined</mat-icon> -->
       <img class="menu-icon" src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png"
         alt="">
     </button>
-
-
+    <mat-menu #chart="matMenu">
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item>Help</button>
+    </mat-menu>
+    
+    <!-- dehaze -->
     <button mat-icon-button [matMenuTriggerFor]="dehaze">
-      <!-- <mat-icon style="color: #ffffff">dehaze</mat-icon> -->
       <img class="menu-icon" src="https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png"
         alt="">
     </button>
@@ -46,6 +55,5 @@
         <span>Disable alerts</span>
       </button>
     </mat-menu>
-
   </div>
 </div>

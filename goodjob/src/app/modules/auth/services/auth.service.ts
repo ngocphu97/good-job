@@ -49,4 +49,13 @@ export class AuthService {
     this.tokenStoreManager.remove();
   }
 
+  loginWithGudjob(u): Observable<any> {
+    const user = {
+      email: 'nhoc@gmail.com',
+      password: '123'
+    };
+
+    return this.http.post('http://localhost:3000/api/users/login', user);
+  }
+
 }

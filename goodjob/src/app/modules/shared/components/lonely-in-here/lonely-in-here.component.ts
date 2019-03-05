@@ -17,5 +17,4 @@ export class LonelyInHereComponent {
   onActionBtnClick() {
     this.action.emit(true);
   }
-
 }

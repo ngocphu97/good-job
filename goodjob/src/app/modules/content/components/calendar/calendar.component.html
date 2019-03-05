@@ -1,68 +1,46 @@
-<!-- MODAL -->
-<ng-template #modalContent let-close="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Preview content</h5>
-    <button type="button" class="close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div>
-      <h4>
-        <strong>{{modalData?.event.start | date:'short'}}</strong> |
-        <strong>{{modalData?.event.clientName}}</strong>
-      </h4>
-
-      <span>
-        Post link:
-        <a href="{{modalData?.event.link}}">{{modalData?.event.link}}</a>
-      </span>
-      <br>
-      <img src="{{modalData?.event.thumbnail}}" alt="">
-      <p style="white-space: pre-wrap;">
-        {{modalData?.event.message}}
-      </p>
-
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
-  </div>
-</ng-template>
-<!-- END MODAL -->
-
 <ng-template #customCellTemplate let-day="day">
-  <div class="cal-cell-top" [matTooltipShowDelay]="showDelayTooltip" matTooltip="There are {{ day.badgeTotal }} on this day. Click to preview">
-    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
-      {{ day.badgeTotal }}
-    </span>
+  <div class="cal-cell-top" tabindex="4" [matTooltipShowDelay]="showDelayTooltip" matTooltip="There are {{ day.badgeTotal }} on this day. Click to preview">
     <span class="cal-day-number">
       {{ day.date | calendarDate:'monthViewDayNumber':locale }}
     </span>
+
+    <div class="cell-totals">
+      <span *ngFor="let group of day.eventGroups" class="badge badge-{{ group[0] }}">
+        {{ group[1].length }}
+      </span>
+    </div>
   </div>
 </ng-template>
+
+<div class="alert alert-info" *ngIf="!clickedDate">
+  Please click on a date to view !
+</div>
 
 
 <div class="wrapper">
   <div class="calendar-container">
     <div class="calendar-header">
-      <button class="custom-btn" mat-mini-fab mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+      <button class="custom-btn" mat-mini-fab mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="activeDayIsOpen = false">
         <i class="material-icons" style="color: #ffffff"> chevron_left </i>
       </button>
       <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h4>
-      <button class="custom-btn" mat-mini-fab mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+      <button class="custom-btn" mat-mini-fab mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="activeDayIsOpen = false">
         <i class="material-icons" style="color: #ffffff"> chevron_right </i>
       </button>
     </div>
 
-    <br>
-
-    <div class="alert alert-info">
-      Click on a day on the view.
-      <strong *ngIf="clickedDate">
-        You clicked on this day: {{ clickedDate | date:'fullDate' }}
-      </strong>
+    <div class="calendar-switch">
+      <div class="btn btn-primary" (click)="changeView('month')" [class.active]="view">
+        Month
+      </div>
+      <div class="btn btn-primary" (click)="changeView('week')" [class.active]="view">
+        Week
+      </div>
     </div>
+
+    <br>
 
     <div [ngSwitch]="view" class="calendar">
       <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
@@ -71,12 +49,14 @@
         [cellTemplate]="customCellTemplate">
       </mwl-calendar-month-view>
 
-      <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [ngStyle]="{'background-color':'green !important'}">
+      <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" (dayClicked)="handleEvent('Clicked', $event.event)"
+        (eventClicked)="handleEvent('Clicked', $event.event)" [events]="events">
       </mwl-calendar-week-view>
 
     </div>
   </div>
+
   <div class="preview-event">
-    <app-preview-post [events] = 'eventsFillter'></app-preview-post>
+    <app-preview-post [events]='eventsFillter'></app-preview-post>
   </div>
 </div>
