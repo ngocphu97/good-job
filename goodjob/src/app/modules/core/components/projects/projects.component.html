@@ -1,0 +1,17 @@
+<h4>Projects</h4>
+<mat-list>
+    <ng-container *ngFor="let p of projects">
+        <mat-list-item class="list-items">
+            <h5 matSubheader>
+                <span>{{p.name}}</span> 
+                <img src="{{p.thumnail}}" alt="">
+            </h5>
+            <mat-selection-list class="selection-list" style="width: 100%;">
+                <mat-list-option *ngFor="let pi of p.pages">
+                    <span matLine>{{pi.name}}</span>
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </ng-container>
+</mat-list>

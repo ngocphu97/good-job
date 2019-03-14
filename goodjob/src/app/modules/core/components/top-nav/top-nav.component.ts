@@ -36,7 +36,9 @@ export class TopNavComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(PubishDialogComponent, {
-      width: '1250px',
+      maxWidth: '1300px',
+      width: '1300px',
+      height: '600px',
       panelClass: 'custom-panel',
       data: {name: this.name, animal: this.animal}
     });

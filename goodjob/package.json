@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^6.0.2",
     "@angular/router": "^6.0.2",
     "@auth0/angular-jwt": "^2.1.0",
+    "@ctrl/ngx-emoji-mart": "^0.12.0",
     "@ng-bootstrap/ng-bootstrap": "^3.1.0",
     "@ngrx/effects": "^6.0.1",
     "@ngrx/entity": "^6.0.1",
@@ -43,7 +44,7 @@
     "moment": "^2.22.2",
     "ng2-charts": "^1.6.0",
     "ng5-time-picker": "0.0.7",
-    "ngx-input-file": "^2.0.1",
+    "ngx-input-file": "^2.1.4",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.1.0",
     "zone.js": "^0.8.26"

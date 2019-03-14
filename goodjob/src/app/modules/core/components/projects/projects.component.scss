@@ -1,0 +1,44 @@
+h4 {
+    margin-top: 0;
+    padding: 15px;
+    box-shadow:
+        0 3px 1px -2px rgba(0, 0, 0, .2),
+        0 2px 2px 0 rgba(0, 0, 0, .14),
+        0 1px 5px 0 rgba(0, 0, 0, .12);
+    text-transform: uppercase;
+}
+
+.wrapper {
+    border-right: 1px solid grey;
+}
+
+:host::ng-deep.list-items>.mat-list-item-content {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+}
+
+.list-items {
+    height: 100% !important;
+
+    .selection-list:focus {
+        outline: none;
+    }
+
+    h5 {
+        display: flex;
+        flex-direction: row-reverse;
+
+    }
+
+    span {
+        margin: 0 10px;
+    }
+
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 0.5px solid
+    }
+
+}

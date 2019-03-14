@@ -11,12 +11,21 @@ import { SharedModule } from '@app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { PubishDialogComponent } from './components/pubish-dialog/pubish-dialog.component';
 
+import { InputFileModule } from 'ngx-input-file';
+import { InputFileConfig } from 'ngx-input-file/src/lib/interfaces/input-file-config';
+
+const config: InputFileConfig = {
+  iconAdd: 'add_circle_outline'
+};
+
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    InputFileModule.forRoot(config)
   ],
   entryComponents: [
     PubishDialogComponent
@@ -29,7 +38,7 @@ import { PubishDialogComponent } from './components/pubish-dialog/pubish-dialog.
   declarations: [
     DashboardComponent,
     PubishDialogComponent,
-    components,
+    components
   ]
 })
 export class CoreModule {

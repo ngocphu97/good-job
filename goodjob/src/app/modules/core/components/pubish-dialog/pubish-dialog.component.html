@@ -1,27 +1,16 @@
 <h3 class="title-top">publish</h3>
 <div mat-dialog-content class="custom-content">
-  <div class="row project">
-    <h4>project</h4>
-    <div>
-      container project
-    </div>
-  </div>
-  <div class="row post">
-    <h4>your post</h4>
-    <div>
-      container post
-    </div>
-  </div>
-  <div class="row review">
-    <h4>review</h4>
-    <div>
-      container review
-    </div>
-  </div>
+    <app-projects style="width: 25%"></app-projects>
+    <app-post style="width: 75%"></app-post>
 </div>
 
-<!-- <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div> -->
-
+<div mat-dialog-actions class="dialog-actions">
+    <div class="actions-left">
+        <button mat-button (click)="onPublishNow()">Publish Now</button>
+        <button mat-button (click)="onAddToQueue()">Add to queue</button>
+        <button mat-button (click)="onSchedule()">Schedule</button>
+    </div>
+    <div class="actions-right">
+        <button mat-button [mat-dialog-close]="data.animal">Next</button>
+    </div>
+</div>

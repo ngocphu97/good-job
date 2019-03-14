@@ -1,0 +1,52 @@
+<div class="wrapper">
+    <div class="post">
+        <h4>Post</h4>
+        <mat-card class="example-card" style="margin: 15px;">
+            <mat-card-header class="custom-card-header">
+                <div mat-card-avatar class="example-header-image"></div>
+            </mat-card-header>
+            <mat-card-content class="post-card-content">
+                <textarea matInput placeholder="Edit your content here ..." [(ngModel)]="mytext" name="test"
+                    #editContentField autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
+                <div class="actions">
+                    <button class="emoji-btn" (click)="openEmojiMart()">
+                        <i [className]="emojiMartDiv ? 'fas fa-times' : 'far fa-grin-wink'"></i>
+                    </button>
+                    <div [className]="emojiMartDiv ? 'active' : 'inactive'">
+                        <emoji-mart set="facebook" showPreview="false" sheetSize="32" (emojiClick)="addEmoji($event)"
+                            totalFrequentLines="1" perLine="7">
+                        </emoji-mart>
+                    </div>
+                </div>
+                <div class="add-image">
+                    <!-- (change)="onAccept($event)" -->
+                    <input-file (deletedFile)="onDeletedFile($event)" (acceptedFile)="onAccept($event)" fileAccept="image/*"
+                        fileLimit="10">
+                    </input-file>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="preview">
+        <h4>Preview</h4>
+        <mat-card class="example-card" style="margin: 15px;">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>User name</mat-card-title>
+                <mat-card-subtitle>Now</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <textarea matInput [(ngModel)]="mytext" name="test" #previewContentField autocomplete="off" role="textbox"
+                    aria-autocomplete="list" aria-haspopup="true"></textarea>
+            </mat-card-content>
+            <ul *ngIf="imagesPreview.length > 0">
+                <li *ngFor="let item of imagesPreview">
+                    <img style="width: 50px; margin: 5px;" mat-card-image src="{{item.pre}}" alt="image preview">
+                </li>
+            </ul>
+        </mat-card>
+    </div>
+</div>
+

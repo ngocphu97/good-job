@@ -5,6 +5,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { materialModules } from './material.module';
 import { components, entryComponents } from './components';
 
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,6 +22,7 @@ import { components, entryComponents } from './components';
   exports: [
     CommonModule,
     FlexLayoutModule,
+    PickerModule,
     ...materialModules,
     ...components,
     ...entryComponents

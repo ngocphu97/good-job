@@ -18,5 +18,15 @@ export class PubishDialogComponent {
     this.dialogRef.close();
   }
 
+  onPublishNow() {
+    // publish post now
+  }
+  onAddToQueue() {
+    // add post to queue
+  }
+  onSchedule() {
+    // schedule post
+  }
+
 
 }
