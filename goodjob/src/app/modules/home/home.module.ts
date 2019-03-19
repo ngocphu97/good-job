@@ -6,16 +6,22 @@ import { routes } from './home.routing';
 import { containers } from './containers';
 import { components } from './components';
 
+import { AddProjectDialogComponent } from '@app/dialog/add-project-dialog/add-project-dialog.component';
+import { DialogModule } from '@app/dialog/dialog.module';
 
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    SharedModule
+    SharedModule,
+    DialogModule
   ],
   declarations: [
     containers,
     components
+  ],
+  entryComponents: [
+    AddProjectDialogComponent
   ]
 })
 

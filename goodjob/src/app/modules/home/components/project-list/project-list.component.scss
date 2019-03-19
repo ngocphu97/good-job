@@ -1,41 +1,49 @@
 .project {
-  padding: 8px;
-  background: #ffffff;
-  border-radius: 15px;
-}
+    padding: 8px;
+    background: #ffffff;
+    border-radius: 15px;
 
-.project h3 {
-    margin-top: 3px;
-    margin-bottom: 3px;
-    font-weight: lighter;
-}
+    h3 {
+        margin-top: 3px;
+        margin-bottom: 3px;
+        font-weight: lighter;
+    }
 
-.project-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-}
+    .project-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
 
-.project-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 11px;
-}
+        .project-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 11px;
 
-.project-item img {
-  max-width: 50px;
-  border: 1px solid #ffe100;
-  border-radius: 50%;
-}
+            img {
+                height: 50px;
+                width: 50px;
+                border: 1px solid #ffe100;
+                border-radius: 50%;
+            }
 
-.project-item span {
-  font-size: 8px;
-}
+            span {
+                font-size: 8px;
+            }
+        }
 
-.add-project:hover {
-  cursor: pointer;
-  border-radius: 50%;
+        .add-project-btn {
+            border: 1px solid #769aff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 0px;
+
+            i {
+                color: #769aff;
+            }
+        }
+    }
 }

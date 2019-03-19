@@ -1,11 +1,11 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Renderer2, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements AfterViewInit {
+export class PostComponent {
   content: '';
   mytext = '';
   lastPos = 0;
@@ -17,9 +17,6 @@ export class PostComponent implements AfterViewInit {
   @ViewChild('previewContentField', { read: ElementRef }) private previewContentField: ElementRef;
 
   constructor(private renderer: Renderer2) { }
-
-  ngAfterViewInit() {
-  }
 
   addEmoji(event) {
     const pos = this.editContentField.nativeElement.selectionStart;

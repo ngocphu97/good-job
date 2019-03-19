@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { MatDialog } from '@angular/material';
 import { CalendarEvent } from 'angular-calendar';
 
 import { ContentService } from '../../services/content.service';
-
-import { AddGroupFormComponent } from '../add-group-form/add-group-form.component';
-
-
 import { Client } from '../../models/client';
 import { Group } from '../../models/group';
-import { Router } from '@angular/router';
+
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 
 declare var FB: any;
@@ -81,36 +79,36 @@ export class EditWizardComponent implements OnInit {
     }
   }
 
-  openDialog(): void {
-    if (this.clients.length === 0) {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '1000px',
-        data: {
-          title: 'Login again',
-          message: 'Your token out of time',
-          confirmButtonText: 'OK',
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        this.router.navigateByUrl('/');
-      });
-    } else {
-      const dialogRef = this.dialog.open(AddGroupFormComponent, {
-        width: '1000px',
-        data: this.clients
-      });
+  // openDialog(): void {
+  //   if (this.clients.length === 0) {
+  //     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+  //       width: '1000px',
+  //       data: {
+  //         title: 'Login again',
+  //         message: 'Your token out of time',
+  //         confirmButtonText: 'OK',
+  //       }
+  //     });
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       this.router.navigateByUrl('/');
+  //     });
+  //   } else {
+  //     const dialogRef = this.dialog.open(AddGroupFormComponent, {
+  //       width: '1000px',
+  //       data: this.clients
+  //     });
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        const g: Group = {
-          id: '1',
-          groupName: result[0].groupName,
-          clients: result[0].clients
-        };
-        this.groups.push(g);
-      });
-    }
-  }
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       console.log(result);
+  //       const g: Group = {
+  //         id: '1',
+  //         groupName: result[0].groupName,
+  //         clients: result[0].clients
+  //       };
+  //       this.groups.push(g);
+  //     });
+  //   }
+  // }
 
   selectGroup(group: Group) {
     this.selectedGroup = this.groups.find(function (g) {

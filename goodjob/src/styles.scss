@@ -19,38 +19,42 @@ $my-theme-warn);
 @include angular-material-theme($my-theme);
 
 html {
-	height: 100%;
-	padding: 0;
-	margin: 0;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-	height: 100%;
-	padding: 0;
-	margin: 0;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 * {
-	font-family: Montserrat, sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
 .gp-btn {
-	border-radius: 18.5px !important;
-	min-width: 60.8px;
+    border-radius: 18.5px !important;
+    min-width: 60.8px;
 }
 
 .gp-btn:focus {
-	outline: none;
+    outline: none;
 }
 
 .gp-btn-sm {
-	min-width: 120px !important;
+    min-width: 120px !important;
 }
 
 .gp-btn-md {
-	min-width: 180px !important;
+    min-width: 180px !important;
 }
 
 .gp-text-white {
-	color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+button:focus {
+    outline: none;
 }

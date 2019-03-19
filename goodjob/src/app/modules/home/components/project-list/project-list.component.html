@@ -1,13 +1,13 @@
 <div class="project">
     <h3>PROJECT</h3>
     <div class="project-list">
-      <div *ngFor="let i of projects" class="project-item">
-        <img src="https://image.flaticon.com/icons/svg/427/427917.svg" alt="">
-        <span>{{i.name}}</span>
-      </div>
-      <div>
-        <i class="material-icons add-project" style="font-size: 40px; color: #29B6F6"> add_circle_outline</i>
-      </div>
+        <div *ngFor="let project of projects$ | async" class="project-item">
+            <img src="{{project.avatar}}" alt="">
+            <span>{{project.name}}</span>
+        </div>
+        <button (click)="onOpenProjectDialog()" class="add-project-btn" mat-icon-button>
+            <i class="material-icons"> add</i>
+        </button>
     </div>
-    
 </div>
+

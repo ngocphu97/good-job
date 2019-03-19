@@ -18,7 +18,8 @@ import { routes } from './content.routing';
 import { containers } from './containers';
 import { components } from './components';
 
-import { AddGroupFormComponent } from './components/add-group-form/add-group-form.component';
+import { DialogModule } from '@app/dialog/dialog.module';
+import { AddProjectDialogComponent } from '@app/dialog/add-project-dialog/add-project-dialog.component';
 
 const config: InputFileConfig = {};
 
@@ -28,13 +29,13 @@ const config: InputFileConfig = {};
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    InputFileModule.forRoot(config),
-
     SharedModule,
+    DialogModule,
+
+    InputFileModule.forRoot(config),
     Ng5TimePickerModule,
     IgxCalendarModule,
     IgxDialogModule,
-
     CalendarModule.forRoot(),
     FlatpickrModule.forRoot(),
     NgbModule.forRoot()
@@ -44,7 +45,7 @@ const config: InputFileConfig = {};
     ...components,
   ],
   entryComponents: [
-    AddGroupFormComponent
+    AddProjectDialogComponent
   ],
   providers: [DatePipe]
 })

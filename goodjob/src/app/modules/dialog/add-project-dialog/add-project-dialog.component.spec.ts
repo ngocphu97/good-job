@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddGroupFormComponent } from './add-group-form.component';
+import { AddProjectDialogComponent } from './add-project-dialog.component';
 
-describe('AddGroupFormComponent', () => {
-  let component: AddGroupFormComponent;
-  let fixture: ComponentFixture<AddGroupFormComponent>;
+describe('AddProjectDialogComponent', () => {
+  let component: AddProjectDialogComponent;
+  let fixture: ComponentFixture<AddProjectDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddGroupFormComponent ]
+      declarations: [ AddProjectDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddGroupFormComponent);
+    fixture = TestBed.createComponent(AddProjectDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

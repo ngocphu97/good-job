@@ -21,7 +21,9 @@
       "@app/core": ["app/modules/core/index"],
       "@app/core/*": ["app/modules/core/*"],
       "@app/shared/*": ["app/modules/shared/*"],
-      "@app/auth/*": ["app/modules/auth/*"]
+      "@app/auth/*": ["app/modules/auth/*"],
+      "@app/content/*": ["app/modules/content/*"],
+      "@app/dialog/*": ["app/modules/dialog/*"]
     }
   }
 }

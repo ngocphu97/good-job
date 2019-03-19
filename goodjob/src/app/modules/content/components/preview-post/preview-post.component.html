@@ -8,15 +8,15 @@
     <mat-expansion-panel-header>
       <mat-panel-title class="expansion-header">
 
-        <div *ngIf="event.is_published; then thenBlock else elseBlock"></div>
+        <div *ngIf="event.is_published; then isPulishedBlock else isNotPulishedBlock"></div>
 
-        <ng-template #thenBlock>
+        <ng-template #isPulishedBlock>
           <span class="event-time">
             <i class="material-icons" style="color: lightgreen;"> check_circle_outline</i>
             {{event.start | date:'shortTime'}}</span>
         </ng-template>
 
-        <ng-template #elseBlock>
+        <ng-template #isNotPulishedBlock>
           <span class="event-time">
             <i class="material-icons" style="color: red;"> check_circle_outline</i>
             {{event.start | date:'shortTime'}}</span>
@@ -36,8 +36,7 @@
 
       </mat-panel-title>
     </mat-expansion-panel-header>
-
-    <!-- body -->
+    
     <div>
       <div class="content-preview">
         <div class="img-preview">

@@ -19,7 +19,6 @@
                     </div>
                 </div>
                 <div class="add-image">
-                    <!-- (change)="onAccept($event)" -->
                     <input-file (deletedFile)="onDeletedFile($event)" (acceptedFile)="onAccept($event)" fileAccept="image/*"
                         fileLimit="10">
                     </input-file>
@@ -41,9 +40,16 @@
                 <textarea matInput [(ngModel)]="mytext" name="test" #previewContentField autocomplete="off" role="textbox"
                     aria-autocomplete="list" aria-haspopup="true"></textarea>
             </mat-card-content>
+            <ng-container *ngIf="imagesPreview.length === 0">
+                <img src="https://makitweb.com/demo/broken_image/images/noimage.png" alt="">
+            </ng-container>
             <ul *ngIf="imagesPreview.length > 0">
                 <li *ngFor="let item of imagesPreview">
-                    <img style="width: 50px; margin: 5px;" mat-card-image src="{{item.pre}}" alt="image preview">
+                    <img 
+                        style="width: 50px; margin: 5px;" 
+                        mat-card-image 
+                        src="{{item.pre}}" 
+                        alt="image preview">
                 </li>
             </ul>
         </mat-card>
