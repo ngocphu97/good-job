@@ -1,9 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ViewContainerRef, ComponentRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-
-import { DialogService } from '../service/dialog.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 export interface DialogData {
   users: any;
@@ -20,15 +17,18 @@ export class AddProjectDialogComponent implements OnInit {
   clientControl = new FormControl();
   users = [];
 
-  constructor(public dialogRef: MatDialogRef<AddProjectDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private service: DialogService,
-    private projectForm: FormBuilder) { }
+  @ViewChild('target', { read: ViewContainerRef }) vcRef: ViewContainerRef;
+
+  componentRef: ComponentRef<any>;
+
+  constructor(
+    public dialogRef: MatDialogRef<AddProjectDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.data.users.forEach(d => {
       console.log(d);
       this.users.push(d);
     });
-    console.log(this.users);
   }
 }

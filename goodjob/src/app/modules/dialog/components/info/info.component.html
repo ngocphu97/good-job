@@ -1,0 +1,71 @@
+<h4>
+    Info
+</h4>
+<div class="info-wrapper">
+    <div class="name">
+        <div class="avatar">
+            <input type="file" name="project-avatar">
+            <label for="project-avatar">
+                <i class="material-icons">
+                    collections
+                </i>
+            </label>
+        </div>
+
+        <div class="actions">
+            <mat-form-field class="example-form-field">
+                <input matInput type="text" placeholder="Name" [(ngModel)]="value">
+                <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-chip class="chip" disabled>Asia/Ho Chi Minh City</mat-chip>
+        </div>
+    </div>
+
+    <div class="channel">
+        <label for="">Select Chanel</label>
+        <div>
+            <button mat-raised-button>
+                <i class="fab fa-facebook-f"></i>
+            </button>
+            <button mat-raised-button>
+                <i class="fab fa-instagram"></i>
+            </button>
+            <button mat-raised-button>
+                <i class="fab fa-linkedin-in"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="setting">
+        <label for="">Setting up automatic UTM parameters for this channel</label>
+        <div>
+            <div class="row1">
+                <p> </p>
+                <p>.utm_campaign</p>
+                <p>.utm_content</p>
+                <p>.utm_source</p>
+            </div>
+            <div class="row2">
+                Facebook
+                <input type="text">
+                <input type="text">
+                <input type="text">
+            </div>
+            <div class="row2">
+                Facebook
+                <input type="text">
+                <input type="text">
+                <input type="text">
+            </div>
+            <div class="row2">
+                Facebook
+                <input type="text">
+                <input type="text">
+                <input type="text">
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,10 +4,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, PreloadingStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { StoreModule } from '@ngrx/store';
-import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+// import { StoreModule } from '@ngrx/store';
+// import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
+// import { EffectsModule } from '@ngrx/effects';
+// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CoreModule } from '@app/core/core.module';
 import { AuthModule } from '@app/auth/auth.module';
@@ -38,18 +38,18 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    StoreModule.forRoot(reducers, {metaReducers}),
+    // StoreModule.forRoot(reducers, {metaReducers}),
 
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
      */
-    StoreRouterConnectingModule.forRoot({
-      /*
-        They stateKey defines the name of the state used by the router-store reducer.
-        This matches the key defined in the map of reducers
-      */
-      stateKey: 'router',
-    }),
+    // StoreRouterConnectingModule.forRoot({
+    /*
+      They stateKey defines the name of the state used by the router-store reducer.
+      This matches the key defined in the map of reducers
+    */
+    //   stateKey: 'router',
+    // }),
 
     /**
      * Store devtools instrument the store retaining past versions of state
@@ -61,10 +61,10 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
      *
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
-    StoreDevtoolsModule.instrument({
-      name: 'NgRx Book Store DevTools',
-      logOnly: environment.production,
-    }),
+    // StoreDevtoolsModule.instrument({
+    //   name: 'NgRx Book Store DevTools',
+    //   logOnly: environment.production,
+    // }),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and
@@ -73,8 +73,7 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
      *
      * See: https://github.com/ngrx/platform/blob/master/docs/effects/api.md#forroot
      */
-    EffectsModule.forRoot([]),
-
+    // EffectsModule.forRoot([]),
 
     CoreModule,
     OverlayModule,
@@ -84,13 +83,14 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
     AppComponent
   ],
   providers: [
+    { provide: AppPreloadingStrategy, useClass: AppPreloadingStrategy },
+
     /**
      * The `RouterStateSnapshot` provided by the `Router` is a large complex structure.
      * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
      * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
      */
-    {provide: RouterStateSerializer, useClass: CustomRouterStateSerializer},
-    {provide: AppPreloadingStrategy, useClass: AppPreloadingStrategy},
+    // {provide: RouterStateSerializer, useClass: CustomRouterStateSerializer},
   ],
   bootstrap: [AppComponent]
 })

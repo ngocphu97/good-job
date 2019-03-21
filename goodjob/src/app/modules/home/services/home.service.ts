@@ -30,7 +30,6 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<any> {
-    // return this.http.get('http://localhost:3000/api/getUser');
     return new Observable((observer: Observer<any[]>) => {
       setTimeout(() => {
         observer.next(this.projects);

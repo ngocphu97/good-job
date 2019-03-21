@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { HomeService } from '../../services/home.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddProjectDialogComponent } from '@app/dialog/add-project-dialog/add-project-dialog.component';
+
+import { HomeService } from '../../services/home.service';
+import { AddProjectDialogComponent } from '@app/dialog/containers/add-project-dialog/add-project-dialog.component';
 
 @Component({
   selector: 'app-project-list',
@@ -12,7 +12,6 @@ import { AddProjectDialogComponent } from '@app/dialog/add-project-dialog/add-pr
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
-
   projects$: Observable<any>;
 
   users = [];
@@ -32,6 +31,23 @@ export class ProjectListComponent implements OnInit {
       this.users.push(data);
     });
   }
+
+  onOpenProjectDialog(): void {
+    const dialogRef = this.dialog.open(AddProjectDialogComponent, {
+      width: '1300px',
+      maxWidth: '1300px',
+      height: '600px',
+      panelClass: 'custom-add-project-panel',
+      data: {
+        users: this.users
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
 
   getUserConnectPage() {
     // this.clients = this.service.getInfo();
@@ -62,24 +78,7 @@ export class ProjectListComponent implements OnInit {
   //     });
   //   }
   // }
-  onOpenProjectDialog(): void {
-    alert(this.users);
-    const dialogRef = this.dialog.open(AddProjectDialogComponent, {
-      width: '1300px',
-      maxWidth: '1300px',
-      height: '600px',
-      panelClass: 'custom-add-project-panel',
-      data: {
-        users: this.users
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
-  }
 
   selectGroup(group) {
-
   }
 }

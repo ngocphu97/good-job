@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { PubishDialogComponent } from '../pubish-dialog/pubish-dialog.component';
+import { PublishNowDialogComponent } from '@app/dialog/containers/publish-now-dialog/publish-now-dialog.component';
 
 declare var FB: any;
 
@@ -19,8 +19,8 @@ export class TopNavComponent implements OnInit {
 
   @Output() logoutSignal = new EventEmitter();
 
-  animal: string;
-  name: string;
+  animal = 'dog';
+  name = 'phu';
   constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -34,18 +34,38 @@ export class TopNavComponent implements OnInit {
     this.logoutSignal.emit();
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(PubishDialogComponent, {
+  // openDialog(): void {
+  //   const dialogConfig = {
+  //     maxWidth: '1300px',
+  //     width: '1300px',
+  //     height: '600px',
+  //     panelClass: 'custom-panel',
+  //     data: { name: this.name, animal: this.animal }
+  //   };
+
+  //   const dialogRef = this.dialog.open(PublishNowDialogComponent, dialogConfig);
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //     this.animal = result;
+  //   });
+  // }
+
+  openDialog() {
+    const dialogConfig = {
       maxWidth: '1300px',
       width: '1300px',
       height: '600px',
       panelClass: 'custom-panel',
-      data: {name: this.name, animal: this.animal}
-    });
+      data: { name: this.name, animal: this.animal }
+    };
+
+    const dialogRef = this.dialog.open(PublishNowDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 }
+
+

@@ -79,6 +79,10 @@ export class EditWizardComponent implements OnInit {
     }
   }
 
+  openDialog() {
+    console.log('open');
+  }
+
   // openDialog(): void {
   //   if (this.clients.length === 0) {
   //     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

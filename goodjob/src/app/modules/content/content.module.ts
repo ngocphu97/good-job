@@ -19,7 +19,7 @@ import { containers } from './containers';
 import { components } from './components';
 
 import { DialogModule } from '@app/dialog/dialog.module';
-import { AddProjectDialogComponent } from '@app/dialog/add-project-dialog/add-project-dialog.component';
+import { AddProjectDialogComponent } from '@app/dialog/containers/add-project-dialog/add-project-dialog.component';
 
 const config: InputFileConfig = {};
 

@@ -34,6 +34,17 @@ body {
     font-family: Montserrat, sans-serif;
 }
 
+.mat-dialog-container {
+    padding: 0 !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+}
+
+.dialog-content.mat-dialog-content {
+    max-height: 100% !important;
+    overflow: hidden;
+}
+
 .gp-btn {
     border-radius: 18.5px !important;
     min-width: 60.8px;
