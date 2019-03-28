@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { environment } from '@app/environment';
 
@@ -8,6 +8,8 @@ import { environment } from '@app/environment';
 
 import { TokenStoreManager } from './token-storage.service';
 import { LoginModel, AuthToken } from '../models';
+
+declare var FB: any;
 
 @Injectable()
 export class AuthService {
@@ -58,4 +60,13 @@ export class AuthService {
     return this.http.post('http://localhost:3000/api/users/login', user);
   }
 
+  loginWithFb(): Observable<any> {
+    return Observable.create((observer) => {
+      FB.login((response) => {
+        localStorage.setItem('access_token', response.authResponse.accessToken);
+        observer.next(response);
+        observer.complete();
+      });
+    });
+  }
 }

@@ -1,12 +1,8 @@
 @import '~@angular/material/theming';
-
-@import "../node_modules/angular-calendar/css/angular-calendar.css";
-// @import '~@angular/material/_theming';
-@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
-
-@import "~@ctrl/ngx-emoji-mart/picker";
-
 @include mat-core();
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "~@ctrl/ngx-emoji-mart/picker";
 
 $my-theme-primary: mat-palette($mat-amber, 800, 700, 900);
 $my-theme-accent : mat-palette($mat-light-blue, 400);
@@ -17,6 +13,10 @@ $my-theme-accent,
 $my-theme-warn);
 
 @include angular-material-theme($my-theme);
+
+* {
+    font-family: Montserrat, sans-serif;
+}
 
 html {
     height: 100%;
@@ -30,9 +30,6 @@ body {
     margin: 0;
 }
 
-* {
-    font-family: Montserrat, sans-serif;
-}
 
 .mat-dialog-container {
     padding: 0 !important;

@@ -13,13 +13,14 @@ declare var FB: any;
   providedIn: 'root'
 })
 export class ContentService {
-
   groups: Group[] = [];
   events: CalendarEvent[] = [];
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAOjh8GAImtDMG4NSwriJk8aIrKBMK6SENTwpkWRR6AVVyq86wqr3zgoz7bzdCHZAWEtfnsRZASAghQdfl0tvMpYls4ZBZAlIYX4JF7ktyfx8RsH3ySuITJtWW7KZAF349FkaCN0cQZAZCtlrEdpjN4x8XYnrgOZCUOVBO1hR0hJ9mwdFz0Fn3KwZD';
+  access_token =
+    // tslint:disable-next-line: max-line-length
+    'EAANQlAVxZBd4BAKtK2NtsuEMi7rKDz4gDsRJlqhT7PlgwLEZAaJSYzUUPVF34dKR09ZCZAAmfSY69WyyVLSZAjAoZCDCh60EbBgxyT2z3Tz6qK3eDZAkeomZAikN0RM1ZA6ZAN4yTALN4CzM6SzSk8ElMyVZCcQnhFzwV0Kj5kcnAy1RxcHulPfTzoGC4uJ41xhlRcZD';
   connectAccount = [];
   colors: any = {
     red: {
@@ -60,11 +61,12 @@ export class ContentService {
     const eventColors = this.colors;
     const events = this.events;
 
-    FB.api(`/me`, 'GET',
+    FB.api(
+      `/me`,
+      'GET',
       {
         access_token: token,
-        fields: `
-          scheduled_posts{
+        fields: `scheduled_posts{
             id,
             full_picture,
             message,
@@ -72,9 +74,10 @@ export class ContentService {
             created_time,
             link,
             name
-          }
+        }
         `
-      }, (response) => {
+      },
+      response => {
         if (response.error) {
           throw new Error(response.error);
         } else {
@@ -82,43 +85,58 @@ export class ContentService {
           if (response.scheduled_posts !== undefined) {
             response.scheduled_posts.data.forEach(d => {
               const convertDateTime = new Date(d.created_time);
-              const timeForTitle = this.convertDate(convertDateTime);
+              const timeForTitle = this.convertDate(
+                convertDateTime
+              );
               const title = `<p class="scheduledPost">${timeForTitle}</p>`;
               const label = `
                       <i class="material-icons icon-week-custom-scheduled">schedule</i>
-                      <img class="img-custom-week-view" src='${d.full_picture}'/>
+                      <img class="img-custom-week-view" src='${
+                d.full_picture
+                }'/>
                     `;
 
-              const event: CalendarEvent = {
+              const calendarEvent: CalendarEvent = {
                 id: d.id,
                 start: convertDateTime,
                 title: title,
                 color: eventColors.red,
                 cssClass: 'my-custom-class',
                 draggable: true,
+                meta: {
+                  type: 'secondary'
+                },
+                actions: [
+                  {
+                    label: label,
+                    onClick: ({
+
+                    }: {
+                      event: CalendarEvent;
+                    }): void => { }
+                  }
+                ]
+              };
+
+              const fbEvent = {
                 message: d.message,
                 story: d.story,
                 clientName: clientName,
                 is_published: false,
                 link: d.link,
-                thumbnail: d.full_picture,
-                meta: {
-                  type: 'secondary'
-                },
-                actions: [{
-                  label: label,
-                  onClick: ({ }: { event: CalendarEvent }): void => {
-                  }
-                }]
+                thumbnail: d.full_picture
               };
+
+              const event = { ...calendarEvent, fbEvent };
+
               events.push(event);
             });
           } else {
             console.log('Error');
           }
         }
-
-      });
+      }
+    );
     return events;
   }
 
@@ -153,27 +171,34 @@ export class ContentService {
               `;
     }
 
-    const event: CalendarEvent = {
+    const calendarEvent: CalendarEvent = {
       id: feed.id,
       start: convertDateTime,
       title: title,
       color: eventColor,
       cssClass: 'my-custom-class',
       draggable: false,
+      meta: {
+        type: metaType
+      },
+      actions: [
+        {
+          label: label,
+          onClick: ({ }: { event: CalendarEvent }): void => { }
+        }
+      ]
+    };
+
+    const fbEvent = {
       message: feed.message,
       clientName: clientName,
       is_published: feed.is_published,
       link: feed.link,
-      thumbnail: feed.full_picture,
-      meta: {
-        type: metaType
-      },
-      actions: [{
-        label: label,
-        onClick: ({ }: { event: CalendarEvent }): void => {
-        }
-      }]
+      thumbnail: feed.full_picture
     };
+
+    const event = { ...calendarEvent, fbEvent };
+
     this.events.push(event);
   }
 
@@ -189,7 +214,7 @@ export class ContentService {
       name: data,
       image: avatar,
       access_token: access_token,
-      feed: feed,
+      feed: feed
     };
     return client;
   }
@@ -199,7 +224,9 @@ export class ContentService {
     const events = this.events;
     this.getScheduledPost(clientName, access_token);
 
-    FB.api(`/me/feed`, 'GET',
+    FB.api(
+      `/me/feed`,
+      'GET',
       {
         access_token: token,
         fields: `
@@ -212,7 +239,8 @@ export class ContentService {
           name,
           photos.width(150).height(150){picture}
         `
-      }, (response) => {
+      },
+      response => {
         response.data.forEach(d => {
           this.addCalendarEvent(d, clientName, 'info');
         });
@@ -227,15 +255,19 @@ export class ContentService {
 
   getInfo(): Client[] {
     const token = this.access_token;
-    FB.api(`/me`, 'GET',
+    FB.api(
+      `/me`,
+      'GET',
       {
         access_token: token,
-        fields: 'accounts{access_token,name,photos.width(150).height(150){picture}}'
-      }, (response) => {
+        fields:
+          'accounts{access_token,name,photos.width(150).height(150){picture}}'
+      },
+      response => {
         if (response.error) {
           alert(response.error);
         } else {
-          response.accounts.data.forEach((r) => {
+          response.accounts.data.forEach(r => {
             const c = this.addClient(r);
             this.connectAccount.push(c);
           });
@@ -245,7 +277,11 @@ export class ContentService {
     return this.connectAccount;
   }
 
-  onUploadMuiltiPhotos(message: string, multiSelectedFile: any, pageToken: string) {
+  onUploadMuiltiPhotos(
+    message: string,
+    multiSelectedFile: any,
+    pageToken: string
+  ) {
     const files = multiSelectedFile;
     const fbMediaId: any = [];
     const lenght = multiSelectedFile.length;
@@ -255,7 +291,9 @@ export class ContentService {
       if (file) {
         fileReader.onloadend = async () => {
           const token = pageToken;
-          const photoData = new Blob([fileReader.result], { type: 'image/jpeg' });
+          const photoData = new Blob([fileReader.result], {
+            type: 'image/jpeg'
+          });
           const formData = new FormData();
           const published = 'false';
 
@@ -264,10 +302,13 @@ export class ContentService {
           formData.append('message', 'status message');
           formData.append('published', published);
 
-          let response: any = await fetch(`https://graph.facebook.com/249376455821855/photos`, {
-            body: formData,
-            method: 'POST',
-          });
+          let response: any = await fetch(
+            `https://graph.facebook.com/249376455821855/photos`,
+            {
+              body: formData,
+              method: 'POST'
+            }
+          );
           response = await response.json();
 
           fbMediaId.push({
@@ -284,13 +325,13 @@ export class ContentService {
                 message: mess,
                 attached_media: fbMediaId
               },
-              (res) => {
-                if (res && !res.error) { }
+              res => {
+                if (res && !res.error) {
+                }
                 return res;
               }
             );
           }
-
         };
 
         fileReader.readAsArrayBuffer(file);
@@ -304,10 +345,10 @@ export class ContentService {
     } else {
       console.error(
         `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `body was: ${error.error}`
+      );
     }
-    return throwError(
-      'Something bad happened; please try again later.');
+    return throwError('Something bad happened; please try again later.');
   }
 
   saveArticle(article): Observable<any> {
@@ -323,10 +364,10 @@ export class ContentService {
 
     let response = await fetch(url, {
       body: formData,
-      method: 'POST',
+      method: 'POST'
     });
 
-    return response = await response.json();
+    return (response = await response.json());
   }
 
   getImageFormS3(): Observable<any> {

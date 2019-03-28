@@ -1,3 +1,5 @@
+<span *ngIf="errorMessage.length>0">{{errorMessage}}</span>
+
 <div class="login-form">
   <app-login-form 
     (loginSignal)="loginWithFb($event)" 

@@ -66,7 +66,6 @@ export class EditWizardComponent implements OnInit {
 
   getInfo() {
     this.clients = this.service.getInfo();
-    console.log(1, this.clients);
   }
 
   onAccept(evt) {

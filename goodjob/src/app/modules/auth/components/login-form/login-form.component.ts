@@ -46,7 +46,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   loginWithFb() {
-    this.loginSignal.emit();
+    this.loginSignal.emit('');
   }
 
   loginWithGJ() {

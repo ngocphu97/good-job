@@ -9,8 +9,11 @@ export class TokenStoreManager {
   constructor(private localStorage: LocalStorageService) {
   }
 
-  get(): AuthToken {
-    return this.localStorage.get(environment.authentication.tokenKey);
+  // get(): AuthToken {
+  //   return this.localStorage.get(environment.authentication.tokenKey);
+  // }
+  get() {
+    return this.localStorage.get('access_token');
   }
 
   save(value: AuthToken): void {

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgZone } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
 import { AuthService } from '@app/auth/services';
 
-declare var FB: any;
 
 @Component({
   selector: 'app-login-page',
@@ -12,28 +15,30 @@ declare var FB: any;
 export class LoginPageComponent implements OnInit {
 
   connectAccount = new Array<any>();
-  accessToken: any;
-
-  constructor(private service: AuthService, private router: Router) { }
+  accessToken$: Observable<any>;
+  errorMessage = '';
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private zone: NgZone
+  ) { }
 
   ngOnInit() {
   }
 
+
   loginWithFb(event) {
-    const router = this.router;
-    FB.login(function (response) {
-      if (response.authResponse) {
-        this.accessToken = response.authResponse;
-        this.service.saveAuthToken(this.accessToken);
-        router.navigate(['/home']);
-      } else {
-        console.log('User cancelled login or did not fully authorize.');
-      }
-    });
+    this.authService.loginWithFb()
+      .pipe()
+      .subscribe(data => {
+        if (data) {
+          console.log(data);
+          // this.zone.run(() => { this.router.navigate(['/home']); });
+        }
+      });
   }
 
   loginWithGJ(user: any) {
-    // this.service.loginWithGudjob(user).subscribe(res => console.log(res));
     this.router.navigate(['/home']);
   }
 

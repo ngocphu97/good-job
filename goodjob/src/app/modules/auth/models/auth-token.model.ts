@@ -1,14 +1,14 @@
 export class AuthToken {
 
   static isValid(token: AuthToken): boolean {
-    return token && new Date() <= new Date(token.exp);
+    return token && new Date() <= new Date(token.expiresIn);
   }
 
   constructor(public accessToken: string,
-              public refreshToken: string,
-              public tokenType: string,
-              public expiresIn: number,
-              public expiresAt: number,
-              public exp: Date) {
-  }
+    public tokenType: string,
+    public expiresIn: number,
+    public data_access_expiration_time: number
+    ) {}
 }
+
+
