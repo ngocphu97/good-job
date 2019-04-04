@@ -7,8 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { services } from './services';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { components } from './components';
-import { PublishNowDialogComponent } from '@app/dialog/containers/publish-now-dialog/publish-now-dialog.component';
-import { MatDialogModule } from '@angular/material';
+import { PublishNowDialogComponent } from '@app/dialog/containers';
 import { DialogModule } from '@app/dialog/dialog.module';
 
 @NgModule({

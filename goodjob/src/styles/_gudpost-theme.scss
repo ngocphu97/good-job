@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+
+// $gudpost-primary: #8ddef1;
+
+// predefine theme keys 
+
+// $primary: map-get($gudpost-theme, primary);
+// button {
+//   color: mat-color($primay, button);
+// }
+
+$gudpost-theme-primary: mat-palette($mat-light-blue);
+$gudpost-theme-accent: mat-palette($mat-light-blue);
+$gudpost-theme-warn: mat-palette($mat-deep-orange, A200);
+
+// create theme (use mat-dark-theme for themes with dark backgrounds)
+$gudpost-theme: mat-light-theme(
+    $gudpost-theme-primary,
+    $gudpost-theme-accent,
+    $gudpost-theme-warn
+);

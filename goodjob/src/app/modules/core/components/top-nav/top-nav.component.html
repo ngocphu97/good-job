@@ -1,6 +1,8 @@
 <div class="top-nav">
   <div class="gudjob-logo">
-    <button class="gp-btn gp-btn-md gp-text-white" mat-raised-button color="accent" (click)="openDialog()">
+    <button class="gp-btn gp-btn-md gp-text-white" 
+            mat-raised-button color="accent" 
+            (click)="openDialog()">
       Public
     </button>
   </div>
@@ -8,38 +10,32 @@
   <div class="gudjob-actions">
     <img class="gp-logo" src="https://gudjob.net/storage/2018/07/callme@3x-768x446.png" alt="GP logo">
 
-    <!-- Home -->
     <button mat-icon-button [matMenuTriggerFor]="home">
-      <img class="menu-icon" src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png" alt="">
+      <img class="menu-icon" src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png">
     </button>
     <mat-menu #home="matMenu">
       <button mat-menu-item>Settings</button>
       <button mat-menu-item>Help</button>
     </mat-menu>
 
-    <!-- calendar -->
     <button mat-icon-button [matMenuTriggerFor]="calendar">
-      <img class="menu-icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png" alt="">
+      <img class="menu-icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png">
     </button>
     <mat-menu #calendar="matMenu">
       <button mat-menu-item>Settings</button>
       <button mat-menu-item>Help</button>
     </mat-menu>
 
-    <!-- chart -->
     <button mat-icon-button [matMenuTriggerFor]="chart">
-      <img class="menu-icon" src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png"
-        alt="">
+      <img class="menu-icon" src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png">
     </button>
     <mat-menu #chart="matMenu">
       <button mat-menu-item>Settings</button>
       <button mat-menu-item>Help</button>
     </mat-menu>
     
-    <!-- dehaze -->
     <button mat-icon-button [matMenuTriggerFor]="dehaze">
-      <img class="menu-icon" src="https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png"
-        alt="">
+      <img class="menu-icon" src="https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png">
     </button>
     <mat-menu #dehaze="matMenu">
       <button mat-menu-item (click)="logoutWithFb()">

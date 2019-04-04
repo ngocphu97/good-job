@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { routes } from './app.routing';
 import { AppPreloadingStrategy } from './app_preloading_strategy';
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -23,8 +24,10 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
       useHash: false,
       preloadingStrategy: AppPreloadingStrategy
     }),
-    CoreModule,
+
     OverlayModule,
+
+    CoreModule,
     AuthModule
   ],
   declarations: [

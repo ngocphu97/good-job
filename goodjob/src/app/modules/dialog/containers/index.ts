@@ -5,3 +5,8 @@ export const containers = [
     AddProjectDialogComponent,
     PublishNowDialogComponent
 ];
+
+export {
+    AddProjectDialogComponent,
+    PublishNowDialogComponent
+};

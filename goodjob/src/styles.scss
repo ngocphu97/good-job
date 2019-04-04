@@ -1,68 +1,12 @@
-@import '~@angular/material/theming';
-@include mat-core();
+@import "./styles/global.scss";
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "~@ctrl/ngx-emoji-mart/picker";
 
-$my-theme-primary: mat-palette($mat-amber, 800, 700, 900);
-$my-theme-accent : mat-palette($mat-light-blue, 400);
-$my-theme-warn : mat-palette($mat-light-blue, 900);
+// Import GUDPOST THEME 
+@import './styles/gudpost-theme.scss';
 
-$my-theme: mat-light-theme($my-theme-primary,
-$my-theme-accent,
-$my-theme-warn);
+@import '~@angular/material/theming';
+@include mat-core();
 
-@include angular-material-theme($my-theme);
-
-* {
-    font-family: Montserrat, sans-serif;
-}
-
-html {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-body {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-
-.mat-dialog-container {
-    padding: 0 !important;
-    border-radius: 15px !important;
-    overflow: hidden !important;
-}
-
-.dialog-content.mat-dialog-content {
-    max-height: 100% !important;
-    overflow: hidden;
-}
-
-.gp-btn {
-    border-radius: 18.5px !important;
-    min-width: 60.8px;
-}
-
-.gp-btn:focus {
-    outline: none;
-}
-
-.gp-btn-sm {
-    min-width: 120px !important;
-}
-
-.gp-btn-md {
-    min-width: 180px !important;
-}
-
-.gp-text-white {
-    color: #ffffff !important;
-}
-
-button:focus {
-    outline: none;
-}
+@include angular-material-theme($gudpost-theme);
