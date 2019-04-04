@@ -1,19 +1,77 @@
 @import '~@angular/material/theming';
 
-// $gudpost-primary: #8ddef1;
+$my-custom-primary-color: (
+  50 : #edebfc,
+  100 : #d3cef8,
+  200 : #b6aef3,
+  300 : #988dee,
+  400 : #8274eb,
+  500 : #769aff,
+  600 : #6454e4,
+  700 : #594ae0,
+  800 : #4f41dd,
+  900 : #3d30d7,
+  A100 : #ffffff,
+  A200 : #e9e7ff,
+  A400 : #b9b4ff,
+  A700 : #a29bff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
 
-// predefine theme keys 
+$my-custom-accent-color: (
+    50: #fffde7,
+    100: #fff9c4,
+    200: #fff59d,
+    300: #fff176,
+    400: #ffee58,
+    500: #ffe100,
+    600: #fdd835,
+    700: #fbc02d,
+    800: #f9a825,
+    900: #f57f17,
+    A100: #ffff8d,
+    A200: #ffff00,
+    A400: #ffea00,
+    A700: #ffd600,
+    contrast: (
+      50: $dark-primary-text,
+      100: $dark-primary-text,
+      200: $dark-primary-text,
+      300: $dark-primary-text,
+      400: $dark-primary-text,
+      500: $dark-primary-text,
+      600: $dark-primary-text,
+      700: $dark-primary-text,
+      800: $dark-primary-text,
+      900: $dark-primary-text,
+      A100: $dark-primary-text,
+      A200: $dark-primary-text,
+      A400: $dark-primary-text,
+      A700: $dark-primary-text,
+    )
+);
 
-// $primary: map-get($gudpost-theme, primary);
-// button {
-//   color: mat-color($primay, button);
-// }
+$gudpost-theme-primary: mat-palette($my-custom-primary-color);
+$gudpost-theme-accent: mat-palette($my-custom-accent-color);
+$gudpost-theme-warn: mat-palette($my-custom-primary-color, 900);
 
-$gudpost-theme-primary: mat-palette($mat-light-blue);
-$gudpost-theme-accent: mat-palette($mat-light-blue);
-$gudpost-theme-warn: mat-palette($mat-deep-orange, A200);
 
-// create theme (use mat-dark-theme for themes with dark backgrounds)
+// // create theme (use mat-dark-theme for themes with dark backgrounds)
 $gudpost-theme: mat-light-theme(
     $gudpost-theme-primary,
     $gudpost-theme-accent,

@@ -1,12 +1,12 @@
 @import "./styles/global.scss";
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
-@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "~angular-calendar/css/angular-calendar.css";
 @import "~@ctrl/ngx-emoji-mart/picker";
 
 // Import GUDPOST THEME 
 @import './styles/gudpost-theme.scss';
-
 @import '~@angular/material/theming';
+
 @include mat-core();
 
 @include angular-material-theme($gudpost-theme);

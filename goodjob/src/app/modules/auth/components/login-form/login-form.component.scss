@@ -1,42 +1,47 @@
-#gp-logo {
-  max-width: 380px;
-}
-
 .gp-login {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    img {
+        max-width: 380px;
+    }
 }
 
 .login-form {
-  text-align: center;
-  width: 380px;
+    text-align: center;
+    width: 380px;
+
+    .login-text {
+        color: #838383;
+    }
 }
 
 .input-group {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-.gp-input {
-  border-radius: 18.5px !important;
-}
-
-.login-text {
-  color: #838383;
-}
 
 .remember-checkbox {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .actions {
-  padding: 25px 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+        width: 100%;
+
+        &:nth-child(2) {
+            margin: 0 1rem;
+        }
+    }
 }

@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { materialModules } from './material.module';
-import { components, entryComponents } from './components';
-
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
+import { components, entryComponents } from './components';
+import { directives } from './directive';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     ...materialModules
   ],
   declarations: [
-    ...components
+    ...components,
+    ...directives
   ],
   entryComponents: [
     ...entryComponents
@@ -25,7 +27,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     PickerModule,
     ...materialModules,
     ...components,
-    ...entryComponents
+    ...entryComponents,
+    ...directives
   ]
 })
 export class SharedModule {

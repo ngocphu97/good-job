@@ -17,6 +17,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginFormComponent implements OnInit {
 
+  red: 'red';
+
   email: string;
   password: string;
   color = 'accent';

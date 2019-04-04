@@ -1,10 +1,12 @@
 <div class="gp-login">
-  <div class="gp-logo">
-    <img id="gp-logo" src="https://gudjob.net/storage/2018/07/Glogo.png" alt="GUDPOST Logo">
+  <div>
+    <img src="https://gudjob.net/storage/2018/07/Glogo.png" alt="GUDPOST Logo">
   </div>
 
   <form class="login-form">
-    <h3 class="login-text">LOG IN</h3>
+    <h3 class="login-text" [appTextcolor]="red">
+			LOG IN
+		</h3>
 
     <div class="input-group">
 		<ng-container>
@@ -48,15 +50,15 @@
     </div>
 
     <div class="actions">
-      <button class="gp-btn gp-btn-sm" mat-raised-button color="accent" (click)="loginWithGJ()">
+      <button mat-raised-button color="accent" (click)="loginWithGJ()">
         Sign Up
       </button>
 
-      <button class="gp-btn gp-btn-sm" mat-raised-button color="primary" (click)="loginWithGJ()">
+      <button mat-raised-button color="primary" (click)="loginWithGJ()">
         Log in
       </button>
 
-      <button class="gp-btn gp-btn-sm" mat-raised-button color="warn" (click)="loginWithFb()">
+      <button mat-raised-button color="warn" (click)="loginWithFb()">
         <i class="fab fa-facebook-f" style="font-size: 25px"></i>
       </button>
     </div>

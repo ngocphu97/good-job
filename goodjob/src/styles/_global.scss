@@ -1,12 +1,20 @@
-
 * {
     font-family: Montserrat, sans-serif;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     padding: 0;
     margin: 0;
+}
+
+button {
+    border-radius: 18.5px !important;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .mat-dialog-container {
@@ -19,29 +27,3 @@ html, body {
     max-height: 100% !important;
     overflow: hidden;
 }
-
-.gp-btn {
-    border-radius: 18.5px !important;
-    min-width: 60.8px;
-}
-
-.gp-btn:focus {
-    outline: none;
-}
-
-.gp-btn-sm {
-    min-width: 120px !important;
-}
-
-.gp-btn-md {
-    min-width: 180px !important;
-}
-
-.gp-text-white {
-    color: #ffffff !important;
-}
-
-button:focus {
-    outline: none;
-}
-

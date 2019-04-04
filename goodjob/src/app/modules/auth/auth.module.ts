@@ -18,6 +18,7 @@ import { SharedModule } from '../shared';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+
     SharedModule
   ],
   declarations: [

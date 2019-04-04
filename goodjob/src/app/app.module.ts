@@ -14,7 +14,6 @@ import { AppComponent } from './app.component';
 import { routes } from './app.routing';
 import { AppPreloadingStrategy } from './app_preloading_strategy';
 
-
 @NgModule({
   imports: [
     BrowserModule,
