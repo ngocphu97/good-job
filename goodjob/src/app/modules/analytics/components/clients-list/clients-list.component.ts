@@ -83,7 +83,6 @@ export class ClientsListComponent implements OnInit {
 
                 this.temp.push(d);
                 this.x = this.temp;
-                console.log('this.x', this.x);
 
                 // this.feeds$.next(this.temp);
 
@@ -124,8 +123,6 @@ export class ClientsListComponent implements OnInit {
 
     data.forEach((d, i) => {
       if (d.time.getTime() >= startDate.getTime()) {
-        // console.log(d.time);
-        // console.log(d.content);
         temp.push(d);
       }
     });

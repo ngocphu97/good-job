@@ -73,7 +73,6 @@ export class CalendarComponent implements OnInit {
           if (!datas || datas.length < 1) {
             return;
           }
-          console.log(datas);
           this.pageFans(datas);
           this.data$.next(datas);
         }

@@ -11,13 +11,13 @@ declare var FB: any;
 export class AnalyticsService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAANQlAVxZBd4BAEdV5UyuUjASxrmwSO7AVvUURPs6Y6bTJL9xVhgZBnD3lAXSpIfq93Bsb3pDOMwqx2DxZAeInnZBxBuOk4coYlYO3bZArTSoG1NnC2ffnZCjHzPfuIqayjHDN6VuLXUBAAwpEjJcXsF3XFTT7AsDkbhTFjZCt2eRcg0ljOwV5gv5YZCyFg7WkcAvLemJiziwgZDZD';
+  access_token = 'EAAFiVT3Gv5EBAD3ZAtLVYJ9b88yH1xBQ0lEIZCBEaySjlLdQGDiLiaKZA1qFWzu8kwd4NTojrCRabVLbu4s1MPN8BA2u5ey5RUTnAO52lRFEPNBaav4BUEM5KQctnVEDVOZAUpMaKtMv858MX17uKVyYzpKdw2NhoYTE24pd8uccxZCSPLmr3LMtWwmwlxoTNwv0cCkuKWwZDZD';
 
   feeds: Feed[] = [];
 
   constructor(private http: HttpClient) { }
 
- getFeedsObservable(): Observable<Array<any>> {
+  getFeedsObservable(): Observable<Array<any>> {
     const token = this.access_token;
 
     return new Observable((observer) => {
@@ -58,7 +58,6 @@ export class AnalyticsService {
           if (response.error) {
             console.log(response.error);
           }
-          // console.log(response);
           observer.next(response);
           observer.complete();
           observer.unsubscribe();
@@ -208,8 +207,6 @@ export class AnalyticsService {
           fields: 'insights.metric(post_impressions_unique, post_impressions_paid_unique, post_reactions_like_total, post_reactions_love_total, post_reactions_wow_total, post_reactions_haha_total, post_reactions_sorry_total, post_reactions_anger_total, post_negative_feedback,post_engaged_users,post_impressions){title,values},shares,comments.summary(true).limit(0)'
         }, (response) => {
 
-          console.log(response);
-
           // post reach
           reach = response.insights.data[0].values[0].value;
           // paid reach
@@ -262,10 +259,10 @@ export class AnalyticsService {
   }
 
   getPageImpressionsByAgeGenderUnique(): Observable<any> {
-    const id = '1415019512144250';
+    const id = '342728539606649';
     const token = this.access_token;
     return new Observable((observer) => {
-      FB.api(`/${id}`, 'GET',
+      FB.api(`/me`, 'GET',
         {
           access_token: token,
           fields: 'insights.metric(page_impressions_by_age_gender_unique){title,values}'
@@ -276,9 +273,10 @@ export class AnalyticsService {
           }
 
           const datas = {
-            data: response.insights.data[1].values[1].value,
-            endTime: response.insights.data[1].values[1].end_time
+            data: response.data[0].values[1].value,
+            endTime: response.data[0].values[1].value.end_time
           };
+
           observer.next(datas);
           observer.complete();
         });
@@ -363,7 +361,6 @@ export class AnalyticsService {
             observer.error(response.error);
             observer.complete();
           }
-          console.log(response);
           const data = response.data[0].values;
           observer.next(data);
           observer.complete();

@@ -62,7 +62,6 @@ export class PageFansOnlineComponent implements OnInit {
           if (!datas || datas.length < 1) {
             return;
           }
-          console.log(datas);
           this.dataFromFB = datas;
           this.pageFansOnlineDate(datas);
           this.pageFansOnlineData(datas[0]);
