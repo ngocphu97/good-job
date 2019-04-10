@@ -1,3 +1,10 @@
+// @import 'variables';
+// @import "variables";
+
+$gudpost-blue: #769aff; 
+$gudpost-yellow: #ffe100; 
+$gudpost-warn: #f57f17; 
+
 .chart-card {
     margin: 15px;
     padding: 0;
@@ -7,7 +14,7 @@
 }
 
 .chart-header {
-    background: #ffe100;
+    background: $gudpost-yellow;
     color: #ffffff;
     width: 200px;
     margin: 0;
@@ -21,7 +28,22 @@
 }
 
 .chart-content {
-    padding: 15px; 
+    padding: 15px;
+}
+
+.chart-conclusion p{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    strong {
+        padding: 0 5px;
+    }
+
+    &:nth-child(2) {
+        font-size: xx-large;
+    }
 }
 
 .icon-revert {

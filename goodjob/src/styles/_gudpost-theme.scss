@@ -70,8 +70,6 @@ $gudpost-theme-primary: mat-palette($my-custom-primary-color);
 $gudpost-theme-accent: mat-palette($my-custom-accent-color);
 $gudpost-theme-warn: mat-palette($my-custom-primary-color, 900);
 
-
-// // create theme (use mat-dark-theme for themes with dark backgrounds)
 $gudpost-theme: mat-light-theme(
     $gudpost-theme-primary,
     $gudpost-theme-accent,

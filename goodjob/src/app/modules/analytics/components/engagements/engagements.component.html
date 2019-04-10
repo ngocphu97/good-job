@@ -21,8 +21,13 @@
         </div>
 
         <div class="chart-conclusion">
-            <i [ngClass]="{'icon-revert': !conclusion.isIncreased}" class="material-icons"> eject </i>
-            <strong> {{conclusion.increasedValue}} </strong>
+            <p>
+                Total Engagement is <strong>{{ (conclusion.isIncreased) ? 'increased' : 'decreased' }}</strong> by
+            </p>
+            <p>
+                <i [ngClass]="{'icon-revert': !conclusion.isIncreased}" class="material-icons"> eject </i>
+                <strong> {{conclusion.increasedValue}} </strong>
+            </p>
         </div>
     </div>
 </mat-card>

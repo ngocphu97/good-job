@@ -27,10 +27,14 @@
               "src/assets"
             ],
             "styles": [
-              
               "src/styles.scss",
               "node_modules/igniteui-angular/styles/igniteui-angular.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": [
               "node_modules/hammerjs/hammer.min.js",
               "node_modules/chart.js/dist/Chart.min.js"
