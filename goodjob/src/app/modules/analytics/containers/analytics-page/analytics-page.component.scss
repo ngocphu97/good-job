@@ -1,17 +1,19 @@
 :host ::ng-deep .mat-tab-body-wrapper {
-  padding: 0 15px;
+    padding: 0 15px;
 }
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
-:host ::ng-deeptd.mat-cell:first-child,td.mat-footer-cell:first-child,th.mat-header-cell:first-child {
-  padding-left: 12px;
-  padding-right: 12px;
-  width: 30%;
+:host ::ng-deeptd.mat-cell:first-child,
+td.mat-footer-cell:first-child,
+th.mat-header-cell:first-child {
+    padding-left: 12px;
+    padding-right: 12px;
+    width: 30%;
 }
 
 th.mat-sort-header-sorted {
-  color: black;
+    color: black;
 }

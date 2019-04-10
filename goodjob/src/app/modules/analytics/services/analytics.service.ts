@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 import { Feed } from '../models/feed';
 declare var FB: any;
@@ -9,9 +9,8 @@ declare var FB: any;
   providedIn: 'root'
 })
 export class AnalyticsService {
-
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAD3ZAtLVYJ9b88yH1xBQ0lEIZCBEaySjlLdQGDiLiaKZA1qFWzu8kwd4NTojrCRabVLbu4s1MPN8BA2u5ey5RUTnAO52lRFEPNBaav4BUEM5KQctnVEDVOZAUpMaKtMv858MX17uKVyYzpKdw2NhoYTE24pd8uccxZCSPLmr3LMtWwmwlxoTNwv0cCkuKWwZDZD';
+  access_token = 'EAAFiVT3Gv5EBAO4G9xed3uwCWrH4HhEVmpZAqWZCYN1mSpfYVfLSZCg3iWzmat3fXQV9VvfcWZBHIqrbRyTrNjSKhOKfkxIgQFzrVvZAEfVkvZApkTaWlA7Xj1Ef7gO8U4p0Hg5ZCCEP51m7ZCeyZCmkyZBqWJZBZCcrRo0LRuGjKVyAX7SPEW4oYXUWms5PcG4JCcclwWvv8xuo6AZDZD';
 
   feeds: Feed[] = [];
 
@@ -114,27 +113,28 @@ export class AnalyticsService {
     const token = this.access_token;
     const id = postId;
     const values = [];
-    let totalEngagement = 0;
 
     return new Observable((observer) => {
       FB.api(`/${id}`, 'GET',
         {
           access_token: token,
           // tslint:disable-next-line:max-line-length
-          fields: 'insights.metric(post_reactions_like_total,post_reactions_love_total,post_reactions_wow_total,post_reactions_haha_total,post_reactions_sorry_total,post_reactions_anger_total){title,values},shares,comments.summary(true).limit(0)'
+          fields: `insights.metric(post_reactions_like_total,post_reactions_love_total,post_reactions_wow_total,post_reactions_haha_total,post_reactions_sorry_total,post_reactions_anger_total){title,values},shares,comments.summary(true).limit(0)`
         }, (response) => {
           if (response.error) {
-            console.log(response.error);
+            return response.error;
           }
-          totalEngagement = 0;
-          for (let i = 0; i < response.insights.data.length; i++) {
+          let totalEngagement = 0;
+
+          response.insights.data.forEach(i => {
+            console.log(i);
             const value = response.insights.data[i].values[0].value;
             values.push(value);
             totalEngagement = totalEngagement + value;
-          }
+          });
+
           observer.next(totalEngagement);
           observer.complete();
-          observer.unsubscribe();
         }
       );
     });
@@ -146,7 +146,7 @@ export class AnalyticsService {
     const id = '1415019512144250_2047932125519649';
     const values = [];
 
-    FB.api(`/${id}`, 'GET',
+    FB.api(`/me`, 'GET',
       {
         access_token: token,
         fields: 'insights.metric(post_impressions,post_impressions_organic){title,values}'
@@ -168,7 +168,7 @@ export class AnalyticsService {
     const id = '1415019512144250_2047932125519649';
     let value = 0;
 
-    FB.api(`/${id}`, 'GET',
+    FB.api(`/me`, 'GET',
       {
         access_token: token,
         fields: 'insights.metric(post_negative_feedback){title,values}'
@@ -267,17 +267,21 @@ export class AnalyticsService {
           access_token: token,
           fields: 'insights.metric(page_impressions_by_age_gender_unique){title,values}'
         }, (response) => {
+
+
           if (response.error) {
             observer.error(response.error);
             observer.complete();
           }
 
-          const datas = {
-            data: response.data[0].values[1].value,
-            endTime: response.data[0].values[1].value.end_time
+          const responseData = {
+            data: response.insights.data[0].values[1].value,
+            endTime: response.insights.data[0].values[1].end_time
           };
 
-          observer.next(datas);
+          console.log(responseData);
+
+          observer.next(responseData);
           observer.complete();
         });
     });
@@ -318,8 +322,7 @@ export class AnalyticsService {
             observer.error(response.error);
             observer.complete();
           }
-          const data = response.data[0].values;
-          observer.next(data);
+          observer.next(response.data[0].values);
           observer.complete();
         });
     });

@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
 import { BehaviorSubject } from 'rxjs';
-
-import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-analytics-page',

@@ -4,6 +4,8 @@ import { ClientsListComponent } from './clients-list/clients-list.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NetLikeComponent } from './net-like/net-like.component';
 import { PageFansOnlineComponent } from './page-fans-online/page-fans-online.component';
+import { DemoGraphicComponent } from './demo-graphic/demo-graphic.component';
+import { EngagementsComponent } from './engagements/engagements.component';
 
 export const components = [
     AnalyticsDetailComponent,
@@ -11,5 +13,18 @@ export const components = [
     ClientsListComponent,
     CalendarComponent,
     NetLikeComponent,
-    PageFansOnlineComponent
+    PageFansOnlineComponent,
+    DemoGraphicComponent,
+    EngagementsComponent
 ];
+
+export {
+    AnalyticsDetailComponent,
+    ExportToFileComponent,
+    ClientsListComponent,
+    CalendarComponent,
+    NetLikeComponent,
+    PageFansOnlineComponent,
+    DemoGraphicComponent,
+    EngagementsComponent
+};

@@ -33,7 +33,10 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
     AppComponent
   ],
   providers: [
-    { provide: AppPreloadingStrategy, useClass: AppPreloadingStrategy },
+    {
+      provide: AppPreloadingStrategy,
+      useClass: AppPreloadingStrategy
+    },
   ],
   bootstrap: [AppComponent]
 })

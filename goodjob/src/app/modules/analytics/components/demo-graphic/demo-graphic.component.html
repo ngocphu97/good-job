@@ -1,0 +1,36 @@
+<h2>Demographic</h2>
+<div class="chart-container">
+
+    <div class="chart">
+        <canvas 
+            baseChart 
+            [data]="doughnutChartData" 
+            [labels]="doughnutChartLabels" 
+            [chartType]="doughnutChartType"
+            [colors]="colors" 
+            [datasets]="datasets">
+        </canvas>
+      </div>
+
+    <!-- Female -->
+    <div class="chart">
+      <canvas 
+          baseChart 
+          [data]="femaleChartData" 
+          [labels]="barChartLabels" 
+          [chartType]="barChartType" 
+          [colors]="colors"
+          [options]="barChartOptions" 
+          [legend]="barChartLegend"
+          [datasets]="barChartFemaleData">
+      </canvas>
+    </div>
+  </div>
+
+<p>
+  Kết luận: <strong>{{hightestGender}}</strong> trong độ tuổi <strong>{{hightestByAge}}</strong> chiếm đa số Fan
+  củabạn.
+</p>
+
+
+    

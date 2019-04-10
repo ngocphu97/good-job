@@ -1,0 +1,29 @@
+.chart-card {
+    margin: 15px;
+    padding: 0;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 -1.5px 3px 0 rgba(0, 0, 0, 0.16) !important;
+}
+
+.chart-header {
+    background: #ffe100;
+    color: #ffffff;
+    width: 200px;
+    margin: 0;
+    padding: 15px;
+    font-size: larger;
+    font-weight: bolder;
+    text-align: center;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16);
+}
+
+.chart-content {
+    padding: 15px; 
+}
+
+.icon-revert {
+    transform: rotate(180deg);
+}
