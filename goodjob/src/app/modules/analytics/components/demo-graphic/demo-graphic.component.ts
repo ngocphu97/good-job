@@ -19,6 +19,8 @@ export class DemoGraphicComponent implements OnInit {
   maleTotal = 0;
   femaleTotal = 0;
   hightestByAge = '';
+  malePercent = 0;
+  femalePercent = 0;
 
   doughnutChartData = [];
   datasets: any[] = [
@@ -26,7 +28,7 @@ export class DemoGraphicComponent implements OnInit {
       data: this.doughnutChartData,
       backgroundColor: [
         '#ffe100',
-        '#8ddef1'
+        '#769aff'
       ],
     }];
   colors: Array<any> = [{}];
@@ -34,7 +36,7 @@ export class DemoGraphicComponent implements OnInit {
   femaleChartData = [];
   maleChartData = [];
 
-  doughnutChartLabels = [' MALE (%)', ' FEMALE (%)'];
+  doughnutChartLabels = [' FEMALE (%)', ' MALE (%)'];
   doughnutChartType = 'doughnut';
   barChartType = 'horizontalBar';
 
@@ -58,11 +60,11 @@ export class DemoGraphicComponent implements OnInit {
       data: this.maleChartData,
       label: 'Male',
       backgroundColor: [
-        '#FFCE56',
-        '#FFCE56',
-        '#FFCE56',
-        '#FFCE56',
-        '#FFCE56'
+        '#ffe100',
+        '#769aff',
+        '#ffe100',
+        '#769aff',
+        '#ffe100',
       ]
     }
   ];
@@ -70,13 +72,13 @@ export class DemoGraphicComponent implements OnInit {
   barChartFemaleData: any[] = [
     {
       data: this.femaleChartData,
-      label: 'Female',
+      label: 'Female By Age',
       backgroundColor: [
-        '#FF6384',
-        '#FF6384',
-        '#FF6384',
-        '#FF6384',
-        '#333333'
+        '#ffe100',
+        '#769aff',
+        '#ffe100',
+        '#769aff',
+        '#ffe100',
       ]
     }
   ];
@@ -85,63 +87,56 @@ export class DemoGraphicComponent implements OnInit {
 
   ngOnInit() {
     this.service
-      .getPageImpressionsByAgeGenderUnique()
-      .subscribe(
-        (datas) => {
-          if (!datas || datas.length < 1) {
-            return;
-          }
-
-          this.initDoughnutChart(datas.data);
-          this.pipeData(datas.data);
-          this.data$.next(datas);
+      .getPageImpressionsByAgeGenderUnique().subscribe((demoGraphicData) => {
+        if (!demoGraphicData || demoGraphicData.length < 1) {
+          return;
         }
-      );
+
+        this.initDemoGraphicChart(demoGraphicData.data);
+        this.pipeData(demoGraphicData.data);
+        this.data$.next(demoGraphicData);
+      });
   }
 
-  initDoughnutChart(data) {
-    const dataPipe = this.convertData(data);
-    dataPipe.forEach(d => {
-      const gender = d.name.split('.');
+  initDemoGraphicChart(demoGraphicData: Array<any>) {
+    const convertedData = this.convertData(demoGraphicData);
+    convertedData.forEach((data: any) => {
+      const gender = data.name.split('.');
       if (gender[0] === 'M') {
-        this.maleTotal = this.maleTotal + d.value;
+        this.maleTotal = this.maleTotal + data.value;
       }
       if (gender[0] === 'F') {
-        this.femaleTotal = this.femaleTotal + d.value;
+        this.femaleTotal = this.femaleTotal + data.value;
       }
     });
 
     const total = this.maleTotal + this.femaleTotal;
-    const malePersent = this.roundNumber(this.maleTotal, total);
-    const femalePersent = this.roundNumber(this.femaleTotal, total);
+    this.malePercent = this.roundNumber(this.maleTotal, total);
+    this.femalePercent = this.roundNumber(this.femaleTotal, total);
 
-    this.maleTotal > this.femaleTotal ? this.hightestGender = 'NAM' : this.hightestGender = 'NỮ';
+    this.maleTotal > this.femaleTotal ? this.hightestGender = 'MEN' : this.hightestGender = 'WOMEN';
 
-    this.doughnutChartData = [malePersent, femalePersent];
+    this.doughnutChartData = [this.femalePercent, this.malePercent];
   }
 
-  pipeData(data) {
+  pipeData(data: Array<any>): void {
     let i = 0;
-    const femaleChartData = [];
-    const maleChartData = [];
-
-    const dataPipe = this.convertData(data);
-
+    this.femaleChartData = [];
+    this.maleChartData = [];
+    const convertedData = this.convertData(data);
+    this.conclusion(convertedData);
     while (i < 10) {
       if (i <= 4) {
-        femaleChartData.push(this.roundNumber(dataPipe[i].value, this.femaleTotal));
+        this.femaleChartData.push(this.roundNumber(convertedData[i].value, this.femaleTotal));
       }
       if (i > 5) {
-        femaleChartData.push(this.roundNumber(dataPipe[i].value, this.maleTotal));
+        this.femaleChartData.push(this.roundNumber(convertedData[i].value, this.maleTotal));
       }
       i++;
     }
-    this.femaleChartData = femaleChartData;
-    this.maleChartData = maleChartData;
-    this.conclusion(dataPipe);
   }
 
-  convertData(data): any {
+  convertData(data: Array<any>): Array<any> {
     return Object.keys(data).map((k) => {
       return {
         name: k,
@@ -154,12 +149,12 @@ export class DemoGraphicComponent implements OnInit {
     return Math.round((number / total * 100) * 100) / 100;
   }
 
-  conclusion(data: Array<any>) {
-    const max = Math.max.apply(Math, data.map((d) => {
-      return d.value;
-    }));
+  conclusion(data: Array<any>): void {
+    console.log(data);
+    const max = Math.max.apply(Math, data.map((d) => d.value));
 
     const conclusion = data.filter(x => x.value === max);
+    console.log(conclusion);
     this.hightestByAge = conclusion[0].name.split('.')[1];
   }
 }

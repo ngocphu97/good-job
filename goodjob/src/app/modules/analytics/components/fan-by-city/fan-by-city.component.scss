@@ -1,0 +1,11 @@
+:host::ng-deep.mat-paginator-container {
+    justify-content: flex-start;
+}
+
+table {
+    width: 100%;
+}
+
+td, th {
+    vertical-align: middle !important;
+}

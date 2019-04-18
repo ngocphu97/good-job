@@ -1,8 +1,120 @@
-.chart-container {
-    display: flex;
-}
+$gudpost-blue: #769aff;
+$gudpost-yellow: #ffe100;
+$gudpost-warn: #f57f17;
 
 .chart {
-    width: 33% !important;
+    width: 50% !important;
     height: 100% !important;
+}
+
+.conclusion {
+    text-align: center;
+    padding: 0.7rem;
+    opacity: 0.5;
+    border-radius: 11.5px;
+    border: solid 0.5px #707070;
+    background-color: #ffffff;
+}
+
+.chart-card {
+    margin: 15px;
+    padding: 0;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.chart-header {
+    background: $gudpost-yellow;
+    color: #ffffff;
+    width: 200px;
+    margin: 0;
+    padding: 15px;
+    font-size: larger;
+    font-weight: bolder;
+    text-align: center;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.chart-content {
+    padding: 15px;
+
+    div {
+        display: flex;
+        margin: 0.8rem 0;
+    }
+}
+
+.chart-conclusion p {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    strong {
+        padding: 0 5px;
+    }
+
+    &:nth-child(2) {
+        font-size: xx-large;
+    }
+}
+
+.icon-revert {
+    transform: rotate(180deg);
+}
+
+.text-conclusion {
+    height: 36.5px;
+    font-family: Montserrat;
+    font-size: x-large;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.37;
+    letter-spacing: 0.6px;
+    display: flex;
+    flex-direction: column;
+
+    &.male {
+        -webkit-text-stroke: 0.5px $gudpost-blue;
+        color: $gudpost-blue;
+
+        p:nth-child(1) {
+            margin: 0;
+            border-bottom: 5px solid $gudpost-blue;
+            width: 100%;
+        }
+
+        p:nth-child(2) {
+            margin: 0;
+            width: 100%;
+            font-size: smaller;
+        }
+    }
+
+    &.female {
+        -webkit-text-stroke: 0.5px $gudpost-yellow;
+        color: $gudpost-yellow;
+
+        p:nth-child(1) {
+            margin: 0;
+            border-bottom: 5px solid $gudpost-yellow;
+            width: 100%;
+        }
+
+        p:nth-child(2) {
+            margin: 0;
+            width: 100%;
+            font-size: smaller;
+        }
+    }
+}
+
+.doughnut-chart-conclusion {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-left: -120px !important;
+    justify-content: space-evenly;
 }

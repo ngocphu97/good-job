@@ -10,7 +10,7 @@ declare var FB: any;
 })
 export class AnalyticsService {
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAO4G9xed3uwCWrH4HhEVmpZAqWZCYN1mSpfYVfLSZCg3iWzmat3fXQV9VvfcWZBHIqrbRyTrNjSKhOKfkxIgQFzrVvZAEfVkvZApkTaWlA7Xj1Ef7gO8U4p0Hg5ZCCEP51m7ZCeyZCmkyZBqWJZBZCcrRo0LRuGjKVyAX7SPEW4oYXUWms5PcG4JCcclwWvv8xuo6AZDZD';
+  access_token = 'EAAFiVT3Gv5EBAJMdfRhWNWV1zQPpQryfdQ1Di90lq7ByrKDVLpAnWlejiuv4bPfSwCxxtKlmxkk2Qq1RIL4jfgeQ1RlrWnasV4LfD91hDblxwuko21irOn79Rx747VKX1Ka6d6TgMDOYvEPN8tZAbzBTULaU1kPwfLZAaOBSWsxhZBILxpAvfx4782b97tftC0DvYa20QZDZD';
 
   feeds: Feed[] = [];
 
@@ -268,7 +268,6 @@ export class AnalyticsService {
           fields: 'insights.metric(page_impressions_by_age_gender_unique){title,values}'
         }, (response) => {
 
-
           if (response.error) {
             observer.error(response.error);
             observer.complete();
@@ -278,9 +277,6 @@ export class AnalyticsService {
             data: response.insights.data[0].values[1].value,
             endTime: response.insights.data[0].values[1].end_time
           };
-
-          console.log(responseData);
-
           observer.next(responseData);
           observer.complete();
         });
@@ -301,6 +297,7 @@ export class AnalyticsService {
             observer.complete();
           }
           const data = response.insights.data[0].values[1].value;
+          console.log(data);
           observer.next(data);
           observer.complete();
         });
@@ -365,6 +362,7 @@ export class AnalyticsService {
             observer.complete();
           }
           const data = response.data[0].values;
+
           observer.next(data);
           observer.complete();
         });

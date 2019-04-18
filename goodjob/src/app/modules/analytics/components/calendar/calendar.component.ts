@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
 import { BehaviorSubject } from 'rxjs';
-import { MatSort, MatTableDataSource } from '@angular/material';
 import { BaseChartDirective } from 'ng2-charts/charts/charts';
 
 @Component({

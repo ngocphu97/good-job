@@ -1,36 +1,41 @@
-<h2>Demographic</h2>
-<div class="chart-container">
+<mat-card class="chart-card mat-elevation-z5">
+    <p class="chart-header">Demographic</p>
 
-    <div class="chart">
-        <canvas 
-            baseChart 
-            [data]="doughnutChartData" 
-            [labels]="doughnutChartLabels" 
-            [chartType]="doughnutChartType"
-            [colors]="colors" 
-            [datasets]="datasets">
-        </canvas>
-      </div>
+    <div class="chart-content">
+        <div>
+            <div class="chart">
+                <canvas baseChart [data]="femaleChartData" [labels]="barChartLabels" [chartType]="barChartType"
+                    [colors]="colors" [options]="barChartOptions" [legend]="barChartLegend"
+                    [datasets]="barChartFemaleData">
+                </canvas>
+            </div>
 
-    <!-- Female -->
-    <div class="chart">
-      <canvas 
-          baseChart 
-          [data]="femaleChartData" 
-          [labels]="barChartLabels" 
-          [chartType]="barChartType" 
-          [colors]="colors"
-          [options]="barChartOptions" 
-          [legend]="barChartLegend"
-          [datasets]="barChartFemaleData">
-      </canvas>
+            <div class="chart">
+                <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
+                    [chartType]="doughnutChartType" [colors]="colors" [datasets]="datasets">
+                </canvas>
+
+                <div class="doughnut-chart-conclusion">
+                    <div class="text-conclusion male">
+                        <p>{{malePercent}}%</p>
+                        <p>Male</p>
+                    </div>
+
+                    <div class="text-conclusion female">
+                        <p>{{femalePercent}}%</p>
+                        <p>Female</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="conclusion">
+            <strong>{{hightestGender}}</strong> between ages of <strong> {{hightestByAge}} </strong> appear to be the
+            leading force among your fans
+        </p>
+
+        <app-fan-by-city></app-fan-by-city>
+
     </div>
-  </div>
 
-<p>
-  Kết luận: <strong>{{hightestGender}}</strong> trong độ tuổi <strong>{{hightestByAge}}</strong> chiếm đa số Fan
-  củabạn.
-</p>
-
-
-    
+</mat-card>

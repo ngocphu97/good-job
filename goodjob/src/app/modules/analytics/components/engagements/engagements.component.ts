@@ -61,7 +61,6 @@ export class EngagementsComponent implements OnInit {
     responsive: true
   };
 
-
   constructor(private service: AnalyticsService) { }
 
   ngOnInit() {

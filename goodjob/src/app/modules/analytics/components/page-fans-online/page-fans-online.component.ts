@@ -1,46 +1,56 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AnalyticsService } from '../../services/analytics.service';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+
 import { BehaviorSubject } from 'rxjs';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, Color } from 'ng2-charts';
+
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
   selector: 'app-page-fans-online',
   templateUrl: './page-fans-online.component.html',
-  styleUrls: ['./page-fans-online.component.scss']
+  styleUrls: ['../engagements/engagements.component.scss']
 })
 export class PageFansOnlineComponent implements OnInit {
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective) pageFansChart: BaseChartDirective;
+  @ViewChild('canvas') canvas: ElementRef;
   data$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
 
-  dataFromFB: any;
+  blue = '#26eafd';
+  yellow = '#ffe100';
 
-  barChartOptions: any = {
+  pageFanChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    fill: true,
   };
 
-  barChartLabels = [];
-  pageFansData = [];
-  barChartType = 'bar';
-  lineChartLegend = true;
-  lineChartType = 'line';
+  pageFanChartLegend = true;
+  pageFanChartType = 'line';
 
-  barChartData: any[] = [
+  pageFanChartLabels = [];
+  pageFanChartData = [];
+
+  pageFansChartColors: Color[] = [
     {
-      data: this.pageFansData,
-      label: 'Page Fans Online Time'
+      backgroundColor: 'rgba(118,177,255,0.7)',
+      borderColor: this.yellow,
+      pointStyle: 'circle',
+      pointHoverBackgroundColor: [],
+      pointHoverBorderColor: [],
+      pointBackgroundColor: [],
+      pointBorderColor: [],
+      pointBorderWidth: [],
+      borderWidth: [],
     }
   ];
 
-  lineChartColors: Array<any> = [
+
+  pageFansDataset: Array<any> = [
     {
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      data: this.pageFanChartData,
+      label: 'Fans Online Time',
+      colors: this.pageFansChartColors,
     }
   ];
 
@@ -50,125 +60,114 @@ export class PageFansOnlineComponent implements OnInit {
       date_preset: ''
     },
   ];
-  selected: any;
 
   constructor(private service: AnalyticsService) { }
 
   ngOnInit() {
-    this.service
-      .getPageFansOnline()
-      .subscribe(
-        (datas) => {
-          if (!datas || datas.length < 1) {
-            return;
-          }
-          this.dataFromFB = datas;
-          this.pageFansOnlineDate(datas);
-          this.pageFansOnlineData(datas[0]);
-          this.data$.next(datas);
-        }
-      );
+    this.service.getPageFansOnline().subscribe((data) => {
+      if (!data || data.length < 1) {
+        return;
+      }
+      this.createDateOptions(data);
+      this.pageFansOnlineData(data[0]);
+      this.data$.next(data);
+    });
   }
 
-  pageFansOnlineDate(data) {
-    data.pop(data[6]);
-    data.forEach(d => {
+  createDateOptions(pageFansData: any): void {
+    pageFansData.forEach(data => {
+      const date = new Date(data.end_time);
+      const day = date.getDate();
+      const dateInWeek = date.getDay();
+      const month = date.getMonth() + 1;
 
-    const date = new Date(d.end_time);
-    const day = date.getDate();
-    const dateInWeek = date.getDay();
-    const dateInWeekString = this.pipeDay(dateInWeek);
+      const dateInWeekString = this.convertDate(dateInWeek);
+      const dayLabel = dateInWeekString + ' - ' + day + '/' + month;
 
-    const month = date.getMonth() + 1;
-    const dayLabel = dateInWeekString + ' - ' + day + '/' + month;
-
-    const option = {
-      date_preset: d.end_time,
-      optionName: dayLabel
-    };
-
-    this.choosingDayEngagementOptions.push(option);
-  });
-}
-
-
-pageFansOnlineData(data) {
-  const valueBefore = data.value;
-  const dataPipe = Object.keys(valueBefore)
-    .map(function (k) {
-      return {
-        hour: k,
-        value: valueBefore[k]
+      const option = {
+        date_preset: data.end_time.toString(),
+        optionName: dayLabel
       };
+
+      this.choosingDayEngagementOptions.push(option);
+    });
+  }
+
+  pageFansOnlineData(pageFansData: any): void {
+    const convertedData = this.convertData(pageFansData);
+
+    convertedData.forEach(d => {
+      this.pageFanChartLabels.push(d.hour);
+      this.pageFanChartData.push(d.value);
     });
 
-  dataPipe.forEach(d => {
-    this.barChartLabels.push(d.hour);
-    this.pageFansData.push(d.value);
-  });
-
-  setTimeout(() => {
-    if (this.chart && this.chart.chart && this.chart.chart.config) {
-      this.chart.chart.config.data.labels = this.barChartLabels;
-      this.chart.chart.update();
-    }
-  });
-}
-
-pipeDay(day): string {
-  let date = '';
-  switch (day) {
-    case 0:
-      date = 'Chủ nhật';
-      break;
-    case 1:
-      date = 'Thứ 2';
-      break;
-    case 2:
-      date = 'Thứ 3';
-      break;
-    case 3:
-      date = 'Thứ 4';
-      break;
-    case 4:
-      date = 'Thứ 5';
-      break;
-    case 5:
-      date = 'Thứ 6';
-      break;
-    case 6:
-      date = 'Thứ 7';
+    this.getArrayMinMaxIndex(this.pageFanChartData);
+    const maxMinIndex = this.getArrayMinMaxIndex(this.pageFanChartData);
+    this.updateChart(maxMinIndex[0], maxMinIndex[1]);
   }
-  return date;
-}
 
-onSelectedTimeValue(value) {
-  const cloneData = [];
-  this.pageFansData = cloneData;
+  onSelectedTimeValue(selectedTimeValue: Date): void {
+    this.data$.subscribe((data) => {
+      const filteredData = data.filter(d => d.end_time === selectedTimeValue);
 
-  this.dataFromFB.forEach(d => {
-    if (d.end_time === value) {
-      const valueBefore = d.value;
-      const dataPipe = Object.keys(valueBefore)
-        .map(function (k) {
-          return {
-            hour: k,
-            value: valueBefore[k]
-          };
-        });
+      const convertedData = Object.keys(filteredData[0].value).map((key) => filteredData[0].value[key]);
+      this.pageFanChartData = convertedData;
 
-      dataPipe.forEach(d1 => {
-        this.pageFansData.push(d1.value);
-      });
+      this.getArrayMinMaxIndex(this.pageFanChartData);
+      const maxMinIndex = this.getArrayMinMaxIndex(this.pageFanChartData);
+      this.updateChart(maxMinIndex[0], maxMinIndex[1]);
+    });
+  }
+
+  updateChart(hightestPointIndex: number, lowestPointIndex: number): void {
+
+    const configChart = this.pageFansChart.chart.config.data.datasets[0].colors[0];
+    this.pageFansChart.chart.config.data.labels = this.pageFanChartLabels;
+
+    configChart.pointBorderColor[hightestPointIndex] = this.yellow;
+    configChart.pointBorderWidth[hightestPointIndex] = 15;
+
+    configChart.pointBorderColor[lowestPointIndex] = '#769aff';
+    configChart.pointBorderWidth[lowestPointIndex] = 15;
+
+    this.pageFansChart.chart.update();
+  }
+
+  getArrayMinMaxIndex(array: Array<any>): Array<number> {
+    return [
+      array.findIndex(maxValue =>
+        maxValue === array.reduce((a, b) => Math.max(a, b))),
+      array.findIndex(minValue =>
+        minValue === array.reduce((a, b) => Math.min(a, b))),
+    ];
+  }
+
+  convertData(data): Array<any> {
+    return Object.keys(data.value).map((key) => {
+      return {
+        hour: key,
+        value: data.value[key]
+      };
+    });
+  }
+
+  convertDate(day): string {
+    switch (day) {
+      case 0:
+        return 'Chủ nhật';
+      case 1:
+        return 'Thứ 2';
+      case 2:
+        return 'Thứ 3';
+      case 3:
+        return 'Thứ 4';
+      case 4:
+        return 'Thứ 5';
+      case 5:
+        return 'Thứ 6';
+      case 6:
+        return 'Thứ 7';
     }
-  });
-
-  setTimeout(() => {
-    if (this.chart && this.chart.chart && this.chart.chart.config) {
-      this.chart.chart.config.data.labels = this.barChartLabels;
-      this.chart.chart.update();
-    }
-  });
-
-}
+    return '';
+  }
 }

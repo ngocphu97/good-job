@@ -1,0 +1,21 @@
+<mat-card class="chart-card mat-elevation-z5">
+    <p class="chart-header">Fan Growth</p>
+
+    <div class="chart-content">
+        <div>
+            Choose date preset to watch:
+            <mat-form-field>
+                <mat-select (selectionChange)="onSelectedTimeValue($event.value)">
+                    <mat-option *ngFor="let o of choosingDayEngagementOptions" value="{{o.date_preset}}">
+                        {{o.optionName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="chart-engagement">
+            <canvas baseChart [datasets]="fanGrowthData" [labels]="fanGrowthChartLabels" [colors]="fanGrowthChartColors"
+            [legend]="fanGrowthChartLegend" [chartType]="fanGrowthChartType"></canvas>
+        </div>
+    </div>
+</mat-card>
