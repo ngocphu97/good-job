@@ -1,8 +1,16 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Client } from '../../models/response-data.model';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { PublishNowDialogComponent, AddProjectDialogComponent } from '@app/dialog/containers';
 
 declare var FB: any;
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
 
 @Component({
   selector: 'app-side-nav',
@@ -13,30 +21,42 @@ export class SideNavComponent implements OnInit {
 
   @Output()
   userSelected = new EventEmitter();
-
   connectAccount = new Array<Client>();
+  animal = 'dog';
+  name = 'phu';
+  users = [];
 
   menu = [
     {
       name: 'Home',
-      icon: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png',
+      icon: 'home',
       url: '/'
     },
     {
-      name: 'Content plan',
-      icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png',
-      url: '/content-plan'
+      name: 'Member',
+      icon: 'people',
+      url: '/'
     },
     {
-      name: 'Analytics',
-      icon: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png',
-      url: '/analytics'
+      name: 'Projects',
+      icon: 'shop_two',
+      url: '/'
     },
-    {
-      name: 'Status',
-      icon: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png',
-      url: '/status'
-    },
+    // {
+    //   name: 'Content plan',
+    //   icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png',
+    //   url: '/content-plan'
+    // },
+    // {
+    //   name: 'Analytics',
+    //   icon: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png',
+    //   url: '/analytics'
+    // },
+    // {
+    //   name: 'Status',
+    //   icon: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png',
+    //   url: '/status'
+    // },
   ];
 
   projects = [
@@ -58,7 +78,7 @@ export class SideNavComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -105,5 +125,38 @@ export class SideNavComponent implements OnInit {
   onAddProject() {
     console.log('add project');
   }
+
+  openDialog() {
+    const dialogConfig = {
+      maxWidth: '1300px',
+      width: '1300px',
+      height: '600px',
+      panelClass: 'custom-panel',
+      data: { name: this.name, animal: this.animal }
+    };
+
+    const dialogRef = this.dialog.open(PublishNowDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  onOpenProjectDialog() {
+    const dialogRef = this.dialog.open(AddProjectDialogComponent, {
+      width: '1300px',
+      maxWidth: '1300px',
+      height: '600px',
+      panelClass: 'custom-add-project-panel',
+      data: {
+        users: []
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
 
 }

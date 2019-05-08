@@ -5,10 +5,7 @@ import { PublishNowDialogComponent } from '@app/dialog/containers/publish-now-di
 
 declare var FB: any;
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+
 
 @Component({
   selector: 'app-top-nav',
@@ -19,8 +16,7 @@ export class TopNavComponent implements OnInit {
 
   @Output() logoutSignal = new EventEmitter();
 
-  animal = 'dog';
-  name = 'phu';
+
   constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -51,21 +47,21 @@ export class TopNavComponent implements OnInit {
   //   });
   // }
 
-  openDialog() {
-    const dialogConfig = {
-      maxWidth: '1300px',
-      width: '1300px',
-      height: '600px',
-      panelClass: 'custom-panel',
-      data: { name: this.name, animal: this.animal }
-    };
+  // openDialog() {
+  //   const dialogConfig = {
+  //     maxWidth: '1300px',
+  //     width: '1300px',
+  //     height: '600px',
+  //     panelClass: 'custom-panel',
+  //     data: { name: this.name, animal: this.animal }
+  //   };
 
-    const dialogRef = this.dialog.open(PublishNowDialogComponent, dialogConfig);
+  //   const dialogRef = this.dialog.open(PublishNowDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
 }
 
 

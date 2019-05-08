@@ -1,43 +1,49 @@
 <div class="side-nav">
-  <div class="group user-avatar">
-    <img src="https://cdn.icepop.com/wp-content/uploads/2018/08/1-1533501921185.jpg" alt="user avatar">
-    <strong>User name</strong>
-  </div>
+    <div class="group">
+        <img class="w-100" src="assets/images/logos/gudpostlogo.png" alt="user avatar">
+    </div>
 
-  <div class="group">
-    <ul>
-      <li *ngFor="let i of menu" class="menu">
-        <a routerLink="{{i.url}}">
-          <img class="menu-icon" src="{{i.icon}}" alt="">
-          <span>{{i.name}}</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+    <div class="group user-avatar">
+        <div class="d-flex-center ">
+            <img src="https://cdn.icepop.com/wp-content/uploads/2018/08/1-1533501921185.jpg" alt="user avatar">
+            <strong class="gudjpost-blue-text">User name</strong>
+        </div>
+        <i class="material-icons gudjpost-blue-text">edit</i>
+    </div>
 
-  <div class="group">
-    <ul>
-      <li *ngFor="let i of projects" class="menu">
-        <img class="menu-icon" src="{{i.thumnail}}" alt="">
-        <span>{{i.name}}</span>
-      </li>
-      <li class="menu" (click)="onAddProject()">
-        <i class="material-icons" style="font-size: 40px; color: #29B6F6"> add_circle_outline</i>
-        <span>Add project</span>
-      </li>
-    </ul>
+    <div class="group">
+        <ul>
+            <li *ngFor="let item of menu" class="menu">
+                <a routerLink="{{item.url}}" class="d-flex-center gudjpost-blue-text">
+                    <i class="material-icons">{{item.icon}}</i>
+                    <span>{{item.name}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
+    <div class="group">
+        <ul>
+            <li class="menu" (click)="onOpenProjectDialog()">
+                <button class="add-project-btn" mat-icon-button>
+                    <i class="material-icons"> add</i>
+                </button>
+                <span class="gudjpost-blue-text"> Add project</span>
+            </li>
+            <li *ngFor="let i of projects" class="menu">
+                <img class="menu-icon" src="{{i.thumnail}}" alt="">
+                <span class="gudjpost-blue-text">{{i.name}}</span>
+            </li>
+        </ul>
+    </div>
 
-  </div>
-
-  <div class="group">
-    <ul>
-      <li class="menu">
-        <img class="menu-icon" src="https://images.vexels.com/media/users/3/136815/isolated/preview/60dddfcb04d1f3fadea8f3a1354d4347-colorful-stroke-settings-icon-by-vexels.png"
-          alt="">
-        <span>Edit</span>
-      </li>
-    </ul>
-  </div>
-
+    <div class="group">
+        <ul>
+            <li class="menu">
+                <button class="gp-btn gp-btn-md gp-text-white w-100" mat-raised-button color="primary" (click)="openDialog()">
+                    Public
+                </button>
+            </li>
+        </ul>
+    </div>
 </div>

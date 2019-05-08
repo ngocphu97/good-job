@@ -10,3 +10,23 @@
 @include mat-core();
 
 @include angular-material-theme($gudpost-theme);
+
+$gudpost-blue: #769aff;
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.gudjpost-blue-text {
+    color: $gudpost-blue;
+}
+
+.d-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

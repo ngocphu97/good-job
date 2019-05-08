@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { services } from './services';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { components } from './components';
-import { PublishNowDialogComponent } from '@app/dialog/containers';
+import { PublishNowDialogComponent, AddProjectDialogComponent } from '@app/dialog/containers';
 import { DialogModule } from '@app/dialog/dialog.module';
 
 @NgModule({
@@ -28,7 +28,8 @@ import { DialogModule } from '@app/dialog/dialog.module';
     components
   ],
   entryComponents: [
-    PublishNowDialogComponent
+    PublishNowDialogComponent,
+    AddProjectDialogComponent
   ]
 })
 export class CoreModule {
