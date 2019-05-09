@@ -31,4 +31,8 @@ export class AddProjectDialogComponent implements OnInit {
       this.facebookConnectAccout.push(d);
     });
   }
+
+  onSelectedChanel(e) {
+    console.log('on select chanel');
+  }
 }

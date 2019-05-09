@@ -16,6 +16,7 @@ export class TopNavComponent implements OnInit {
 
   @Output() logoutSignal = new EventEmitter();
 
+  // NOT USING ANY MORE
 
   constructor(private router: Router, public dialog: MatDialog) { }
 
