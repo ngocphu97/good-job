@@ -2,10 +2,10 @@
 
 <div mat-dialog-content class="dialog-content">
     <div class="info">
-        <app-info></app-info>
+        <app-info [facebookConnectAccount]="facebookConnectAccout"></app-info>
     </div>
     <div class="channel">
-        <app-channel></app-channel>
+        <app-channel [facebookConnectAccount]="facebookConnectAccout" (selectedChannel)="onSelectedChanel($event)"></app-channel>
     </div>
     <div class="members">
         <app-projects-dialog-members></app-projects-dialog-members>

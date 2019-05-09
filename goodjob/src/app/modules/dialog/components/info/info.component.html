@@ -27,7 +27,7 @@
     <div class="channel">
         <label for="">Select Chanel</label>
         <div>
-            <button mat-raised-button>
+            <button mat-raised-button (click)="onSelectFacebookChanel()">
                 <i class="fab fa-facebook-f"></i>
             </button>
             <button mat-raised-button>
@@ -67,5 +67,11 @@
                 <input type="text">
             </div>
         </div>
+    </div>
+
+    <div class="done">
+        <button mat-raised-button color="primary">
+            Done
+        </button>
     </div>
 </div>

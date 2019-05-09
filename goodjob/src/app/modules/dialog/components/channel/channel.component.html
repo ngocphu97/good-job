@@ -2,5 +2,15 @@
     Channel
 </h4>
 <div class="channel-wrapper">
-    
+    <strong mat-subheader>Facebook</strong>
+    <mat-list>
+        <mat-list-item *ngFor="let channel of facebookConnectAccount[0].connectAccount">
+            <img matListAvatar src="{{channel.thumbnail}}" alt="">
+            <p mat-line> {{channel.name}} </p>
+            <p mat-line> Fanpage </p>
+            <button mat-icon-button (click)="removeFanPage(channel.id)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-list-item>
+    </mat-list>
 </div>

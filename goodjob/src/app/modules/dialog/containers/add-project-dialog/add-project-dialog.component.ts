@@ -16,6 +16,7 @@ export class AddProjectDialogComponent implements OnInit {
   projectFromGroup: FormGroup;
   clientControl = new FormControl();
   users = [];
+  facebookConnectAccout = [];
 
   @ViewChild('target', { read: ViewContainerRef }) vcRef: ViewContainerRef;
 
@@ -27,8 +28,7 @@ export class AddProjectDialogComponent implements OnInit {
 
   ngOnInit() {
     this.data.users.forEach(d => {
-      console.log(d);
-      this.users.push(d);
+      this.facebookConnectAccout.push(d);
     });
   }
 }

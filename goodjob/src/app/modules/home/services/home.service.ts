@@ -31,9 +31,7 @@ export class HomeService {
 
   getUsers(): Observable<any> {
     return new Observable((observer: Observer<any[]>) => {
-      setTimeout(() => {
-        observer.next(this.projects);
-      }, 500);
+      observer.next(this.projects);
     });
   }
 }

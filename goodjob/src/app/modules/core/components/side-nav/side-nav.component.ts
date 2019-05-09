@@ -3,6 +3,8 @@ import { Client } from '../../models/response-data.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { PublishNowDialogComponent, AddProjectDialogComponent } from '@app/dialog/containers';
+import { ConnectFacebookService } from '@app/core/services/facebook/connect-facebook.service';
+import { Subject } from 'rxjs';
 
 declare var FB: any;
 
@@ -11,7 +13,6 @@ export interface DialogData {
   name: string;
 }
 
-
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
@@ -19,12 +20,13 @@ export interface DialogData {
 })
 export class SideNavComponent implements OnInit {
 
-  @Output()
-  userSelected = new EventEmitter();
+  @Output() userSelected = new EventEmitter();
   connectAccount = new Array<Client>();
   animal = 'dog';
   name = 'phu';
   users = [];
+
+  connectFacebookAccount$ = new Subject();
 
   menu = [
     {
@@ -78,9 +80,14 @@ export class SideNavComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, public dialog: MatDialog) { }
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private connectFBService: ConnectFacebookService
+  ) { }
 
   ngOnInit() {
+    this.getInfo();
   }
 
   onSelect(user: any) {
@@ -92,30 +99,9 @@ export class SideNavComponent implements OnInit {
   }
 
   getInfo() {
-    const array = this.connectAccount;
-    FB.api(`/me`, 'GET',
-      {
-        // tslint:disable-next-line:max-line-length
-        access_token: 'EAANQlAVxZBd4BANA4ZBrCf35WFKzMWkACbptczKYr6Swtmr9WSoRwatTumZA0VBXUefHbJrfqb4k5Piq9utRcSYTttkNFLkf4fc08QM9OMMu7ZBOvAx3exgvDwRhEwK4NwccnvZBJSehsWqkFDkeZCL8BzJscdqIPYAi9982KQAbBXJtpcrUdE36y7j0c1x0u8B3vgmwozEveYjDySXwOjZC8JEDWwcYXQZD',
-        fields: 'accounts{name, photos.width(150).height(150){picture}}'
-      }, (response) => {
-        const length = response.accounts.data.length;
-        for (let i = 0; i < length; i++) {
-          const photo = response.accounts.data[i].photos;
-          const avatar = photo.data[0].picture;
-          const data = response.accounts.data[i].name;
-          const client: Client = {
-            name: data,
-            image: avatar
-          };
-
-          array.push(client);
-        }
-        if (response.error) {
-          console.log(response.error);
-        }
-      }
-    );
+    this.connectFBService.getFacebookConnectAccount().subscribe(data => {
+      this.connectFacebookAccount$ = data;
+    });
   }
 
   onSelectEditContent() {
@@ -126,13 +112,16 @@ export class SideNavComponent implements OnInit {
     console.log('add project');
   }
 
-  openDialog() {
+  openPublishNowDialog() {
     const dialogConfig = {
       maxWidth: '1300px',
       width: '1300px',
       height: '600px',
       panelClass: 'custom-panel',
-      data: { name: this.name, animal: this.animal }
+      data: {
+        name: this.name,
+        animal: this.animal
+      }
     };
 
     const dialogRef = this.dialog.open(PublishNowDialogComponent, dialogConfig);
@@ -143,13 +132,19 @@ export class SideNavComponent implements OnInit {
   }
 
   onOpenProjectDialog() {
+    console.log(this.connectFacebookAccount$);
     const dialogRef = this.dialog.open(AddProjectDialogComponent, {
       width: '1300px',
       maxWidth: '1300px',
       height: '600px',
       panelClass: 'custom-add-project-panel',
       data: {
-        users: []
+        users: [
+          {
+            id: 'user_id',
+            connectAccount: this.connectFacebookAccount$
+          }
+        ]
       }
     });
 

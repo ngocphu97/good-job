@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-info',
@@ -7,11 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoComponent implements OnInit {
 
-  value = 'Project ...';
+  @Input() facebookConnectAccount: Array<any>;
+  value = '';
 
   constructor() { }
 
   ngOnInit() {
   }
+
+  onSelectFacebookChanel() {
+    console.log(this.facebookConnectAccount);
+  }
+
 
 }

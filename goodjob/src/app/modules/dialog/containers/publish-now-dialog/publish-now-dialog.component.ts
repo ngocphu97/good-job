@@ -15,6 +15,7 @@ export class PublishNowDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<PublishNowDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    console.log(dialogRef, data);
   }
 
   onNoClick(): void {

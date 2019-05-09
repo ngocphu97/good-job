@@ -78,16 +78,14 @@ h4 {
             align-items: center;
 
             button {
-                margin: 2px;
                 width: 30%;
-                height: 50px;
-                font-size: xx-large;
+                font-size: large;
             }
         }
     }
 
     .setting {
-        margin-top: 40px;
+        margin-top: 20px;
 
         .row1 {
             display: flex;
@@ -116,5 +114,10 @@ h4 {
                 border: solid 0.5px rgba(112, 112, 112, 0.3);
             }
         }
+    }
+
+    .done {
+        text-align: center;
+        margin-top: 15px;
     }
 }
