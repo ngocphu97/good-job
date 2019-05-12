@@ -1,3 +1,5 @@
-<div class="edit-post">
-  <app-edit-wizard></app-edit-wizard>
+<div class="edit-post" *ngIf="project">
+  <strong>Project {{projectName}}</strong>
+  <app-calendar [selectedGroup]="project.connectAccounts"></app-calendar>
+  <!-- <app-edit-wizard [selectedProject]="project"></app-edit-wizard> -->
 </div>

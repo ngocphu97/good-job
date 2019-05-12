@@ -17,7 +17,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getUsers() {
-    this.service.getUsers();
+    this.service.getProjectList();
   }
 
   onLoadingImg() {

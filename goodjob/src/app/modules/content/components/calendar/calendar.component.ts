@@ -61,7 +61,10 @@ export class CalendarComponent implements OnInit {
   showDelayTooltip = '2000';
 
   ngOnInit() {
-    this.getFeedsByPageAccessToken();
+    this.selectedGroup.forEach(account => {
+      this.getFeedByPageId(account.name, account.id);
+    });
+
     this.activeDayIsOpen = false;
   }
 
@@ -78,11 +81,9 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  getFeedsByPageAccessToken() {
+  getFeedByPageId(clientName, pageId) {
     setTimeout(() => {
-      this.selectedGroup.clients.forEach(c => {
-        this.events = this.service.getFeedsByPageAccessToken(c.name, c.access_token);
-      });
+      this.events = this.service.getFeedsByPageId(clientName, pageId);
     }, 1000);
   }
 

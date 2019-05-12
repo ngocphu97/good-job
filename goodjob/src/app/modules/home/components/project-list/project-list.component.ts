@@ -26,10 +26,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   getProjects() {
-    this.projects$ = this.service.getUsers();
-    this.projects$.subscribe(data => {
-      this.users.push(data);
-    });
+    this.projects$ = this.service.getProjectList();
   }
 
   onOpenProjectDialog(): void {

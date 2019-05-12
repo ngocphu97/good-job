@@ -9,8 +9,10 @@ declare var FB: any;
   providedIn: 'root'
 })
 export class AnalyticsService {
+
+  // uncle jax access token
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAJMdfRhWNWV1zQPpQryfdQ1Di90lq7ByrKDVLpAnWlejiuv4bPfSwCxxtKlmxkk2Qq1RIL4jfgeQ1RlrWnasV4LfD91hDblxwuko21irOn79Rx747VKX1Ka6d6TgMDOYvEPN8tZAbzBTULaU1kPwfLZAaOBSWsxhZBILxpAvfx4782b97tftC0DvYa20QZDZD';
+  access_token = 'EAAFiVT3Gv5EBAAWAITU5a5HpqBSbPssNh0bqaLM0VjRzjx7lMlEv3aHXSLYO1uzqZCKl4ECMJ2Gdl8a30IhMps91PvgXthcx7nwfnfEl71bsX9OGG3wUVPLj2m2Qtbi1XFUsUbLOmjoAlh5XZBiCMkSVyUHZBP2LCu1nZCTqNQZDZD';
 
   feeds: Feed[] = [];
 
@@ -25,6 +27,7 @@ export class AnalyticsService {
           access_token: token,
           fields: 'feed{id,link,message,created_time,is_published,picture.width(150).height(150)}'
         }, (response) => {
+          console.log(response);
           if (response.error) {
             observer.error(response.error);
             observer.complete();
@@ -54,6 +57,7 @@ export class AnalyticsService {
           access_token: token,
           fields: 'shares,comments.summary(true).limit(0)'
         }, (response) => {
+          console.log(response);
           if (response.error) {
             console.log(response.error);
           }
@@ -259,7 +263,7 @@ export class AnalyticsService {
   }
 
   getPageImpressionsByAgeGenderUnique(): Observable<any> {
-    const id = '342728539606649';
+    const id = '1415019512144250';
     const token = this.access_token;
     return new Observable((observer) => {
       FB.api(`/me`, 'GET',
@@ -267,7 +271,7 @@ export class AnalyticsService {
           access_token: token,
           fields: 'insights.metric(page_impressions_by_age_gender_unique){title,values}'
         }, (response) => {
-
+          console.log(response);
           if (response.error) {
             observer.error(response.error);
             observer.complete();

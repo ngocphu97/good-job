@@ -5,7 +5,6 @@ import { CalendarEvent } from 'angular-calendar';
 
 import { Client } from '../models/client';
 import { Group } from '../models/group';
-import { Calendar, flipLeft } from 'igniteui-angular';
 
 declare var FB: any;
 
@@ -18,9 +17,7 @@ export class ContentService {
   clients: Client[] = [];
 
   // tslint:disable-next-line:max-line-length
-  access_token =
-    // tslint:disable-next-line: max-line-length
-    'EAANQlAVxZBd4BAKtK2NtsuEMi7rKDz4gDsRJlqhT7PlgwLEZAaJSYzUUPVF34dKR09ZCZAAmfSY69WyyVLSZAjAoZCDCh60EbBgxyT2z3Tz6qK3eDZAkeomZAikN0RM1ZA6ZAN4yTALN4CzM6SzSk8ElMyVZCcQnhFzwV0Kj5kcnAy1RxcHulPfTzoGC4uJ41xhlRcZD';
+  access_token = 'EAAFiVT3Gv5EBANu7ggjWMXFVLV0F29oh3W3gMJpMzdfjPqzidSo3tqa6dXZBEQSU8sb8sA3L3lcFkbkuNMS87UHBGqYB5svztgsR7aYHka1ZAZCHaqPGHau24lZBT07u0JlpNEHB279G1dP9ZCSJ03OdcnJ71eewZD';
   connectAccount = [];
   colors: any = {
     red: {
@@ -38,6 +35,67 @@ export class ContentService {
   };
 
   constructor(private http: HttpClient) { }
+
+  // ==========================
+
+  getProjectById(projectId): Observable<any> {
+    const url = `https://www.jsonstore.io/9e2c377d376c4655f5d20a0d9275b4e4c623770a618b32be0c53c54fb32c2f16/projects/${projectId}`;
+    return this.http.get(url);
+  }
+
+  getSelectedPageInfoById(pageId) {
+    const token = this.access_token;
+    FB.api(`/${pageId}`, 'GET',
+      {
+        access_token: token,
+        fields: 'accounts{access_token}'
+      },
+      response => {
+        if (response.error) {
+          console.log(response);
+        }
+        console.log(response);
+      }
+    );
+  }
+
+  getFeedsByPageId(clientName, pageId): CalendarEvent[] {
+    const token = this.access_token;
+    const events = this.events;
+    // this.getScheduledPost(clientName, access_token);
+    console.log(clientName, pageId);
+
+    FB.api(
+      `/${pageId}/feed`,
+      'GET',
+      {
+        access_token: token,
+        fields: `
+          link,
+          message,
+          created_time,
+          is_published,
+          picture.width(150).height(150),
+          full_picture,
+          name,
+          photos.width(150).height(150){picture}
+        `
+      },
+      response => {
+        if (response.error) {
+          console.log(response.error);
+        }
+
+        response.data.forEach(d => {
+          // console.log(d);
+          this.addCalendarEvent(d, clientName, 'info');
+        });
+
+      }
+    );
+    return events;
+  }
+  // =============================
 
   convertDate(date: Date): string {
     const hh = date.getHours();
@@ -198,25 +256,7 @@ export class ContentService {
     };
 
     const event = { ...calendarEvent, fbEvent };
-
     this.events.push(event);
-  }
-
-  addClient(response) {
-    const id = response.id;
-    const avatar = response.photos.data[0].picture;
-    const data = response.name;
-    const access_token = response.access_token;
-    const feed = [];
-
-    const client: Client = {
-      id: id,
-      name: data,
-      image: avatar,
-      access_token: access_token,
-      feed: feed
-    };
-    return client;
   }
 
   getFeedsByPageAccessToken(clientName, access_token): CalendarEvent[] {
@@ -240,13 +280,15 @@ export class ContentService {
           photos.width(150).height(150){picture}
         `
       },
-      response => {
+      (response) => {
+        console.log(response);
         response.data.forEach(d => {
           this.addCalendarEvent(d, clientName, 'info');
         });
 
         if (response.error) {
-          alert(response.error);
+          console.log(response.error);
+          // alert(response.error);
         }
       }
     );
@@ -255,18 +297,16 @@ export class ContentService {
 
   getInfo(): Client[] {
     const token = this.access_token;
-    FB.api(
-      `/me`,
-      'GET',
+    FB.api(`/me`, 'GET',
       {
         access_token: token,
-        fields:
-          'accounts{access_token,name,photos.width(150).height(150){picture}}'
+        fields: 'accounts{access_token,name,photos.width(150).height(150){picture}}'
       },
       response => {
         if (response.error) {
-          alert(response.error);
+          console.log(response);
         } else {
+          console.log(response);
           response.accounts.data.forEach(r => {
             const c = this.addClient(r);
             this.connectAccount.push(c);
@@ -275,6 +315,23 @@ export class ContentService {
       }
     );
     return this.connectAccount;
+  }
+
+  addClient(response) {
+    const id = response.id;
+    const avatar = response.photos.data[0].picture;
+    const data = response.name;
+    const access_token = response.access_token;
+    const feed = [];
+
+    const client: Client = {
+      id: id,
+      name: data,
+      image: avatar,
+      access_token: access_token,
+      feed: feed
+    };
+    return client;
   }
 
   onUploadMuiltiPhotos(

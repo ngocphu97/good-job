@@ -30,9 +30,9 @@
                 </button>
                 <span class="gudjpost-blue-text"> Add project</span>
             </li>
-            <li *ngFor="let i of projects" class="menu">
-                <img class="menu-icon" src="{{i.thumnail}}" alt="">
-                <span class="gudjpost-blue-text">{{i.name}}</span>
+            <li *ngFor="let project of projectList" class="menu" (click)="onSelectProject(project)">
+                <img class="menu-icon" src="https://media.techz.vn/upload/2013/11/06/image-1383728007-avatar-facebook.jpg" alt="">
+                <span class="gudjpost-blue-text">{{project.projectName}}</span>
             </li>
         </ul>
     </div>

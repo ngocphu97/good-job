@@ -1,4 +1,4 @@
-<form [formGroup]="firstFormGroup">
+<!-- <form [formGroup]="firstFormGroup">
   <ng-template>SELECT GROUP</ng-template>
   <ul class="list">
     <li *ngFor="let g of groups" class="item">
@@ -8,12 +8,7 @@
             <button mat-button (click)="selectGroup(g)" style="width: 100%">
               GROUP {{g.groupName}}
             </button>
-            <ul>
-              <li *ngFor="let c of g.clients" class="client-group">
-                <img src="{{c.image}}" alt="" class="client-avatar">
-                <span class="client-name">{{c.name}}</span>
-              </li>
-            </ul>
+            
           </div>
 
         </mat-card-content>
@@ -35,4 +30,25 @@
 
 <div class="calendar" *ngIf="selectedGroup.clients.length > 0">
   <app-calendar [selectedGroup]='selectedGroup'></app-calendar>
+</div> -->
+
+<!-- <div *ngIf="clients.length > 0">
+    <ul>
+        <li *ngFor="let c of clients" class="client-group">
+            <img src="{{c.image}}" alt="" class="client-avatar">
+            <span class="client-name">{{c.name}}</span>
+        </li>
+    </ul>
+</div> -->
+
+<div *ngIf="selectedProject">
+    <strong>Your are select:</strong> {{selectedProject.projectName}}
+    <br>
+    <strong>This project include</strong>
+    <ul>
+      <li *ngFor="let p of selectedProject.connectAccounts">
+        {{p.name}} : {{p.id}}
+      </li>
+    </ul>
+    <app-calendar [selectedGroup]="selectedProject.connectAccounts"></app-calendar>
 </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-info',
@@ -8,15 +9,26 @@ import { Component, OnInit, Input } from '@angular/core';
 export class InfoComponent implements OnInit {
 
   @Input() facebookConnectAccount: Array<any>;
-  value = '';
+  @Input() selectedPage: Observable<any>;
+  @Output() done = new EventEmitter();
+
+  projectName = '';
 
   constructor() { }
 
   ngOnInit() {
+    this.selectedPage.subscribe(val => {
+      console.log(val);
+    });
   }
 
   onSelectFacebookChanel() {
     console.log(this.facebookConnectAccount);
+  }
+
+  onDone() {
+    console.log(this.projectName);
+    this.done.emit(this.projectName);
   }
 
 

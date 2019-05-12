@@ -1,5 +1,5 @@
 <p class="nothing-here" *ngIf="events.length === 0"> 
-  <img src="https://gudjob.net/storage/2018/07/identity@2x-768x650.png" alt="">
+  <img class="w-100" src="assets/images/default/calendar-nothing.png" alt="">
 </p>
 
 <mat-accordion *ngIf="events.length > 0" #myaccordion="matAccordion" multi="true">
@@ -40,10 +40,10 @@
     <div>
       <div class="content-preview">
         <div class="img-preview">
-          <img src="{{event.thumbnail}}" alt="">
+          <img src="{{event.fbEvent.thumbnail}}" alt="">
         </div>
         <p>
-          {{event.message}}
+          {{event.fbEvent.message}}
         </p>
       </div>
     </div>

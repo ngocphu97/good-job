@@ -3,5 +3,10 @@
 </h4>
 
 <div class="members-wrapper">
-
+    <mat-selection-list [(ngModel)]="displayMembers" (ngModelChange)="onNgModelChange()">
+        <mat-list-option *ngFor="let member of members" [value]="member">
+            {{member.name}}
+            <span><small>{{member.role}}</small></span>
+        </mat-list-option>
+    </mat-selection-list>
 </div>

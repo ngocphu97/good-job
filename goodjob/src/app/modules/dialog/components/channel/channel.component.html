@@ -3,14 +3,13 @@
 </h4>
 <div class="channel-wrapper">
     <strong mat-subheader>Facebook</strong>
-    <mat-list>
-        <mat-list-item *ngFor="let channel of facebookConnectAccount[0].connectAccount">
-            <img matListAvatar src="{{channel.thumbnail}}" alt="">
-            <p mat-line> {{channel.name}} </p>
-            <p mat-line> Fanpage </p>
-            <button mat-icon-button (click)="removeFanPage(channel.id)">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-list-item>
-    </mat-list>
+    <mat-selection-list #optionList [(ngModel)]="connectAccount" (ngModelChange)="onNgModelChange($event)">
+        <mat-list-option *ngFor="let channel of facebookConnectAccount[0].connectAccount" 
+            [value]="channel">
+            <p class="channel">
+                <img class="channel-thumbnail" src="{{channel.thumbnail}}" alt="">
+                {{channel.name}}
+            </p>
+        </mat-list-option>
+    </mat-selection-list>
 </div>

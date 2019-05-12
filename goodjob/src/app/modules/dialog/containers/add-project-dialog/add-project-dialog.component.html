@@ -1,14 +1,20 @@
-<h3 class="title-top">project</h3>
+<h3 class="title-top">project </h3>
 
 <div mat-dialog-content class="dialog-content">
     <div class="info">
-        <app-info [facebookConnectAccount]="facebookConnectAccout"></app-info>
+        <app-info 
+        (done)="onDone($event)"
+        [selectedPage]="selectedPage" 
+        [facebookConnectAccount]="facebookConnectAccout"></app-info>
     </div>
     <div class="channel">
-        <app-channel [facebookConnectAccount]="facebookConnectAccout" 
+        <app-channel 
+        [facebookConnectAccount]="facebookConnectAccout" 
         (selectedChannel)="onSelectedChanel($event)"></app-channel>
     </div>
     <div class="members">
-        <app-projects-dialog-members></app-projects-dialog-members>
-    </div>
+        <app-projects-dialog-members 
+        (selectedMember)="onSelectedMembers($event)">
+    </app-projects-dialog-members>
+    </div>    
 </div>

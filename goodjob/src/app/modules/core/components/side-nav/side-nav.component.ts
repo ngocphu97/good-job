@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { PublishNowDialogComponent, AddProjectDialogComponent } from '@app/dialog/containers';
 import { ConnectFacebookService } from '@app/core/services/facebook/connect-facebook.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 declare var FB: any;
 
@@ -22,8 +22,6 @@ export class SideNavComponent implements OnInit {
 
   @Output() userSelected = new EventEmitter();
   connectAccount = new Array<Client>();
-  animal = 'dog';
-  name = 'phu';
   users = [];
 
   connectFacebookAccount$ = new Subject();
@@ -44,41 +42,10 @@ export class SideNavComponent implements OnInit {
       icon: 'shop_two',
       url: '/'
     },
-    // {
-    //   name: 'Content plan',
-    //   icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png',
-    //   url: '/content-plan'
-    // },
-    // {
-    //   name: 'Analytics',
-    //   icon: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png',
-    //   url: '/analytics'
-    // },
-    // {
-    //   name: 'Status',
-    //   icon: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png',
-    //   url: '/status'
-    // },
   ];
 
-  projects = [
-    {
-      name: 'Project 1',
-      thumnail: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/house-icon.png'
-    },
-    {
-      name: 'Project 2',
-      thumnail: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/calendar-512.png'
-    },
-    {
-      name: 'Project 3',
-      thumnail: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Analytics-512.png'
-    },
-    {
-      name: 'Project 4',
-      thumnail: 'https://cdn2.iconfinder.com/data/icons/flat-school/256/school_certificate_document_testimonial_instrument-512.png'
-    },
-  ];
+  projectList = [];
+  project$: Observable<any>;
 
   constructor(
     private router: Router,
@@ -87,7 +54,16 @@ export class SideNavComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getProjects();
     this.getInfo();
+  }
+
+  getProjects() {
+    this.connectFBService.getProjects().subscribe(d => {
+      return this.projectList = Object.keys(d.result).map((key) => {
+        return d.result[key];
+      });
+    });
   }
 
   onSelect(user: any) {
@@ -104,12 +80,14 @@ export class SideNavComponent implements OnInit {
     });
   }
 
-  onSelectEditContent() {
-    this.router.navigateByUrl('/content');
+  onSelectProject(project) {
+    console.log(project);
+    this.router.navigateByUrl(`/content-plan/${project.id}`);
   }
 
-  onAddProject() {
-    console.log('add project');
+
+  onSelectEditContent() {
+    this.router.navigateByUrl('/content');
   }
 
   openPublishNowDialog() {
@@ -119,8 +97,8 @@ export class SideNavComponent implements OnInit {
       height: '600px',
       panelClass: 'custom-panel',
       data: {
-        name: this.name,
-        animal: this.animal
+        name: 'this.name',
+        animal: 'this.animal'
       }
     };
 
@@ -132,7 +110,6 @@ export class SideNavComponent implements OnInit {
   }
 
   onOpenProjectDialog() {
-    console.log(this.connectFacebookAccount$);
     const dialogRef = this.dialog.open(AddProjectDialogComponent, {
       width: '1300px',
       maxWidth: '1300px',
@@ -148,8 +125,11 @@ export class SideNavComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    dialogRef.afterClosed().subscribe(() => {
+      dialogRef.componentInstance.newGroup$.subscribe(project => {
+        this.projectList.push(project);
+        this.connectFBService.addProject(project).subscribe(res => console.log(res));
+      });
     });
   }
 

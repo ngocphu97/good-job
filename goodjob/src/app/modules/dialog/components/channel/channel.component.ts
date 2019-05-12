@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-channel',
@@ -9,16 +10,16 @@ export class ChannelComponent implements OnInit {
 
   @Input() facebookConnectAccount;
   @Output() selectedChannel = new EventEmitter();
+  connectAccount = [];
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.facebookConnectAccount);
+    this.connectAccount = [];
   }
 
-  removeFanPage(pageId) {
-    this.facebookConnectAccount[0].connectAccount = this.facebookConnectAccount[0].connectAccount.filter(page => page.id !== pageId);
-    this.selectedChannel.emit(this.facebookConnectAccount);
+  onNgModelChange(e) {
+    this.selectedChannel.emit(this.connectAccount);
   }
 
 }

@@ -18,6 +18,7 @@ export class PreviewPostComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.events);
     this.openAll();
   }
 

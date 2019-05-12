@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-projects-dialog-members',
@@ -7,9 +7,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsDialogMembersComponent implements OnInit {
 
+  @Output() selectedMember = new EventEmitter();
+
+  members = [
+    {
+      id: '1',
+      name: 'Leanne Graham',
+      username: 'Bret',
+      email: 'Sincere@april.biz',
+      role: 'admin',
+    },
+    {
+      id: '2',
+      name: 'Ervin Howell',
+      username: 'Antonette',
+      email: 'Shanna@melissa.tv',
+      role: 'admin',
+    },
+  ];
+
+  displayMembers = [];
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onNgModelChange() {
+    this.selectedMember.emit(this.members);
   }
 
 }

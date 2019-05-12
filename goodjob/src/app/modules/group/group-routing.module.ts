@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { containers } from './containers';
 import { AddGroupPageComponent } from './containers/add-group-page/add-group-page.component';
 
 const routes: Routes = [

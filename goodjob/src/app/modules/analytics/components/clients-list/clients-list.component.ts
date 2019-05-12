@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics.service';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
-import { SourceFromFB } from '../../models/source';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({

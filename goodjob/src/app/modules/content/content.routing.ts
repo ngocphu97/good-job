@@ -4,7 +4,7 @@ import { EditWizardComponent } from './components/edit-wizard/edit-wizard.compon
 
 export const routes: Routes = [
   {
-    path: '',
+    path: ':projectId',
     component: CreatePageComponent
   },
   {

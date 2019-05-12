@@ -14,7 +14,7 @@
 
         <div class="actions">
             <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Name" [(ngModel)]="value">
+                <input matInput type="text" placeholder="Name" [(ngModel)]="projectName">
                 <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -70,7 +70,7 @@
     </div>
 
     <div class="done">
-        <button mat-raised-button color="primary">
+        <button matDialogClose cdkFocusInitial mat-raised-button (click)="onDone()" color="primary">
             Done
         </button>
     </div>

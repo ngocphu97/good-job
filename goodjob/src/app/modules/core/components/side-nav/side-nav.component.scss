@@ -45,9 +45,10 @@
 }
 
 .menu-icon {
-    height: 31.5px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
 }
-
 
 .add-project-btn {
     border: 1px solid #769aff;
@@ -69,10 +70,11 @@
 .group:nth-child(1) {
     padding-top: 0;
 }
+
 .group:nth-child(5) {
     background-color: #ffe100;
 
-    .menu { 
+    .menu {
         &:hover {
             background: #ffe100;
         }

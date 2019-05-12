@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,8 +9,6 @@ import { ContentService } from '../../services/content.service';
 import { Client } from '../../models/client';
 import { Group } from '../../models/group';
 
-import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
-
 declare var FB: any;
 
 @Component({
@@ -19,6 +17,8 @@ declare var FB: any;
   styleUrls: ['./edit-wizard.component.scss']
 })
 export class EditWizardComponent implements OnInit {
+
+  @Input() selectedProject: any;
 
   selectedFile = null;
   multiSelectedFile = [];
@@ -34,13 +34,6 @@ export class EditWizardComponent implements OnInit {
   events: CalendarEvent[] = [];
   clients: Client[] = [];
 
-  selectedGroup: Group = {
-    id: '',
-    groupName: '',
-    clients: [],
-    created_time: ''
-  };
-
   onPostSuccess = true;
   onPostFalse = false;
 
@@ -48,12 +41,12 @@ export class EditWizardComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private service: ContentService,
-    private dialog: MatDialog,
-    private router: Router) { }
+    private service: ContentService
+  ) {
+  }
 
   ngOnInit() {
-    this.getInfo();
+    // this.getInfo();
 
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -65,6 +58,7 @@ export class EditWizardComponent implements OnInit {
   }
 
   getInfo() {
+    // console.log(this.selectedProject);
     this.clients = this.service.getInfo();
   }
 
@@ -78,43 +72,8 @@ export class EditWizardComponent implements OnInit {
     }
   }
 
-  openDialog() {
-    console.log('open');
-  }
-
-  // openDialog(): void {
-  //   if (this.clients.length === 0) {
-  //     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-  //       width: '1000px',
-  //       data: {
-  //         title: 'Login again',
-  //         message: 'Your token out of time',
-  //         confirmButtonText: 'OK',
-  //       }
-  //     });
-  //     dialogRef.afterClosed().subscribe(result => {
-  //       this.router.navigateByUrl('/');
-  //     });
-  //   } else {
-  //     const dialogRef = this.dialog.open(AddGroupFormComponent, {
-  //       width: '1000px',
-  //       data: this.clients
-  //     });
-
-  //     dialogRef.afterClosed().subscribe(result => {
-  //       console.log(result);
-  //       const g: Group = {
-  //         id: '1',
-  //         groupName: result[0].groupName,
-  //         clients: result[0].clients
-  //       };
-  //       this.groups.push(g);
-  //     });
-  //   }
-  // }
-
   selectGroup(group: Group) {
-    this.selectedGroup = this.groups.find(function (g) {
+    this.selectedProject = this.groups.find((g) => {
       return g.groupName === group.groupName;
     });
   }
@@ -136,7 +95,7 @@ export class EditWizardComponent implements OnInit {
     const _length = this.multiSelectedFile.length;
 
     console.log('uploading your post ...');
-    this.selectedGroup.clients.forEach(c => {
+    this.selectedProject.clients.forEach(c => {
       const pageId = c.id;
       const _token = c.access_token;
 
@@ -190,7 +149,7 @@ export class EditWizardComponent implements OnInit {
   }
 
   onUploadVideo(message) {
-    this.selectedGroup.clients.forEach(c => {
+    this.selectedProject.clients.forEach(c => {
       console.log('preparing your post ....');
 
       const pageId = c.id;
@@ -222,3 +181,7 @@ export class EditWizardComponent implements OnInit {
     });
   }
 }
+
+/**
+ * clear flow of the project
+ */

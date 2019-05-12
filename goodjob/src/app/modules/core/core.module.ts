@@ -9,12 +9,14 @@ import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { components } from './components';
 import { PublishNowDialogComponent, AddProjectDialogComponent } from '@app/dialog/containers';
 import { DialogModule } from '@app/dialog/dialog.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    HttpClientModule,
     SharedModule,
     DialogModule
   ],

@@ -12,7 +12,7 @@ export const routes: Routes = [
         // canActivate: [AuthGuard]
       },
       {
-        path: 'contentplan',
+        path: 'content-plan',
         loadChildren: 'app/modules/content/content.module#ContentModule',
         data: { preload: true, delay: false },
       },
