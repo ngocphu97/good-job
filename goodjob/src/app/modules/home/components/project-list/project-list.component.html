@@ -1,9 +1,10 @@
 <div class="project">
     <h3>PROJECT</h3>
     <div class="project-list">
-        <div *ngFor="let project of projects$ | async" class="project-item">
-            <img src="{{project.avatar}}" alt="">
-            <span>{{project.name}}</span>
+        <div *ngFor="let project of projectList" class="project-item" (click)="onSelectProject(project)">
+            <!-- <img src="{{project.avatar}}" alt=""> -->
+            <img src="https://media.techz.vn/upload/2013/11/06/image-1383728007-avatar-facebook.jpg" alt="">
+            <span>{{project.projectName}}</span>
         </div>
         <button (click)="onOpenProjectDialog()" class="add-project-btn" mat-icon-button>
             <i class="material-icons"> add</i>

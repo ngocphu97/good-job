@@ -39,8 +39,7 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getProjectList(): Observable<any> {
-    return new Observable((observer: Observer<any[]>) => {
-      observer.next(this.projects);
-    });
+    const url = `https://www.jsonstore.io/9e2c377d376c4655f5d20a0d9275b4e4c623770a618b32be0c53c54fb32c2f16/projects/`;
+    return this.http.get(url);
   }
 }

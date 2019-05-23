@@ -81,7 +81,6 @@ export class SideNavComponent implements OnInit {
   }
 
   onSelectProject(project) {
-    console.log(project);
     this.router.navigateByUrl(`/content-plan/${project.id}`);
   }
 
@@ -128,7 +127,7 @@ export class SideNavComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       dialogRef.componentInstance.newGroup$.subscribe(project => {
         this.projectList.push(project);
-        this.connectFBService.addProject(project).subscribe(res => console.log(res));
+        this.connectFBService.addProject(project).subscribe();
       });
     });
   }

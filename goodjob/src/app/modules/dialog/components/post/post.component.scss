@@ -14,7 +14,7 @@ textarea {
     margin-top: 10px;
     width: 100%;
     height: 150px;
-    background: $color-light;
+    // background: $color-light;
     border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
     border-image: none;
     border-radius: 6px 6px 6px 6px;
@@ -45,9 +45,9 @@ textarea:focus {
     .post {
         width: 60%;
         box-shadow:
-        0 3px 1px -2px rgba(0, 0, 0, .2),
-        0 2px 2px 0 rgba(0, 0, 0, .14),
-        0 1px 5px 0 rgba(0, 0, 0, .12);
+            0 3px 1px -2px rgba(0, 0, 0, .2),
+            0 2px 2px 0 rgba(0, 0, 0, .14),
+            0 1px 5px 0 rgba(0, 0, 0, .12);
 
         .emoji-btn {
             background: transparent;
@@ -95,9 +95,9 @@ textarea:focus {
     .preview {
         width: 40%;
         box-shadow:
-        0 3px 1px -2px rgba(0, 0, 0, .2),
-        0 2px 2px 0 rgba(0, 0, 0, .14),
-        0 1px 5px 0 rgba(0, 0, 0, .12);
+            0 3px 1px -2px rgba(0, 0, 0, .2),
+            0 2px 2px 0 rgba(0, 0, 0, .14),
+            0 1px 5px 0 rgba(0, 0, 0, .12);
     }
 }
 
@@ -112,6 +112,8 @@ textarea:focus {
 .example-header-image {
     background-image: url('https://png.pngtree.com/svg/20170602/96bf30659c.png');
     background-size: cover;
+    height: 50px;
+    width: 50px;
 }
 
 :host::ng-deep.emoji-mart-bar {
@@ -132,6 +134,16 @@ textarea:focus {
 
     .delete-button {
         background: $color-light;
-        color:#FFE100;
+        color: #FFE100;
     }
+}
+
+.facebook-preview-subtitle {
+    display: flex;
+    align-items: center;
+}
+
+
+.wrapper-grid {
+    width: 100%;
 }

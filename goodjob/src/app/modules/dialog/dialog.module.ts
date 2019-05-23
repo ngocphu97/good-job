@@ -3,14 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 
+import { MatDialogModule } from '@angular/material';
+import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 
 import { containers } from './containers';
 import { components } from './components';
-
-import { AddProjectDialogComponent } from './containers/add-project-dialog/add-project-dialog.component';
-import { PublishNowDialogComponent } from './containers/publish-now-dialog/publish-now-dialog.component';
-import { InputFileConfig, InputFileModule } from 'ngx-input-file';
-import { MatDialogModule } from '@angular/material';
 
 const config: InputFileConfig = {
   iconAdd: 'add_circle_outline'

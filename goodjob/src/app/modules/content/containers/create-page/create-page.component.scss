@@ -1,0 +1,46 @@
+@import '~styles/variabel';
+
+.page-header {
+    display: flex;
+    align-items: center;
+    background: $gudpost-yellow;
+
+    p {
+        margin: 0.5rem 0;
+        display: flex;
+    }
+
+    p:nth-child(1) {
+        align-items: center;
+        width: 20%;
+        padding-left: 1rem;
+        border-right: 1px solid #f4f4f4;
+
+        .project-name {
+            color: #ffffff;
+        }
+    }
+
+    p:nth-child(2) {
+        justify-content: space-around;
+        align-items: center;
+        width: 80%;
+    }
+
+    .project-thumnail {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .page-header-btn {
+        // color: $gudpost-blue;
+        width: 300px;
+        height: 40px;
+    }
+}
+
+.calendar {
+    padding: 1rem;
+}

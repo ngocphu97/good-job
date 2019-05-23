@@ -1,36 +1,26 @@
 <ng-template #customCellTemplate let-day="day">
     <div class="cal-cell-top" tabindex="4" [matTooltipShowDelay]="showDelayTooltip"
         matTooltip="There are {{ day.badgeTotal }} on this day. Click to preview">
-        <span class="cal-day-number">
-            {{ day.date | calendarDate:'monthViewDayNumber':locale }}
-        </span>
-
         <div class="cell-totals">
             <span *ngFor="let group of day.eventGroups" class="badge badge-{{ group[0] }}">
                 {{ group[1].length }}
             </span>
         </div>
+        <span class="cal-day-number">
+            {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+        </span>
     </div>
 </ng-template>
-
-
-<div class="alert alert-info" *ngIf="!clickedDate">
-    Please click on a date to view !
-</div>
-
-<!-- <div *ngIf="events.length === 0">
-    <mat-spinner></mat-spinner>
-</div> -->
 
 <div class="loading-calendar" *ngIf="events.length === 0">
     <mat-spinner color="accent"></mat-spinner>
 </div>
 
 <div class="calendar-switch">
-    <button mat-raised-button color="warn" (click)="changeView('month')" [class.active]="view">
+    <button mat-raised-button color="primary" (click)="changeView('month')" [class.active]="view">
         Month
     </button>
-    <button mat-raised-button color="warn" (click)="changeView('week')" [class.active]="view">
+    <button mat-raised-button (click)="changeView('week')" [class.active]="view">
         Week
     </button>
 </div>
@@ -39,14 +29,14 @@
 
     <div class="calendar-container">
         <div class="calendar-header">
-            <button class="custom-btn" mat-mini-fab color="primary" mwlCalendarPreviousView [view]="view"
+            <button class="custom-btn" mat-mini-fab color="accent" mwlCalendarPreviousView [view]="view"
                 [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
-                <i class="material-icons" style="color: #ffffff"> chevron_left </i>
+                <i class="material-icons"> chevron_left </i>
             </button>
             <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h4>
-            <button color="primary" class="custom-btn" mat-mini-fab mwlCalendarNextView [view]="view"
+            <button class="custom-btn" color="accent" mat-mini-fab mwlCalendarNextView [view]="view"
                 [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
-                <i class="material-icons" style="color: #ffffff"> chevron_right </i>
+                <i class="material-icons"> chevron_right </i>
             </button>
         </div>
 

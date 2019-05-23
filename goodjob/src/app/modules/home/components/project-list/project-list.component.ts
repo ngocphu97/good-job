@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { HomeService } from '../../services/home.service';
 import { AddProjectDialogComponent } from '@app/dialog/containers/add-project-dialog/add-project-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-list',
@@ -13,12 +14,14 @@ import { AddProjectDialogComponent } from '@app/dialog/containers/add-project-di
 })
 export class ProjectListComponent implements OnInit {
   projects$: Observable<any>;
+  projectList = [];
 
   users = [];
 
   constructor(
     private service: HomeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -26,7 +29,16 @@ export class ProjectListComponent implements OnInit {
   }
 
   getProjects() {
-    this.projects$ = this.service.getProjectList();
+    // this.projects$ = this.service.getProjectList();
+    this.service.getProjectList().subscribe(d => {
+      return this.projectList = Object.keys(d.result).map((key) => {
+        return d.result[key];
+      });
+    });
+  }
+
+  onSelectProject(project) {
+    this.router.navigateByUrl(`/content-plan/${project.id}`);
   }
 
   onOpenProjectDialog(): void {

@@ -1,5 +1,39 @@
 <div class="edit-post" *ngIf="project">
-  <strong>Project {{projectName}}</strong>
-  <app-calendar [selectedGroup]="project.connectAccounts"></app-calendar>
-  <!-- <app-edit-wizard [selectedProject]="project"></app-edit-wizard> -->
+    <div class="page-header">
+        <p>
+            <img class="project-thumnail"
+                src="https://media.techz.vn/upload/2013/11/06/image-1383728007-avatar-facebook.jpg" alt="">
+            <strong class="project-name">{{project.projectName}}</strong>
+        </p>
+        <p>
+
+
+            <button mat-raised-button class=" page-header-btn" color="primary">
+                <i class="material-icons">
+                    calendar_today
+                </i>
+                Content plan
+            </button>
+
+            <a routerLink="/analytics">
+                <button mat-raised-button class="page-header-btn">
+                    <i class="material-icons">
+                        pie_chart
+                    </i>
+                    Analytics
+                </button>
+            </a>
+
+            <button mat-raised-button class="page-header-btn">
+                <i class="material-icons">
+                    style
+                </i>
+                Status
+            </button>
+        </p>
+    </div>
+    <div class="calendar">
+        <app-calendar [selectedGroup]="project.connectAccounts"></app-calendar>
+    </div>
+    <!-- <app-edit-wizard [selectedProject]="project"></app-edit-wizard> -->
 </div>

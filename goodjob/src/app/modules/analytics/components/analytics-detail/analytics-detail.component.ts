@@ -1,11 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-
-import { MatSort, MatTableDataSource } from '@angular/material';
-import { BehaviorSubject } from 'rxjs';
-
-import { BaseChartDirective } from 'ng2-charts/charts/charts';
-
-import { AnalyticsService } from '../../services/analytics.service';
+import { Component, OnInit } from '@angular/core';
+import { ExportFileService } from '../../services/export-file.service';
 
 @Component({
   selector: 'app-analytics-detail',
@@ -14,37 +8,14 @@ import { AnalyticsService } from '../../services/analytics.service';
 })
 export class AnalyticsDetailComponent implements OnInit {
 
-  @ViewChild(MatSort) sort: MatSort;
-
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-
-  data$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-
-  // page Fans
-  barChartLabelsPageFans = [];
-  pageFansData = [];
-
-  barChartDataPageFans: any[] = [
-    {
-      data: this.pageFansData,
-      label: 'Page Fans'
-    }
-  ];
-
-  constructor(private service: AnalyticsService) {
+  constructor(private exportFileService: ExportFileService) {
   }
 
   ngOnInit() {
 
-    this.service
-      .getPageFans('last_90d')
-      .subscribe(
-        (data) => {
-          if (!data || data.length < 1) {
-            return;
-          }
+  }
 
-          // console.log(data);
-        });
+  exportChart() {
+    this.exportFileService.slide11();
   }
 }
