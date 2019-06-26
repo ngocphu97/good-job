@@ -4,11 +4,11 @@ import { SignUpPageComponent } from './containers/sign-up-page/sign-up-page.comp
 
 export const routes: Routes = [
     {
-        path: '',
+        path: 'login',
         component: LoginPageComponent
     },
     {
-        path: 'sign-up',
+        path: 'signup',
         component: SignUpPageComponent
     },
 ];

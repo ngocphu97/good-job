@@ -1,72 +1,63 @@
-<div class="gp-login">
-  <div>
-    <img src="https://gudjob.net/storage/2018/07/Glogo.png" alt="GUDPOST Logo">
-  </div>
+<div class="gp-login d-flex justify-content-center flex-column align-items-center h-100">
+  <img class="img-fluid gudpost-logo" src="assets/images/logos/GUDPOST-2.png" alt="GUDPOST Logo">
 
-  <form class="login-form">
-    <h3 class="login-text" [appTextcolor]="red">
-			LOG IN
-		</h3>
+  <form class="login-form text-center">
+    <h3 class="login-text text-uppercase mt-1 mb-2">
+      log in
+    </h3>
 
-    <div class="input-group">
-		<ng-container>
-			<mat-form-field [color]="color" appearance="outline">
-			  <mat-icon matSuffix> how_to_reg </mat-icon>
-			  <mat-label>Username</mat-label>
-			  <input matInput placeholder="Email" [formControl]="emailFormControl"
-			  [errorStateMatcher]="matcher" autofocus [(ngModel)]="email" >
+    <div class="d-flex flex-column w-100">
+      <ng-container>
+        <mat-form-field [color]="'primary'" appearance="outline">
+          <mat-icon matSuffix> how_to_reg </mat-icon>
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="Email" [errorStateMatcher]="matcher" [formControl]="email">
 
-			  <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-				Please enter a valid email address
-			  </mat-error>
-			  <mat-error *ngIf="emailFormControl.hasError('required')">
-				Email is <strong>required</strong>
-			  </mat-error>
+          <mat-error *ngIf="email.hasError('required')" class="text-warning">
+            Email is required
+          </mat-error>
 
-			</mat-form-field>
-		  </ng-container>
-	  
-		  <ng-container>
-			<mat-form-field [color]="color" appearance="outline">
-			  <mat-icon matSuffix>vpn_key</mat-icon>
-			  <mat-label>Password</mat-label>
-			  <input required type="password" matInput [(ngModel)]="password" name="password">
+        </mat-form-field>
+      </ng-container>
 
-			  <mat-error *ngIf="passwordFormControl.hasError('password') && ! passwordFormControl.hasError('required')">
-				Your password is incorect 
-			  </mat-error>
-			  <mat-error *ngIf="passwordFormControl.hasError('required')">
-				Password is <strong>required</strong>
-			  </mat-error>
+      <ng-container>
+        <mat-form-field [color]="'primary'" appearance="outline">
+          <mat-icon matSuffix>vpn_key</mat-icon>
+          <mat-label>Password</mat-label>
+          <input required [formControl]="password" type="password" matInput name="password">
 
-			</mat-form-field>
-		  </ng-container>
-	</div>
+          <mat-error *ngIf="password.hasError('required')" class="text-warning">
+            Password is required
+          </mat-error>
 
-    <div class="remember-checkbox">
-      <mat-checkbox [(ngModel)]="checked" name="checked" [labelPosition]="labelPosition">
+        </mat-form-field>
+      </ng-container>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <mat-checkbox [formControl]="check" name="checked" [labelPosition]="'after'">
         Remember me
       </mat-checkbox>
     </div>
 
-    <div class="actions">
-      <button mat-raised-button color="accent" (click)="loginWithGJ()">
+    <div class="d-flex flex-row justify-content-between py-3">
+      <button class="w-100" mat-raised-button color="accent" (click)="loginWithGJ()">
         Sign Up
       </button>
 
-      <button mat-raised-button color="primary" (click)="loginWithGJ()">
+      <button class="w-100 mx-2" mat-raised-button color="primary" (click)="loginWithGJ()">
         Log in
       </button>
 
-      <button mat-raised-button color="warn" (click)="loginWithFb()">
+      <button class="w-100" mat-raised-button color="warn" (click)="loginWithFb()">
         <i class="fab fa-facebook-f" style="font-size: 25px"></i>
       </button>
     </div>
 
-    <hr style="color: grey; margin: 10px;">
+    <hr>
 
-    <div class="forgot-password">
-      <a href="#">Forgot Password</a>
+    <div>
+      <a routerLink="/">Forgot Password</a>
     </div>
 
   </form>

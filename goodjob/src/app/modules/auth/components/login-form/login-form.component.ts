@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {ErrorStateMatcher} from '@angular/material/core';
-import { Router } from '@angular/router';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -15,37 +14,27 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
 
-  red: 'red';
+  matcher = new MyErrorStateMatcher();
 
-  email: string;
-  password: string;
-  color = 'accent';
-
-  checked = false;
-  labelPosition = 'after';
-
-  emailFormControl = new FormControl('', [
+  email = new FormControl('admin@gudpost.net', [
     Validators.required,
     Validators.email,
   ]);
 
-  passwordFormControl = new FormControl('', [
+  password = new FormControl('admin123', [
     Validators.required,
-    Validators.minLength(2),
+    Validators.minLength(5),
   ]);
 
-  matcher = new MyErrorStateMatcher();
+  check = new FormControl(false);
 
   @Output() loginSignal = new EventEmitter();
   @Output() loginSignalGJ = new EventEmitter();
   @Output() logoutSignal = new EventEmitter();
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-  }
+  constructor() { }
 
   loginWithFb() {
     this.loginSignal.emit('');
@@ -53,8 +42,9 @@ export class LoginFormComponent implements OnInit {
 
   loginWithGJ() {
     const user = {
-      email: this.email,
-      password: this.password
+      email: this.email.value,
+      password: this.password.value,
+      rememberMe: this.check.value
     };
     this.loginSignalGJ.emit(user);
   }

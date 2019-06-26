@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from '@app/core/layout/dashboard/dashboard.component';
+import { AuthGuardService } from '@app/auth/services/auth-guard.service';
 
 export const routes: Routes = [
   {
@@ -9,7 +10,7 @@ export const routes: Routes = [
       {
         path: 'home',
         loadChildren: 'app/modules/home/home.module#HomeModule',
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuardService]
       },
       {
         path: 'content-plan',

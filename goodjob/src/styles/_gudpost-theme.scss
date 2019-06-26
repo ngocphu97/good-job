@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import '_variabel';
 
 $my-custom-primary-color: (
   50 : #edebfc,
@@ -6,7 +7,7 @@ $my-custom-primary-color: (
   200 : #b6aef3,
   300 : #988dee,
   400 : #8274eb,
-  500 : #8ddef1,
+  500 : $gudpost-blue,
   600 : #6454e4,
   700 : #594ae0,
   800 : #4f41dd,
@@ -39,7 +40,7 @@ $my-custom-accent-color: (
   200 : #b6aef3,
   300 : #988dee,
   400 : #8274eb,
-  500 : #556dd3,
+  500 : $gudpost-darker-blue,
   600 : #6454e4,
   700 : #594ae0,
   800 : #4f41dd,
@@ -72,7 +73,7 @@ $my-custom-warn-color: (
     200: #fff59d,
     300: #fff176,
     400: #ffee58,
-    500: #ffe100,
+    500: $gudpost_yellow,
     600: #fdd835,
     700: #fbc02d,
     800: #f9a825,
@@ -101,7 +102,7 @@ $my-custom-warn-color: (
 
 $gudpost-theme-primary: mat-palette($my-custom-primary-color);
 $gudpost-theme-accent: mat-palette($my-custom-accent-color);
-$gudpost-theme-warn: mat-palette($my-custom-warn-color, 900);
+$gudpost-theme-warn: mat-palette($my-custom-warn-color);
 
 $gudpost-theme: mat-light-theme(
     $gudpost-theme-primary,

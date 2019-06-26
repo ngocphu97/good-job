@@ -12,6 +12,7 @@ import { environment } from '@app/environment';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routing';
+import { AuthGuardService } from '@app/auth/services/auth-guard.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,9 @@ import { routes } from './app.routing';
   ],
   declarations: [
     AppComponent
+  ],
+  providers: [
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

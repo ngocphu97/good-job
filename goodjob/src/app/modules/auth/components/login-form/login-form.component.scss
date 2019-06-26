@@ -1,47 +1,21 @@
-.gp-login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+@import 'src/styles/_variabel';
 
-    img {
-        max-width: 380px;
-    }
+.gp-login {
+  .gudpost-logo {
+    max-width: 380px;
+  }
 }
 
 .login-form {
-    text-align: center;
-    width: 380px;
+  width: 380px;
 
-    .login-text {
-        color: #838383;
-    }
+  .login-text {
+    color: $gudpost-dark-grey;
+  }
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-
-.remember-checkbox {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.actions {
-    padding: 1.5rem 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    button {
-        width: 100%;
-
-        &:nth-child(2) {
-            margin: 0 1rem;
-        }
-    }
+hr {
+  color: $gudpost-dark-grey;
+  margin: 1.5rem 0;
+  width: 100%;
 }
