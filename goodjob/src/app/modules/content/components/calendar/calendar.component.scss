@@ -1,3 +1,5 @@
+@import '~angular-calendar/css/angular-calendar.css';
+
 .custom-cell {
     background-color: #8ddef1 !important;
     color: #ffffff !important;
@@ -96,14 +98,12 @@
 .icon-week-custom-scheduled {
     color: #707070;
     position: absolute;
-    background: #ffffff;
     border-radius: 50%;
 }
 
 .icon-week-custom-done {
     color: #556dd3;
     position: absolute;
-    background: #ffffff;
     border-radius: 50%;
 }
 
@@ -113,13 +113,10 @@
     text-align: center;
 }
 
-// container [ preview event - calendar ]
 .wrapper {
     display: flex;
     flex-direction: row;
 }
-
-//preview events
 
 .preview-event {
     width: 40%;
@@ -131,7 +128,6 @@
     border-bottom-right-radius: 15px;
 }
 
-// calendar
 .calendar-container {
     background-color: #8ddef1;
     border-top-left-radius: 15px;
@@ -167,6 +163,48 @@
     margin-bottom: 1rem;
 
     button:nth-child(1) {
-      margin-right: 1rem;
+        margin-right: 1rem;
+    }
+}
+
+
+.cal-cell-row.cal-header {
+    background: red !important;
+}
+
+.cal-week-view {
+    overflow: auto;
+    height: 500px;
+    background: #8ddef1;
+    color: #ffffff;
+}
+
+.cal-week-view .cal-hour-odd {
+    background: #8ddef1;
+}
+
+.cal-day-columns .cal-day-column {
+    border-right: 1px solid black;
+}
+
+
+// header template 
+.cal-day-headers {
+    background: #ffe100;
+    z-index: 0;
+    padding-left: 0 !important;
+
+    .cal-time-label-column {
+        display: none;
+    }
+
+    &:hover {
+        background-color: #ffe100 !important;
+    }
+
+    .cal-header {
+        &:hover {
+            background-color: #ffe100 !important;
+        }
     }
 }

@@ -6,6 +6,10 @@
 .group {
     border-bottom: 1px solid #769aff;
     padding: 16.75px 0;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .group.user-avatar {
@@ -65,10 +69,6 @@
 .group:nth-child(4),
 .group:nth-child(5) {
     border-bottom: none;
-}
-
-.group:nth-child(1) {
-    padding-top: 0;
 }
 
 .group:nth-child(5) {

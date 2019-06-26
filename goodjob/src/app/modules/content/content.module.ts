@@ -9,7 +9,7 @@ import { Ng5TimePickerModule } from 'ng5-time-picker';
 import { InputFileModule } from 'ngx-input-file';
 import { InputFileConfig } from 'ngx-input-file/src/lib/interfaces/input-file-config';
 import { IgxCalendarModule, IgxDialogModule } from 'igniteui-angular';
-import { CalendarModule } from 'angular-calendar';
+
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -19,6 +19,9 @@ import { components } from './components';
 
 import { DialogModule } from '@app/dialog/dialog.module';
 import { AddProjectDialogComponent } from '@app/dialog/containers/add-project-dialog/add-project-dialog.component';
+
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 const config: InputFileConfig = {};
 
@@ -35,7 +38,10 @@ const config: InputFileConfig = {};
     Ng5TimePickerModule,
     IgxCalendarModule,
     IgxDialogModule,
-    CalendarModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     FlatpickrModule.forRoot(),
     NgbModule
   ],

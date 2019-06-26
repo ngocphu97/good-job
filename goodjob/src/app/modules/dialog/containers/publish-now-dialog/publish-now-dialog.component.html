@@ -6,12 +6,33 @@
 
 <div mat-dialog-actions class="dialog-actions">
     <div class="actions-left">
-        <button mat-button (click)="onPublishNow()">Publish Now</button>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="action">
+            <mat-radio-button color="warn" value="publishnow">Publish Now</mat-radio-button>
+            <mat-radio-button color="warn" value="savedraft">Save Draft</mat-radio-button>
+            <mat-radio-button color="warn" value="schedule">Schedule</mat-radio-button>
+        </mat-radio-group>
+        <!--  <button mat-button (click)="onPublishNow()">Publish Now</button>
         <button mat-button (click)="onAddToQueue()">Add to queue</button>
-        <button mat-button (click)="onSchedule()">Schedule</button>
+        <button mat-button (click)="onSchedule()">Schedule</button> -->
     </div>
     <div class="actions-right">
-        <!-- <button mat-button [mat-dialog-close]="data.animal">Next</button> -->
-        <button mat-button>Next</button>
+        <button *ngIf="action === 'publishnow'" mat-button>Publih now</button>
+        <button *ngIf="action === 'savedraft'" mat-button>Save Draft</button>
+
+        <ng-container *ngIf="action === 'schedule'">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" [value]="date.value" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Choose a time" [ngxTimepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <ngx-material-timepicker #picker1></ngx-material-timepicker>
+            </mat-form-field>
+        </ng-container>
+
     </div>
 </div>

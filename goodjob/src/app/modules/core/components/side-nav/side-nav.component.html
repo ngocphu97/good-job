@@ -1,12 +1,12 @@
 <div class="side-nav">
     <div class="group">
-        <img class="w-100" src="assets/images/logos/gudpostlogo.png" alt="user avatar">
+        <a routerLink="/home"><img class="w-100" src="assets/images/logos/GUDPOST-2.png" alt="user avatar"></a>
     </div>
 
     <div class="group user-avatar">
         <div class="d-flex-center ">
             <img src="https://cdn.icepop.com/wp-content/uploads/2018/08/1-1533501921185.jpg" alt="user avatar">
-            <strong class="gudjpost-blue-text">User name</strong>
+            <strong class="gudjpost-blue-text">Joe Doe</strong>
         </div>
         <i class="material-icons gudjpost-blue-text">edit</i>
     </div>
@@ -31,7 +31,8 @@
                 <span class="gudjpost-blue-text"> Add project</span>
             </li>
             <li *ngFor="let project of projectList" class="menu" (click)="onSelectProject(project)">
-                <img class="menu-icon" src="https://media.techz.vn/upload/2013/11/06/image-1383728007-avatar-facebook.jpg" alt="">
+                <img class="menu-icon"
+                    src="https://media.techz.vn/upload/2013/11/06/image-1383728007-avatar-facebook.jpg" alt="">
                 <span class="gudjpost-blue-text">{{project.projectName}}</span>
             </li>
         </ul>
@@ -40,9 +41,10 @@
     <div class="group">
         <ul>
             <li class="menu">
-                <button class="gp-btn gp-btn-md gp-text-white w-100" mat-raised-button color="primary"
-                    (click)="openPublishNowDialog()">
-                    Public
+                <button class="gp-btn gp-btn-md gp-text-white w-100" 
+                        mat-raised-button color="primary"
+                        (click)="openPublishNowDialog()">
+                    Publish
                 </button>
             </li>
         </ul>

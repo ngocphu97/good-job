@@ -41,15 +41,23 @@
     }
 
     .actions-left {
-        display: flex;
         background: #769aff;
-        justify-content: space-around;
         width: 60%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
     }
 
     .actions-right {
         background: #556dd3;
         width: 40%;
+        height: 61px;
+        padding: 7px;
         display: flex;
     }
+}
+
+
+.mat-radio-button~.mat-radio-button {
+    margin-left: 16px;
 }

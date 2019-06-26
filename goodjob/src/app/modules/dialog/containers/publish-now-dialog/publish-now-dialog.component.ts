@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 export interface DialogData {
   users: any;
@@ -11,6 +12,9 @@ export interface DialogData {
   styleUrls: ['./publish-now-dialog.component.scss']
 })
 export class PublishNowDialogComponent {
+
+  action = '';
+  date = new FormControl(new Date());
 
   constructor(
     public dialogRef: MatDialogRef<PublishNowDialogComponent>,

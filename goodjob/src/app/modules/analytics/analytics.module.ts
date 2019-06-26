@@ -9,7 +9,6 @@ import { ChartsModule } from 'ng2-charts';
 import { routes } from './analytics.routing';
 import { containers } from './containers';
 import { components } from './components';
-import { FanByCityComponent } from './components/fan-by-city/fan-by-city.component';
 
 @NgModule({
   imports: [
@@ -22,8 +21,7 @@ import { FanByCityComponent } from './components/fan-by-city/fan-by-city.compone
   ],
   declarations: [
     ...components,
-    ...containers,
-    FanByCityComponent
+    ...containers
   ]
 
 })

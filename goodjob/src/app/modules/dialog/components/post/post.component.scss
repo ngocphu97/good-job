@@ -129,6 +129,7 @@ textarea:focus {
         align-items: center;
         flex-wrap: nowrap !important;
         max-width: 625px;
+        height: 235px;
         overflow-x: auto;
     }
 
@@ -146,4 +147,13 @@ textarea:focus {
 
 .wrapper-grid {
     width: 100%;
+}
+
+mat-card {
+    height: 500px;
+    margin: 15px;
+}
+
+.add-image {
+    margin-top: 3rem;
 }

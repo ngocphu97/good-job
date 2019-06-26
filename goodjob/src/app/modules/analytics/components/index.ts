@@ -7,6 +7,7 @@ import { PageFansOnlineComponent } from './page-fans-online/page-fans-online.com
 import { DemoGraphicComponent } from './demo-graphic/demo-graphic.component';
 import { EngagementsComponent } from './engagements/engagements.component';
 import { FanGrowthComponent } from './fan-growth/fan-growth.component';
+import { FanByCityComponent } from './fan-by-city/fan-by-city.component';
 
 export const components = [
     AnalyticsDetailComponent,
@@ -17,7 +18,8 @@ export const components = [
     PageFansOnlineComponent,
     DemoGraphicComponent,
     EngagementsComponent,
-    FanGrowthComponent
+    FanGrowthComponent,
+    FanByCityComponent
 ];
 
 export {
@@ -29,5 +31,6 @@ export {
     PageFansOnlineComponent,
     DemoGraphicComponent,
     EngagementsComponent,
-    FanGrowthComponent
+    FanGrowthComponent,
+    FanByCityComponent
 };

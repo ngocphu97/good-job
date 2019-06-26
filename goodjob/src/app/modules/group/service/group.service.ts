@@ -9,7 +9,7 @@ declare var FB: any;
 export class GroupService {
 
   // tslint:disable-next-line:max-line-length
-  access_token = 'EAAFiVT3Gv5EBAAEZB5QS9bjDhUboqjsiVfEtVU5CHZCZClflhyUdtkbMbUPcS3JnkAvc1HlbOxgPh5cgckNOhv05LcWhV20fiVwHNUeFwZBxZBSGGBwxYuecv943JU3USZBfSGTADkuzCnTRZCTuKmjMaNSbhj0NeEVrzM1S2xFcd4AjRRI17t20Weq2ZBhYnqwZD';
+  access_token = '';
 
   constructor(private http: HttpClient) { }
 

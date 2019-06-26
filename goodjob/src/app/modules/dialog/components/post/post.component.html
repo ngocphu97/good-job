@@ -1,7 +1,8 @@
 <div class="wrapper">
     <div class="post">
         <h4>Post</h4>
-        <mat-card style="margin: 15px;">
+
+        <mat-card >
             <mat-card-header class="custom-card-header">
                 <div mat-card-avatar class="example-header-image"></div>
             </mat-card-header>
@@ -20,9 +21,13 @@
                     </div>
                 </div>
                 <div class="add-image">
-                    <input-file (deletedFile)="onDeletedFile($event)" (acceptedFile)="onAccept($event)"
-                        fileAccept="image/*" fileLimit="10">
+                    <input-file 
+                        (deletedFile)="onDeletedFile($event)" 
+                        (acceptedFile)="onAccept($event)"
+                        fileAccept="image/*" 
+                        fileLimit="10">
                     </input-file>
+
                 </div>
             </mat-card-content>
         </mat-card>
@@ -30,7 +35,7 @@
 
     <div class="preview">
         <h4>Preview</h4>
-        <mat-card style="margin: 15px;">
+        <mat-card>
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image"></div>
                 <mat-card-title>
@@ -50,98 +55,10 @@
                     role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
             </mat-card-content>
 
-
-            <div class="wrapper-grid">
-                <h1>1</h1>
-                <mat-grid-list cols="6" rows="5" rowHeight="100px">
-                    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"
-                        [style.background]="tile.color">
-                        {{tile.text}} -123
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
-            <br>
-
-            <div class="wrapper-grid">
-                <h1>2</h1>
-                <mat-grid-list cols="7" rows="3" rowHeight="100px">
-                    <mat-grid-tile *ngFor="let tile of tiles2" [colspan]="tile.cols" [rowspan]="tile.rows"
-                        [style.background]="tile.color">
-                        {{tile.text}}
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
-            <br>
-
-            <div class="wrapper-grid">
-                <h1>3</h1>
-                <mat-grid-list cols="4" rows="3" rowHeight="100px">
-                    <mat-grid-tile *ngFor="let tile of tiles3" [colspan]="tile.cols" [rowspan]="tile.rows"
-                        [style.background]="tile.color">
-                        {{tile.text}}
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
-            <br>
-            <div class="wrapper-grid">
-                <h1>4</h1>
-                <mat-grid-list cols="4" rows="2" rowHeight="100px">
-                    <mat-grid-tile *ngFor="let tile of tiles4" [colspan]="tile.cols" [rowspan]="tile.rows"
-                        [style.background]="tile.color">
-                        {{tile.text}}
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
-            <br>
-            <div class="wrapper-grid">
-                <h1>5</h1>
-                <mat-grid-list cols="5" rows="3" rowHeight="100px">
-                    <mat-grid-tile *ngFor="let tile of tiles5" [colspan]="tile.cols" [rowspan]="tile.rows"
-                        [style.background]="tile.color">
-                        {{tile.text}}
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
-            <br>
-            <div class="wrapper-grid">
-                <h1>6</h1>
-                <mat-grid-list cols="4" rows="5" rowHeight="100px">
-                    <mat-grid-tile *ngFor="let tile of tiles6" [colspan]="tile.cols" [rowspan]="tile.rows"
-                        [style.background]="tile.color">
-                        {{tile.text}}
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
-            <div class="wrapper-grid">
-                <h1>7</h1>
-                <mat-grid-list cols="2">
-                    <mat-grid-tile *ngFor="let tile of tiles7" [style.background]="tile.color">
-                        {{tile.text}}
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
-
             <ng-container *ngIf="imagesPreview.previews.length === 0">
-                <img src="https://makitweb.com/demo/broken_image/images/noimage.png" alt="">
+                <img style="width: 200px;" src="https://makitweb.com/demo/broken_image/images/noimage.png" alt="">
             </ng-container>
 
-            <ng-template [ngIf]="imagesPreview.type === 'one-image' && imagesPreview.previews.length === 1" #oneImage>
-                <img mat-card-image src="{{imagesPreview.previews[0].pre}}" alt="image preview">
-            </ng-template>
-
-            <ng-template [ngIf]="imagesPreview.type === 'two-image' && imagesPreview.previews.length > 0" #twoImage>
-                <div class="two-images">
-                    <img mat-card-image src="{{imagesPreview.previews[0].pre}}" alt="image preview">
-                    <img mat-card-image src="{{imagesPreview.previews[1].pre}}" alt="image preview">
-                </div>
-            </ng-template>
         </mat-card>
     </div>
 </div>

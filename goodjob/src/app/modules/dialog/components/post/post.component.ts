@@ -1,10 +1,16 @@
 import { Component, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { last } from 'rxjs/operators';
 
 export interface Tile {
   color: string;
   cols: number;
   rows: number;
   text: string;
+}
+export interface PreviewImageGrid {
+  type: string;
+  images: Array<any>;
 }
 
 @Component({
@@ -21,6 +27,11 @@ export class PostComponent {
   imagesPreview = {
     previews: [],
     type: ''
+  };
+
+  previewImageGrid: PreviewImageGrid = {
+    type: '',
+    images: []
   };
 
   tiles: Tile[] = [
@@ -70,6 +81,11 @@ export class PostComponent {
   @ViewChild('previewContentField', { read: ElementRef }) private previewContentField: ElementRef;
   @ViewChild('previewImage', { read: ElementRef }) private previewImage: ElementRef;
 
+
+  imagesPreviewOb: Observable<any>;
+
+  myModel: Array<any>;
+
   constructor(private renderer: Renderer2) { }
 
   addEmoji(event) {
@@ -91,60 +107,46 @@ export class PostComponent {
     }
   }
 
+  onDeletedFile(e) {
+    const fileName = e.file.name;
+    const index = this.selectedFile.findIndex(i => i.name === fileName);
+    this.imagesPreview.previews.splice(index, 1);
+    this.selectedFile.splice(index, 1);
+  }
+
   onAccept(evt) {
     const file = evt.file;
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = this.handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(file);
-      this.selectedFile.push(file);
-    }
+    this.imagesPreviewOb = new Observable(observer => {
+      if (file) {
+        this.selectedFile.push(file);
+        const reader = new FileReader();
+        reader.onloadend = this.handleReaderLoaded.bind(this);
+        reader.readAsBinaryString(file);
+      }
+      observer.next(this.selectedFile);
+    });
+
+    this.afterImagesLoaded();
   }
 
   handleReaderLoaded(e) {
     const previewBase64 = 'data:image/png;base64,' + window.btoa(e.target.result);
 
     const i = new Image();
-
-    i.onload = () => {
-      console.log(i.width + ', ' + i.height);
-    };
-
     i.src = previewBase64;
 
-    this.imagesPreview.previews.push({
+    const image = {
       pre: previewBase64,
       height: i.height,
       width: i.width
-    });
+    };
 
-    this.setGridForPreview();
+    this.previewImageGrid.images.push(image);
   }
 
-  setGridForPreview() {
-    const totalImagesPreview = this.imagesPreview.previews.length;
-    console.log(totalImagesPreview);
-    switch (totalImagesPreview) {
-      case 1:
-        if (this.imagesPreview.previews[0].height === this.imagesPreview.previews[0].width) {
-          this.imagesPreview.type = 'one-image';
-        }
-        break;
-      case 2:
-        console.log('case 2');
-        if (this.imagesPreview.previews[0].width < this.imagesPreview.previews[0].height
-          && this.imagesPreview.previews[1].width < this.imagesPreview.previews[1].height) {
-          this.imagesPreview.type = 'two-image';
-        }
-        console.log(this.imagesPreview);
-        break;
-    }
-  }
-
-  onDeletedFile(e) {
-    const fileName = e.file.name;
-    const index = this.selectedFile.findIndex(i => i.name === fileName);
-    this.imagesPreview.previews.splice(index, 1);
-    this.selectedFile.splice(index, 1);
+  afterImagesLoaded() {
+    console.log('hehe');
+    this.imagesPreviewOb.pipe(last())
+      .subscribe(d => console.log(d));
   }
 }

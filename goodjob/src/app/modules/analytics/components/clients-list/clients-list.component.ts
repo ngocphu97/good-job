@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AnalyticsService } from '../../services/analytics.service';
+
 import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
+import { AnalyticsService } from '../../services/analytics.service';
+
 
 @Component({
   selector: 'app-clients-list',
@@ -12,6 +17,9 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 export class ClientsListComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
+
+  EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  EXCEL_EXTENSION = '.xlsx';
 
   feeds = [];
   feedsLength = 0;
@@ -54,43 +62,40 @@ export class ClientsListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.service
-      .getFeedsObservable()
-      .subscribe(
-        (feeds) => {
-          if (!feeds || feeds.length < 1) {
-            return;
-          }
-          feeds.forEach(f => {
-            this.service
-              .getDataFromPostId(f.id)
-              .subscribe(e => {
-                const d = {
-                  postId: f.id,
-                  thumbnail: f.picture,
-                  content: f.message,
-                  time: new Date(f.created_time),
-                  reach: e.reach,
-                  paidReach: e.paidReach,
-                  organicReach: e.organicReach,
-                  engagement: e.engagement,
-                  click: e.click,
-                  // ctr: e.ctr,
-                  negative: e.negative,
-                  impressions: e.impressions
-                };
-
-                this.temp.push(d);
-                this.x = this.temp;
-
-                // this.feeds$.next(this.temp);
-
-                this.dataSource = new MatTableDataSource<any>(this.temp);
-                this.dataFilter = this.temp;
-                this.dataSource.sort = this.sort;
-              });
-          });
+    this.service.getFeedsObservable()
+      .subscribe((feeds) => {
+        if (!feeds || feeds.length < 1) {
+          return;
         }
+        feeds.forEach(f => {
+          this.service.getDataFromPostId(f.id)
+            .subscribe(e => {
+              const d = {
+                postId: f.id,
+                thumbnail: f.picture,
+                content: f.message,
+                time: new Date(f.created_time),
+                reach: e.reach,
+                paidReach: e.paidReach,
+                organicReach: e.organicReach,
+                engagement: e.engagement,
+                click: e.click,
+                // ctr: e.ctr,
+                negative: e.negative,
+                impressions: e.impressions
+              };
+
+              this.temp.push(d);
+              this.x = this.temp;
+
+              // this.feeds$.next(this.temp);
+
+              this.dataSource = new MatTableDataSource<any>(this.temp);
+              this.dataFilter = this.temp;
+              this.dataSource.sort = this.sort;
+            });
+        });
+      }
       );
   }
 
@@ -126,5 +131,37 @@ export class ClientsListComponent implements OnInit {
       }
     });
     this.applyFilterDate(temp);
+  }
+
+  exportAsExcelFile(json: any[]): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    worksheet.cols = [100];
+    const workbook: XLSX.WorkBook = {
+      Sheets: {
+        'data': worksheet
+      },
+      SheetNames: ['data']
+    };
+
+    const writtingOptions: XLSX.WritingOptions = {
+      bookType: 'xlsx',
+      type: 'array',
+      Props: {
+        Title: 'leuelu'
+      }
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, writtingOptions);
+
+    this.saveAsExcelFile(excelBuffer);
+  }
+
+  saveAsExcelFile(buffer: any): void {
+    const data: Blob = new Blob([buffer], { type: this.EXCEL_TYPE });
+    FileSaver.saveAs(data, 'gudpost' + '_export' + this.EXCEL_EXTENSION);
+  }
+
+  exportAsXLSX() {
+    this.exportAsExcelFile(this.temp);
   }
 }

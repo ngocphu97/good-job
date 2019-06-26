@@ -12,6 +12,33 @@
     </div>
 </ng-template>
 
+<ng-template #headerTemplate let-days="days" let-locale="locale" let-dayClicked="dayClicked"
+    let-eventDropped="eventDropped">
+    <div class="cal-day-headers cursor-default">
+        <div class="cal-header" *ngFor="let day of days" 
+            [class.cal-past]="day.isPast" 
+            [class.cal-future]="day.isFuture"
+            [class.cal-drag-over]="day.dragOver" 
+            (mwlClick)="dayClicked.emit({date: day.date})" mwlDroppable
+            (dragEnter)="day.dragOver = true" 
+            (dragLeave)="day.dragOver = false"
+            (drop)="day.dragOver = false; eventDropped.emit({event: $event.dropData.event, newStart: day.date, fromHeader: true})">
+            <div class="top" [class.today]="day.isToday">
+                <div class="day-label text-uppercase">
+                    {{ day.date | calendarDate:'weekViewColumnHeader':locale }}
+                </div>
+                <div class="day-number">{{ day.date | calendarDate:'weekViewColumnSubHeader':locale }}</div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #eventTemplate let-weekEvent="weekEvent" let-locale="locale">
+  <!-- <img src="{{weekEvent.event.title}}" alt=""> -->
+  {{weekEvent.event.title}}
+  {{weekEvent.event.action}}
+</ng-template>
+
 <div class="loading-calendar" *ngIf="events.length === 0">
     <mat-spinner color="accent"></mat-spinner>
 </div>
@@ -42,14 +69,15 @@
 
         <div [ngSwitch]="view" class="calendar">
             <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-                [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+                [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" [refresh]="refresh"
                 (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
                 (beforeViewRender)="beforeMonthViewRender($event)" [cellTemplate]="customCellTemplate">
             </mwl-calendar-month-view>
 
             <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate"
-                (dayClicked)="handleEvent('Clicked', $event.event)"
-                (eventClicked)="handleEvent('Clicked', $event.event)" [events]="events">
+                (dayClicked)="handleEvent('Clicked', $event.event)" [refresh]="refresh"
+                (eventClicked)="handleEvent('Clicked', $event.event)" [events]="events"
+                [headerTemplate]="headerTemplate">
             </mwl-calendar-week-view>
 
         </div>

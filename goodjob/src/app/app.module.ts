@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { CoreModule } from '@app/core/core.module';
@@ -12,7 +12,6 @@ import { environment } from '@app/environment';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routing';
-import { AppPreloadingStrategy } from './app_preloading_strategy';
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
     HttpClientModule,
     RouterModule.forRoot(routes, {
       useHash: false,
-      preloadingStrategy: AppPreloadingStrategy
+      preloadingStrategy: PreloadAllModules
     }),
 
     OverlayModule,
@@ -31,12 +30,6 @@ import { AppPreloadingStrategy } from './app_preloading_strategy';
   ],
   declarations: [
     AppComponent
-  ],
-  providers: [
-    {
-      provide: AppPreloadingStrategy,
-      useClass: AppPreloadingStrategy
-    },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,3 +1,11 @@
+<h3> Export to Excel</h3>
+<button (click)="exportAsXLSX()">
+  <i class="far fa-file-excel"></i>
+  Export to excel
+</button>
+
+<br>
+
 <div *ngFor="let i of feeds$ | async">
   item: {{i.postId}}
 </div>

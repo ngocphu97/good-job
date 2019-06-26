@@ -4,20 +4,22 @@ import { EditWizardComponent } from './components/edit-wizard/edit-wizard.compon
 
 export const routes: Routes = [
   {
-    path: ':projectId',
-    component: CreatePageComponent
-  },
-  {
-    path: 'schedule',
-    component: SchedulePageComponent
-  },
-  {
     path: 'status',
     component: StatusPageComponent
   },
   {
-    path: 'demo',
-    component: EditWizardComponent
-  }
+    path: ':projectId',
+    component: CreatePageComponent,
+    pathMatch: 'full'
+  },
+  // {
+  //   path: 'schedule',
+  //   component: SchedulePageComponent
+  // },
+
+  // {
+  //   path: 'demo',
+  //   component: EditWizardComponent
+  // }
 ];
 

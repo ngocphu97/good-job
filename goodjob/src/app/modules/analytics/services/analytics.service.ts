@@ -263,7 +263,6 @@ export class AnalyticsService {
   }
 
   getPageImpressionsByAgeGenderUnique(): Observable<any> {
-    const id = '1415019512144250';
     const token = this.access_token;
     return new Observable((observer) => {
       FB.api(`/me`, 'GET',
@@ -271,12 +270,10 @@ export class AnalyticsService {
           access_token: token,
           fields: 'insights.metric(page_impressions_by_age_gender_unique){title,values}'
         }, (response) => {
-          console.log(response);
           if (response.error) {
             observer.error(response.error);
             observer.complete();
           }
-
           const responseData = {
             data: response.insights.data[0].values[1].value,
             endTime: response.insights.data[0].values[1].end_time

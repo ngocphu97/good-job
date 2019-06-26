@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatDatepickerModule } from '@angular/material';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 
 import { containers } from './containers';
@@ -18,6 +20,9 @@ const config: InputFileConfig = {
     CommonModule,
     SharedModule,
     MatDialogModule,
+    MatDatepickerModule,
+    NgxMaterialTimepickerModule,
+
     FormsModule,
     InputFileModule.forRoot(config)
   ],
